@@ -21,7 +21,7 @@ document.documentElement.dataset.theme=d?'dark':'light';}catch(e){document.docum
 </script>
 <style>
 /* ============================================================
-   ことばの森 — English Word Garden  v1.2
+   ことばの森 — English Word Garden  v1.3
    設計原則: 画面は常に「1状態のみ」描画（排他ステートマシン）
    ============================================================ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -442,7 +442,7 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
 
       <div class="note">
         <b>対戦方式について</b><br>
-        このアプリはサーバーも外部APIも使わない単独HTMLです。そのため、リアルタイム同期や全ユーザー共通ランキングはありません。コードで同じ問題を再現し、結果コードを送り合って比較する方式です。友達の結果を取り込むと、この端末のランキングに表示できます。
+        このアプリはサーバーも外部APIも使わない単独HTMLです。コードで同じ問題を再現し、結果コードを送り合って比較します。さらに「ランキング」タブの<b>ボードコード</b>を使うと、IDで識別されたプレイヤー全員のスコアを分散的に統合できます。
       </div>
     </div>
   </section>
@@ -450,10 +450,21 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
   <!-- ===== ランキング & 記録 ===== -->
   <section class="screen" id="scr-rank">
     <div class="wrap">
-      <p class="eyebrow">Local Leaderboard</p>
+      <p class="eyebrow">Community Leaderboard</p>
       <h1>ランキング</h1>
-      <p class="sub" style="margin-top:6px">この端末に保存された自分と友達のベストスコア。</p>
-      <button class="btn btn-soft" id="btnAddResult" style="margin-top:14px">＋ 結果コードを追加</button>
+      <p class="sub" style="margin-top:6px">ボードコードで統合された、みんなのベストスコア。</p>
+
+      <div class="statrow">
+        <div class="mini card"><div class="mv" id="gbPlayers">0</div><div class="ml">参加プレイヤー</div></div>
+        <div class="mini card"><div class="mv" id="gbTop">0</div><div class="ml">最高スコア</div></div>
+        <div class="mini card"><div class="mv" id="gbAvg">0</div><div class="ml">平均スコア</div></div>
+      </div>
+      <p class="sub small center" id="gbMyRank" style="margin-top:10px"></p>
+      <div class="row" style="margin-top:14px;gap:8px">
+        <button class="btn btn-primary" id="btnBoardShare" style="padding:12px;font-size:13.5px">📤 ボードを共有</button>
+        <button class="btn btn-line" id="btnBoardImport" style="padding:12px;font-size:13.5px">📥 ボードを取り込む</button>
+      </div>
+
       <div class="ranklist" id="rankList"></div>
       <div class="empty hidden" id="rankEmpty">
         <div class="e">🏆</div>
@@ -464,7 +475,7 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
         <div class="label">チャレンジ記録</div>
         <div id="chalList"></div>
       </div>
-      <p class="sub small" style="margin-top:14px">ランキングはこの端末内に保存されます。ほかの端末の結果を自動で取得する機能はありません。</p>
+      <p class="sub small" style="margin-top:14px">ランキングはこの端末内に保存されます。ボードコードを共有すると、IDで識別されたプレイヤー全員のスコアが1つに統合されます。</p>
 
       <div class="sect" id="progressSec">
         <p class="eyebrow">Your Progress</p>
@@ -567,7 +578,7 @@ const saveChal=()=>store.set('kg1.chal',ST.chal);
 
 /* ================= データベース（英単語660 / 英熟語240 = 900） ================= */
 const W=[
-/* --- Level 1: 基本（既存150 + 追加110 = 約260） --- */
+/* --- Level 1: 基本 --- */
 ["apple","りんご","I ate an apple after school.",1],
 ["book","本","This book is very interesting.",1],
 ["water","水","Drink more water every day.",1],
@@ -813,7 +824,6 @@ const W=[
 ["key","鍵","I lost my key.",1],
 ["map","地図","Look at the map.",1],
 ["paper","紙","Write on this paper.",1],
-["box","箱","Open the box.",1],
 ["sugar","砂糖","Add some sugar.",1],
 ["salt","塩","Pass me the salt.",1],
 ["butter","バター","I put butter on my bread.",1],
@@ -821,7 +831,7 @@ const W=[
 ["onion","玉ねぎ","Cut the onion.",1],
 ["potato","じゃがいも","I like potato soup.",1],
 ["tomato","トマト","The tomato is red.",1],
-/* --- Level 2: 頻出（既存180 + 追加150 = 約330） --- */
+/* --- Level 2: 頻出 --- */
 ["agree","賛成する・同意する","I agree with your idea.",2],
 ["allow","許す・許可する","My parents allow me to use it.",2],
 ["almost","ほとんど","It is almost time to go.",2],
@@ -942,7 +952,6 @@ const W=[
 ["yet","まだ・もう","I haven't finished yet.",2],
 ["anyone","誰でも・誰か","Does anyone know the answer?",2],
 ["anything","何でも・何か","I don't have anything to eat.",2],
-/* Level 2 追加 */
 ["accept","受け入れる","I accept your apology.",2],
 ["across","〜を横切って","Walk across the street.",2],
 ["add","加える","Add some sugar to the tea.",2],
@@ -1042,7 +1051,6 @@ const W=[
 ["involve","巻き込む","Don't involve others in this.",2],
 ["judge","判断する・裁判官","Don't judge people by appearance.",2],
 ["keep","保つ・持ち続ける","Keep your room clean.",2],
-["key","鍵・重要な","I lost my key.",2],
 ["lead","導く","This road leads to the beach.",2],
 ["level","レベル・水準","My English level is improving.",2],
 ["local","地元の","We ate at a local restaurant.",2],
@@ -1187,14 +1195,13 @@ const W=[
 ["unique","独特の・唯一の","Each person is unique.",2],
 ["useful","役に立つ","This dictionary is useful.",2],
 ["usual","いつもの","Today is busier than usual.",2],
-["various","さまざまな","The store has various items.",2],
 ["view","景色・見解","The view from the hill is wonderful.",2],
 ["violence","暴力","We must stop violence.",2],
 ["weight","重さ","What is the weight of this box?",2],
 ["wonder","不思議に思う・驚き","I wonder why she left.",2],
 ["wonderful","素晴らしい","We had a wonderful time.",2],
 ["worth","価値がある","This book is worth reading.",2],
-/* --- Level 3: 応用（既存100 + 追加80 = 約180） --- */
+/* --- Level 3: 応用 --- */
 ["environment","環境","We must protect the environment.",3],
 ["pollution","汚染","Air pollution is a big problem.",3],
 ["recycle","リサイクルする","We recycle bottles and cans.",3],
@@ -1239,7 +1246,6 @@ const W=[
 ["advice","助言","My teacher gave me good advice.",3],
 ["support","支える・支援","My friends support me.",3],
 ["trust","信頼する","You can trust him.",3],
-["respect","尊敬する","We should respect older people.",3],
 ["courage","勇気","It took courage to speak up.",3],
 ["confidence","自信","I have confidence in my team.",3],
 ["imagination","想像力","Use your imagination.",3],
@@ -1264,8 +1270,6 @@ const W=[
 ["create","創造する","Let's create something new.",3],
 ["reduce","減らす","We should reduce plastic waste.",3],
 ["prevent","防ぐ","Washing hands prevents illness.",3],
-["solve","解決する","We solved the problem together.",3],
-/* Level 3 追加 */
 ["abstract","抽象的な","The concept is too abstract.",3],
 ["academic","学術的な","She has an academic background.",3],
 ["accident","事故","The accident caused a traffic jam.",3],
@@ -1422,7 +1426,7 @@ const W=[
 ["withdraw","引き出す・撤退する","He withdrew his offer.",3]
 ];
 const I=[
-/* --- Level 1: 基本（既存60 + 追加30 = 約90） --- */
+/* --- Level 1: 基本 --- */
 ["get up","起きる・起床する","I get up at six every morning.",1],
 ["wake up","目が覚める・起こす","Wake up! It's already seven.",1],
 ["go to bed","寝る・床に就く","I go to bed at eleven.",1],
@@ -1463,7 +1467,6 @@ const I=[
 ["grow up","成長する・大人になる","I want to be a pilot when I grow up.",1],
 ["pick up","拾う・迎えに行く","He picked up the paper.",1],
 ["put on","（身につける物を）着る","Put on your coat.",1],
-/* Level 1 追加 */
 ["have fun","楽しむ","Have fun at the party.",1],
 ["have breakfast","朝食を食べる","I have breakfast at seven.",1],
 ["have lunch","昼食を食べる","We had lunch at noon.",1],
@@ -1504,7 +1507,7 @@ const I=[
 ["where is","どこに","Where is the post office?",1],
 ["right now","今すぐ","Come here right now.",1],
 ["these days","最近","I'm busy these days.",1],
-/* --- Level 2: 頻出（既存40 + 追加50 = 約90） --- */
+/* --- Level 2: 頻出 --- */
 ["take off","脱ぐ・離陸する","The plane took off on time.",2],
 ["try on","試着する","Can I try on this jacket?",2],
 ["look after","〜の世話をする","She looks after her little brother.",2],
@@ -1545,7 +1548,6 @@ const I=[
 ["in English","英語で","Please say it in English.",2],
 ["one of","〜の一つ","He is one of my best friends.",2],
 ["and so on","など","I like apples, oranges, and so on.",2],
-/* Level 2 追加 */
 ["figure out","理解する・解明する","I figured out the answer.",2],
 ["give back","返す","Give back my book.",2],
 ["give away","あげる・譲る","She gave away her old clothes.",2],
@@ -1573,7 +1575,6 @@ const I=[
 ["check out","チェックアウトする・確かめる","Check out this new song.",2],
 ["call back","電話をかけ直す","I'll call you back later.",2],
 ["call off","中止する","They called off the game.",2],
-["get up","起きる","I got up late today.",2],
 ["get back","戻る","When did you get back?",2],
 ["get together","集まる","Let's get together next week.",2],
 ["get used to","慣れる","I got used to the new school.",2],
@@ -1589,7 +1590,7 @@ const I=[
 ["come up","話題になる・現れる","The topic came up in class.",2],
 ["come across","偶然出会う","I came across an old friend.",2],
 ["come along","一緒に来る","Come along with us.",2],
-/* --- Level 3: 応用（既存20 + 追加40 = 約60） --- */
+/* --- Level 3: 応用 --- */
 ["look forward to","〜を楽しみに待つ","I look forward to seeing you.",3],
 ["be used to","〜に慣れている","I am used to getting up early.",3],
 ["come up with","（考えなど）を思いつく","She came up with a good idea.",3],
@@ -1630,7 +1631,6 @@ const I=[
 ["all of a sudden","突然","All of a sudden, it began to rain.",3],
 ["little by little","少しずつ","Little by little, it became easier.",3],
 ["from now on","今後は","From now on, I will study harder.",3],
-/* Level 3 追加 */
 ["go without saying","言うまでもない","It goes without saying that health is important.",3],
 ["better late than never","遅れてもやらないよりまし","Let's start now - better late than never.",3],
 ["once in a while","時々","I visit my grandparents once in a while.",3],
@@ -1819,7 +1819,7 @@ function enterStudy(){
   if(STUDY.view==='session'&&!S)STUDY.view='setup';
   if(STUDY.view==='result'&&!lastRes)STUDY.view='setup';
   setStudyView(STUDY.view);}
-/* ★バグ修正: source='weak'/'fav' 時に選択中typeでフィルタ */
+/* source='weak'/'fav' 時に選択中typeでフィルタ */
 function currentPool(){
   let pool;
   if(ST.settings.source==='weak')pool=weakPool().filter(it=>it.k===ST.settings.type);
@@ -1852,7 +1852,6 @@ function buildQuestions(items,n,rng){
   const picked=shuffle(items,rng).slice(0,n);
   return picked.map(it=>{
     const pool=it.k==='i'?DB.i:DB.w;
-    // 重複する意味を除外したディストラクター
     const seen=new Set([it.m]);
     const others=[];
     for(const o of shuffle(pool,rng)){
@@ -1868,7 +1867,6 @@ function endSession(){if(S){clearInterval(S.tid);clearTimeout(S.adv);S=null;}}
 function startSolo(cfg){
   if(battleActive()){toast('対戦中です','⚔️');return;}
   endSession();lastSoloCfg=cfg;
-  /* ★バグ修正: source='weak'/'fav' は選択中typeでフィルタ */
   let pool;
   if(cfg.pool)pool=cfg.pool;
   else if(cfg.source==='weak')pool=weakPool().filter(it=>it.k===cfg.type);
@@ -1985,7 +1983,7 @@ function renderCard(){
     }});
   const resetVisual=()=>{fc.classList.remove('drag');fc.style.transform='';
     fc.querySelectorAll('.fc-badge').forEach(b=>b.style.opacity=0);};
-  /* ★バグ修正: pointerup と pointercancel を分離（縦スクロールで誤フリップしない） */
+  /* pointerup と pointercancel を分離（縦スクロールで誤フリップしない） */
   fc.addEventListener('pointerup',()=>{
     if(!dragging)return;dragging=false;
     if(Math.abs(dx)>70&&!reducedMotion){resetVisual();judge(dx>0);}
@@ -2076,6 +2074,54 @@ function applyResult(r){
   pl.hashes.push(r.raw);if(pl.hashes.length>60)pl.hashes.shift();
   pl.n=r.n;pl.plays++;pl.k+=r.k;pl.t+=r.t;pl.best=Math.max(pl.best,r.s);pl.last=Date.now();
   savePlayers();return'ok';}
+
+/* ================= ボードコード（分散型全ユーザーランキング） ================= */
+function mkBoardCode(){
+  const entries=Object.entries(ST.players)
+    .filter(([id,p])=>p.plays>0)
+    .map(([id,p])=>[id,p.n||'',p.best||0,p.plays||0,p.k||0,p.t||0]);
+  const payload={v:1,ts:Date.now(),p:entries};
+  const b=b64e(JSON.stringify(payload));
+  return'EMBR1-'+b+'-'+(fnv(b)%1296).toString(36).padStart(2,'0');}
+function parseBoardCode(str){
+  let s=String(str||'').trim();
+  const mUrl=s.match(/[?&]b=([A-Za-z0-9_-]+)/);if(mUrl)s=mUrl[1];
+  s=s.replace(/\s+/g,'');
+  const m=s.match(/^EMBR1-([A-Za-z0-9_-]+)-([a-z0-9]{2})$/);
+  if(!m)throw new Error('format');
+  if((fnv(m[1])%1296).toString(36).padStart(2,'0')!==m[2])throw new Error('checksum');
+  const p=JSON.parse(b64d(m[1]));
+  if(!p||p.v!==1||!Array.isArray(p.p))throw new Error('fields');
+  if(p.p.length>200)throw new Error('size');
+  return p.p.map(e=>{
+    if(!Array.isArray(e)||e.length<6)throw new Error('entry');
+    const[id,name,best,plays,k,t]=e;
+    if(!/^\d{6}$/.test(String(id)))throw new Error('id');
+    if(typeof name!=='string')throw new Error('name');
+    if(!Number.isInteger(best)||best<0||best>999999)throw new Error('best');
+    if(!Number.isInteger(plays)||plays<0||plays>99999)throw new Error('plays');
+    if(!Number.isInteger(k)||k<0||k>99999)throw new Error('k');
+    if(!Number.isInteger(t)||t<0||t>99999)throw new Error('t');
+    return{id:String(id),n:name.trim().slice(0,24),best,plays,k,t,last:0};});}
+function mergeBoard(entries){
+  let added=0,updated=0;
+  for(const e of entries){
+    const cur=ST.players[e.id];
+    if(!cur){
+      ST.players[e.id]={n:e.n,best:e.best,plays:e.plays,k:e.k,t:e.t,last:Date.now(),hashes:[]};
+      added++;
+    }else{
+      let changed=false;
+      if(e.best>cur.best){cur.best=e.best;changed=true;}
+      if(e.plays>cur.plays){cur.plays=e.plays;changed=true;}
+      if(e.k>cur.k){cur.k=e.k;changed=true;}
+      if(e.t>cur.t){cur.t=e.t;changed=true;}
+      if(e.n&&e.n.trim()&&e.n!==cur.n){cur.n=e.n.trim().slice(0,12);changed=true;}
+      if(changed)updated++;
+    }}
+  if(added||updated)savePlayers();
+  return{added,updated,total:entries.length};}
+
 function finishBattle(){
   clearInterval(S.tid);
   const code=S.code,score=S.score,correct=S.correct,total=S.qs.length,secs=Math.round((Date.now()-S.t0)/1000);
@@ -2133,6 +2179,20 @@ async function copyText(t,msg){
 function renderRank(){
   const entries=Object.entries(ST.players).map(([id,p])=>({id,...p})).filter(e=>e.plays>0);
   entries.sort((a,b)=>b.best-a.best||(b.k/(b.t||1))-(a.k/(a.t||1))||b.last-a.last);
+  /* 全ユーザーランキング統計 */
+  if(entries.length){
+    $('gbPlayers').textContent=entries.length;
+    $('gbTop').textContent=entries[0].best;
+    $('gbAvg').textContent=Math.round(entries.reduce((s,e)=>s+e.best,0)/entries.length);
+    const myIdx=entries.findIndex(e=>e.id===ST.profile.id);
+    if(myIdx>=0){
+      $('gbMyRank').textContent=`あなたは ${myIdx+1}位 / ${entries.length}人中`;
+      $('gbMyRank').classList.remove('hidden');
+    }else $('gbMyRank').classList.add('hidden');
+  }else{
+    $('gbPlayers').textContent='0';$('gbTop').textContent='0';$('gbAvg').textContent='0';
+    $('gbMyRank').classList.add('hidden');
+  }
   $('rankEmpty').classList.toggle('hidden',entries.length>0);
   const medals=['🥇','🥈','🥉'];
   $('rankList').innerHTML=entries.map((e,i)=>
@@ -2154,7 +2214,6 @@ function renderRank(){
   $('pgWords').textContent=uniqueWords();
   $('pgAcc').textContent=accText();
   $('pgAnswers').textContent=ST.stats.tot.a;
-  /* ★バグ修正: ラベル「苦手な単語」に合わせて単語のみ表示・復習 */
   const weak=weakPool().filter(it=>it.k==='w');
   $('btnWeakReview').disabled=!weak.length;
   $('weakList').innerHTML=weak.length
@@ -2180,11 +2239,38 @@ function renderRank(){
         <span class="mono"><b>${h.score}/${h.total}</b> <span class="sub small">${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}</span></span></div>`;}).join('')
     :'<p class="sub small">まだ履歴がありません。</p>';}
 $('btnWeakReview').addEventListener('click',()=>{
-  /* ★バグ修正: 単語のみ対象 */
   const pool=weakPool().filter(it=>it.k==='w');
   if(!pool.length){toast('苦手なことばはまだないよ','🌱');return;}
   nav('study');startSolo({pool,mode:'quiz',type:'w',levels:[1,2,3],source:'all'});});
-$('btnAddResult').addEventListener('click',()=>{
+
+/* ================= ボード共有/取り込み ================= */
+$('btnBoardShare').addEventListener('click',async()=>{
+  const code=mkBoardCode();
+  const count=Object.values(ST.players).filter(p=>p.plays>0).length;
+  if(!count){toast('共有できる記録がまだないよ','📭');return;}
+  const url=location.origin+location.pathname+'?b='+encodeURIComponent(code);
+  const text=`ことばの森 ランキングボード（${count}人）\n${url}\n\nボードコード:\n${code}`;
+  if(navigator.share){try{await navigator.share({title:'ことばの森 ランキングボード',text});return;}catch(e){if(e&&e.name==='AbortError')return;}}
+  copyText(code,'ボードコードをコピーしました');});
+$('btnBoardImport').addEventListener('click',()=>{
+  sheet('ボードコードを取り込む',
+    `<p style="text-align:center;margin-bottom:12px">友達から届いたボードコードを貼り付けてね。<br><span class="sub small">同じIDのプレイヤーは、高いスコアが優先されます。</span></p>
+     <textarea id="impBoardText" class="field" placeholder="EMBR1-... またはボードリンク"></textarea>`,
+    [{label:'取り込む',cls:'btn-primary',cb:()=>{
+      let entries;
+      try{entries=parseBoardCode($('impBoardText').value);}
+      catch(e){toast('ボードコードの形式が正しくないよ','⚠️');return false;}
+      if(!entries.length){toast('プレイヤーが入っていないよ','📭');return false;}
+      const result=mergeBoard(entries);
+      toast(`${result.added}人を追加、${result.updated}人を更新しました`,'🏆');
+      snd('ok');
+      if(SCR==='rank')renderRank();
+    }},
+     {label:'キャンセル',cls:'btn-ghost'}]);
+  setTimeout(()=>{try{$('impBoardText').focus();}catch(e){}},400);});
+
+/* 結果コード取り込み */
+$('btnAddResult')?.addEventListener('click',()=>{
   sheet('友達の結果を取り込む',
     '<p style="text-align:center;margin-bottom:12px">相手から送られた結果コードを貼り付けてね。</p>'+
     '<textarea id="impText" class="field" placeholder="EMR1-... または結果リンク"></textarea>',
@@ -2312,6 +2398,7 @@ document.addEventListener('keydown',e=>{
     const params=new URLSearchParams(location.search);
     const rParam=params.get('r');
     const cParam=params.get('c');
+    const bParam=params.get('b');
     if(cParam&&/^\d{6}$/.test(cParam)){
       btCode=cParam;
       $('btCodeWrap').classList.remove('hidden');
@@ -2320,6 +2407,18 @@ document.addEventListener('keydown',e=>{
       $('btnBtJoin').disabled=false;
       nav('battle');
       toast('対戦コードを読み込みました','⚔️');
+    }
+    if(bParam){
+      try{
+        const entries=parseBoardCode(bParam);
+        const result=mergeBoard(entries);
+        setTimeout(()=>{
+          toast(`ボードを取り込みました（${result.added}人追加、${result.updated}人更新）`,'🏆');
+          nav('rank');
+        },400);
+      }catch(e){
+        setTimeout(()=>toast('ボードコードを読み取れませんでした','⚠️'),400);
+      }
     }
     if(rParam){
       try{
