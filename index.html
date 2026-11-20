@@ -40,6 +40,51 @@ main{padding-top:12px}.page{display:none;animation:pageIn .42s cubic-bezier(.2,.
 @media(max-width:370px){.wrap{width:calc(100% - 24px)}.topbar{height:65px}.brand-title{font-size:16px}.hero-card{padding:20px 17px}.home-metrics{gap:7px}.metric{padding:12px 10px}.metric-value{font-size:20px}.bottom-nav{height:72px}.nav-item{font-size:9px}.nav-item svg{width:22px;height:22px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.glass,.panel,.metric,.quick-card,.bottom-nav{background:rgba(245,246,255,.94)}:root[data-theme="dark"] .glass,:root[data-theme="dark"] .panel,:root[data-theme="dark"] .metric,:root[data-theme="dark"] .quick-card{background:rgba(37,40,57,.96)}}
+
+/* Readability + GitHub Pages compatibility hardening (2026-11-20) */
+:root{
+  --glass:rgba(255,255,255,.76);
+  --glass-strong:rgba(255,255,255,.91);
+  --glass-edge:rgba(255,255,255,.88);
+}
+:root[data-theme="dark"]{
+  --glass:rgba(31,35,52,.88);
+  --glass-strong:rgba(43,47,68,.96);
+  --glass-edge:rgba(220,225,255,.24);
+}
+/* Frosting belongs behind content, never on text or icons. */
+.glass,.panel,.metric,.quick-card{
+  -webkit-backdrop-filter:blur(7px) saturate(1.18);
+  backdrop-filter:blur(7px) saturate(1.18);
+}
+.icon-button{
+  -webkit-backdrop-filter:blur(6px) saturate(1.12);
+  backdrop-filter:blur(6px) saturate(1.12);
+}
+.bottom-nav{
+  -webkit-backdrop-filter:blur(10px) saturate(1.25);
+  backdrop-filter:blur(10px) saturate(1.25);
+  background:rgba(28,30,42,.94);
+}
+/* Disable SVG displacement: it can soften/warp edges on mobile browsers. */
+.liquidGlass::before,.liquidGlassLarge::before,.nav-indicator.liquidGlass::before{
+  filter:none !important;
+  -webkit-backdrop-filter:blur(3px) saturate(1.12);
+  backdrop-filter:blur(3px) saturate(1.12);
+}
+.liquidGlass,.liquidGlassLarge{text-shadow:none}
+/* Improve small-text contrast without changing the visual hierarchy. */
+.hero-copy,.page-head p,.brand-sub,.field-label,.setting-row small,.rank-info small{
+  color:var(--muted);
+  text-shadow:none;
+}
+button,input,select{ -webkit-tap-highlight-color:transparent; }
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .glass,.panel,.metric,.quick-card,.icon-button{background:rgba(248,249,255,.97)}
+  :root[data-theme="dark"] .glass,:root[data-theme="dark"] .panel,
+  :root[data-theme="dark"] .metric,:root[data-theme="dark"] .quick-card,
+  :root[data-theme="dark"] .icon-button{background:rgba(30,34,50,.98)}
+}
 </style>
 </head>
 <body>
