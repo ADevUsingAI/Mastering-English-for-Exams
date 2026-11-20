@@ -8,18 +8,20 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="description" content="ことばの森 — 一日少しずつ、英語が得意になる。英単語・英熟語の学習と、6桁コードで友達と同じ問題に挑戦できる単独HTMLアプリ。">
+<meta name="description" content="ことばの森 — 一日少しずつ、英語が得意になる。英単語660語・英熟語240語の学習と、6桁コードで友達と同じ問題に挑戦できる単独HTMLアプリ。">
 <title>ことばの森 | 英単語マスター</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<!-- Favicon: すべてコード上でインライン定義 -->
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%232E6B4F'/%3E%3Ctext%20x='50'%20y='72'%20text-anchor='middle'%20font-size='58'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Crect%20width='100'%20height='100'%20rx='22'%20fill='%232E6B4F'/%3E%3Ctext%20x='50'%20y='72'%20text-anchor='middle'%20font-size='58'%3E%F0%9F%8C%BF%3C/text%3E%3C/svg%3E">
+<link rel="mask-icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20100%20100'%3E%3Cpath%20d='M50%2015c-18%200-32%2014-32%2032%200%2020%2032%2048%2032%2048s32-28%2032-48c0-18-14-32-32-32z'%20fill='%232E6B4F'/%3E%3C/svg%3E" color="#2E6B4F">
 <script>
-/* 初回描画前テーマ確定（フラッシュ防止） */
 (function(){try{var s=JSON.parse(localStorage.getItem('kg1.settings')||'{}');var m=s.theme||'auto';
 var d=m==='dark'||(m==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);
 document.documentElement.dataset.theme=d?'dark':'light';}catch(e){document.documentElement.dataset.theme='light';}})();
 </script>
 <style>
 /* ============================================================
-   ことばの森 — English Word Garden  v1.1
+   ことばの森 — English Word Garden  v1.2
    設計原則: 画面は常に「1状態のみ」描画（排他ステートマシン）
    ============================================================ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -49,7 +51,6 @@ input,textarea{font:inherit;color:inherit}
 a{color:var(--green)}
 .hidden{display:none!important}
 :focus-visible{outline:2px solid var(--green2);outline-offset:2px;border-radius:10px}
-/* 背景（森の光だまり） */
 #bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 #bg i{position:absolute;border-radius:50%;filter:blur(80px);opacity:var(--wash-op);transition:background-color .6s}
 #bg i:nth-child(1){width:60vmax;height:60vmax;left:-20vmax;top:-24vmax;background:var(--wash1);animation:drift 30s ease-in-out infinite alternate}
@@ -57,7 +58,6 @@ a{color:var(--green)}
 @keyframes drift{to{transform:translate(8vmax,6vmax) scale(1.08)}}
 body::after{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.035;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
-/* カード / ボタン */
 .card{background:var(--card);border:1px solid var(--line);border-radius:22px;box-shadow:var(--shadow);transition:background-color .45s,border-color .45s}
 .btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:15px 20px;font-size:15.5px;font-weight:700;
   border-radius:16px;transition:transform .22s var(--spring),opacity .2s}
@@ -74,7 +74,6 @@ body::after{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opac
 .iconbtn.faved{color:var(--amber)}
 .ic{width:22px;height:22px;fill:currentColor;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none;display:block}
 .ic.line{fill:none}.ic.s{width:18px;height:18px}
-/* レイアウト */
 #app{position:fixed;inset:0;z-index:2;display:flex;flex-direction:column}
 #screens{position:relative;flex:1;min-height:0}
 .screen{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;display:none;
@@ -92,7 +91,6 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
 .grow{flex:1;min-width:0}.center{text-align:center}
 .label{font-size:11.5px;font-weight:800;color:var(--sub);letter-spacing:.1em;margin:18px 2px 8px}
 .sect{margin-top:26px}
-/* セグメント / チップ */
 .seg{display:flex;gap:5px;padding:5px;background:var(--card2);border:1px solid var(--line);border-radius:15px}
 .seg button{flex:1;padding:9px 6px;font-size:13.5px;font-weight:700;border-radius:11px;color:var(--sub);white-space:nowrap;
   transition:color .2s,background-color .25s,box-shadow .25s,transform .2s var(--spring)}
@@ -103,7 +101,6 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
   background:var(--card);transition:transform .2s var(--spring),color .2s,background-color .2s,border-color .2s}
 .chip:active{transform:scale(.92)}
 .chip.on{color:var(--green);background:var(--pill);border-color:var(--green2)}
-/* ホーム */
 .brandrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
 .brand{display:flex;align-items:center;gap:10px}
 .brand .mark{width:40px;height:40px;border-radius:14px;background:var(--pill);display:grid;place-items:center;font-size:20px;border:1px solid var(--line)}
@@ -125,7 +122,6 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
 .tile b{display:block;font-size:14.5px;margin-top:10px}
 .tile .sub{font-size:11.5px;margin-top:3px;line-height:1.5}
 .motto{text-align:center;font-size:10px;font-weight:800;letter-spacing:.3em;color:var(--sub);margin-top:30px;opacity:.8}
-/* 学習セッション */
 .sessbar{display:flex;align-items:center;gap:10px;margin-bottom:14px}
 .backbtn{display:flex;align-items:center;gap:2px;font-size:14px;font-weight:700;color:var(--sub);padding:8px 10px 8px 4px;border-radius:12px}
 .backbtn:active{transform:scale(.94)}
@@ -156,7 +152,6 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
 .kbd-hint{text-align:center;color:var(--sub);font-size:11.5px;margin-top:16px}
 @media (pointer:coarse){.kbd-hint{display:none}}
-/* カード（両面表示バグ対策: 3D分離 + webkit prefix + no3dフォールバック） */
 .fc-wrap{perspective:1200px;margin-top:4px}
 .fc{position:relative;height:330px;transform-style:preserve-3d;-webkit-transform-style:preserve-3d;
   transition:transform .55s cubic-bezier(.3,.7,.3,1);cursor:pointer;touch-action:pan-y}
@@ -181,7 +176,6 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
 .judge .btn{padding:16px}
 .j-no{background:var(--ngbg);color:var(--ng)}
 .j-ok{background:var(--okbg);color:var(--ok)}
-/* 結果 */
 .rescard{padding:26px 20px;text-align:center;border-radius:26px}
 .ringwrap{position:relative;width:132px;height:132px;margin:0 auto 12px}
 .ringwrap svg{transform:rotate(-90deg)}
@@ -196,7 +190,6 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
 .missrow{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:15px;font-size:14px}
 .missrow b{font-size:15px}
 .resbtns{margin-top:16px}
-/* 対戦 */
 .btcard{padding:20px;margin-top:14px}
 .btcard h2{margin-top:6px}
 .code{font-size:clamp(38px,12vw,52px);font-weight:800;letter-spacing:.12em;text-align:center;font-variant-numeric:tabular-nums;color:var(--green);margin:14px 0}
@@ -206,7 +199,6 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
 .code-input::placeholder{color:var(--sub);opacity:.4;font-size:24px}
 .note{padding:16px 18px;margin-top:16px;font-size:12.5px;line-height:1.85;color:var(--sub);border-radius:18px;background:var(--card2);border:1px solid var(--line)}
 .note b{color:var(--ink)}
-/* ランキング / 記録 */
 .ranklist{margin-top:14px;display:flex;flex-direction:column;gap:8px}
 .rankrow{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:17px;font-size:14px}
 .rankrow .rk{width:26px;text-align:center;font-weight:800;color:var(--sub);font-variant-numeric:tabular-nums;flex:none}
@@ -223,7 +215,6 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
 .chalrow button{margin-left:auto;font-size:12px;font-weight:800;color:var(--green);background:var(--pill);padding:7px 12px;border-radius:999px;flex:none}
 .histrow{display:flex;justify-content:space-between;gap:8px;padding:9px 2px;font-size:13px;border-bottom:1px solid var(--line)}
 .histrow:last-child{border-bottom:0}
-/* タブバー（スプリングピル） */
 #tabbar{position:fixed;z-index:50;left:0;right:0;margin:0 auto;bottom:calc(10px + var(--sab));
   width:min(520px,calc(100% - 20px));height:70px;border-radius:35px;display:flex;
   background:var(--bar);-webkit-backdrop-filter:blur(16px) saturate(1.4);backdrop-filter:blur(16px) saturate(1.4);
@@ -241,7 +232,6 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
 .tab.on .f{display:block;animation:pop .38s var(--spring)}
 .tab:active .icw{transform:scale(.85);transition:transform .15s}
 @keyframes pop{0%{transform:scale(.6)}60%{transform:scale(1.16)}100%{transform:scale(1)}}
-/* トースト / シート */
 #toast{position:fixed;z-index:200;top:calc(12px + var(--sat));left:0;right:0;margin:0 auto;width:max-content;max-width:calc(100vw - 32px);
   display:flex;align-items:center;gap:9px;padding:11px 18px;border-radius:999px;background:var(--ink);color:var(--bg);
   font-size:13.5px;font-weight:700;box-shadow:0 10px 30px rgba(0,0,0,.25);
@@ -343,7 +333,7 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
     </div>
   </section>
 
-  <!-- ===== 学習（排他3状態: setup / session / result） ===== -->
+  <!-- ===== 学習 ===== -->
   <section class="screen" id="scr-study">
     <div class="wrap">
 
@@ -381,7 +371,6 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
       </div>
 
       <div id="studyResult" class="hidden">
-        <!-- ソロ結果 -->
         <div id="resSolo">
           <div class="rescard card">
             <div class="ringwrap">
@@ -401,7 +390,6 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
             <button id="btnResHome" class="btn btn-ghost">ホームへ戻る</button>
           </div>
         </div>
-        <!-- 対戦結果 -->
         <div id="resBattle" class="hidden">
           <div class="rescard card">
             <p class="eyebrow">Challenge Result</p>
@@ -503,7 +491,6 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
   </section>
 </main>
 
-<!-- ===== タブバー ===== -->
 <nav id="tabbar" role="tablist" aria-label="メインタブ">
   <div id="lens" aria-hidden="true"></div>
   <button class="tab on" data-nav="home" role="tab" aria-selected="true"><span class="icw"><svg class="ic line l"><use href="#i-home"/></svg><svg class="ic f"><use href="#i-home"/></svg></span><span class="tl">ホーム</span></button>
@@ -542,7 +529,7 @@ const b64d=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';r
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const vib=p=>{try{if(ST.settings.haptic&&navigator.vibrate)navigator.vibrate(p);}catch(e){}};
 
-/* ================= ストレージ（堅牢化 + 旧版からのID/統計移行） ================= */
+/* ================= ストレージ ================= */
 const store=(()=>{let ok=true;try{localStorage.setItem('kg1.t','1');localStorage.removeItem('kg1.t');}catch(e){ok=false;}
   const mem={};
   return{ok,
@@ -560,7 +547,7 @@ const ST={
 };
 if(!Array.isArray(ST.settings.levels)||!ST.settings.levels.length)ST.settings.levels=[1,2,3];
 if(!ST.profile){
-  const old=store.get('em3.profile',null); /* 旧版のID・名前を永久引き継ぎ */
+  const old=store.get('em3.profile',null);
   ST.profile=(old&&old.id)?{id:String(old.id),name:String(old.name||''),created:old.created||Date.now()}
     :{id:rand6(),name:'',created:Date.now()};
   if(!ST.profile.name)ST.profile.name='森の学習者'+ST.profile.id.slice(3);
@@ -578,8 +565,9 @@ const saveSettings=()=>store.set('kg1.settings',ST.settings);
 const savePlayers=()=>store.set('kg1.players',ST.players);
 const saveChal=()=>store.set('kg1.chal',ST.chal);
 
-/* ================= データベース（英単語330 / 英熟語120 = 450） ================= */
+/* ================= データベース（英単語660 / 英熟語240 = 900） ================= */
 const W=[
+/* --- Level 1: 基本（既存150 + 追加110 = 約260） --- */
 ["apple","りんご","I ate an apple after school.",1],
 ["book","本","This book is very interesting.",1],
 ["water","水","Drink more water every day.",1],
@@ -720,6 +708,120 @@ const W=[
 ["same","同じ","We are in the same class.",1],
 ["different","異なる","Our ideas are different.",1],
 ["beautiful","美しい","The sunset was beautiful.",1],
+/* --- Level 1 追加（色・体・動物・食べ物・学校・交通・場所・時間・天気・感情） --- */
+["red","赤い","She wore a red dress.",1],
+["blue","青い","The sky is blue.",1],
+["green","緑の","The leaves are green.",1],
+["yellow","黄色い","I like yellow flowers.",1],
+["black","黒い","He has a black bag.",1],
+["white","白い","Snow is white.",1],
+["pink","ピンクの","She likes pink.",1],
+["brown","茶色の","The bear is brown.",1],
+["head","頭","My head hurts.",1],
+["hand","手","Raise your hand.",1],
+["eye","目","She has beautiful eyes.",1],
+["ear","耳","Rabbits have long ears.",1],
+["nose","鼻","The dog has a good nose.",1],
+["mouth","口","Open your mouth wide.",1],
+["foot","足","My foot hurts.",1],
+["arm","腕","He broke his arm.",1],
+["leg","脚","The table has four legs.",1],
+["face","顔","Wash your face.",1],
+["hair","髪","Her hair is long.",1],
+["horse","馬","The horse runs fast.",1],
+["cow","牛","The cow gives us milk.",1],
+["sheep","羊","The sheep is white.",1],
+["rabbit","うさぎ","The rabbit is cute.",1],
+["mouse","ねずみ","A mouse ran across the floor.",1],
+["tiger","とら","The tiger is dangerous.",1],
+["lion","ライオン","The lion is the king of animals.",1],
+["elephant","象","The elephant is very big.",1],
+["monkey","猿","Monkeys are smart.",1],
+["bear","くま","We saw a bear in the forest.",1],
+["meat","肉","I eat meat every day.",1],
+["vegetable","野菜","Eat more vegetables.",1],
+["fruit","果物","Fruit is good for your health.",1],
+["orange","オレンジ","I drink orange juice.",1],
+["banana","バナナ","Monkeys like bananas.",1],
+["cake","ケーキ","She made a birthday cake.",1],
+["tea","お茶","Would you like some tea?",1],
+["coffee","コーヒー","I drink coffee every morning.",1],
+["juice","ジュース","I like apple juice.",1],
+["soup","スープ","The soup is hot.",1],
+["salad","サラダ","I had a salad for lunch.",1],
+["pen","ペン","Can I use your pen?",1],
+["pencil","鉛筆","Write with a pencil.",1],
+["notebook","ノート","Open your notebook.",1],
+["desk","机","Put it on the desk.",1],
+["chair","いす","Sit on the chair.",1],
+["classroom","教室","Our classroom is on the second floor.",1],
+["library","図書館","I study at the library.",1],
+["bag","かばん","This bag is heavy.",1],
+["test","テスト","We have a math test tomorrow.",1],
+["homework","宿題","I finished my homework.",1],
+["car","車","My father drives a car.",1],
+["bus","バス","I take the bus to school.",1],
+["train","電車","The train is crowded.",1],
+["plane","飛行機","The plane flies high.",1],
+["ship","船","The ship crossed the ocean.",1],
+["bicycle","自転車","I ride a bicycle.",1],
+["station","駅","I'll meet you at the station.",1],
+["hospital","病院","She works at a hospital.",1],
+["shop","店","This shop sells books.",1],
+["store","店・商店","The store opens at nine.",1],
+["restaurant","レストラン","Let's eat at that restaurant.",1],
+["museum","博物館","We visited a museum.",1],
+["zoo","動物園","We went to the zoo.",1],
+["garden","庭","There are flowers in the garden.",1],
+["today","今日","Today is my birthday.",1],
+["tomorrow","明日","See you tomorrow.",1],
+["yesterday","昨日","It rained yesterday.",1],
+["now","今","I'm busy now.",1],
+["hour","時間","I studied for two hours.",1],
+["minute","分","Wait a minute, please.",1],
+["month","月","I'll visit you next month.",1],
+["sunny","晴れた","It is sunny today.",1],
+["cloudy","曇った","The sky is cloudy.",1],
+["rainy","雨の","It was a rainy day.",1],
+["windy","風の強い","It is windy outside.",1],
+["snowy","雪の","It was a snowy morning.",1],
+["glad","うれしい","I'm glad to see you.",1],
+["angry","怒った","My father was angry.",1],
+["afraid","怖がって","I'm afraid of snakes.",1],
+["surprised","驚いた","I was surprised at the news.",1],
+["box","箱","Put it in the box.",1],
+["ball","ボール","Throw me the ball.",1],
+["game","ゲーム・試合","Let's play a game.",1],
+["music","音楽","I love music.",1],
+["movie","映画","We watched a movie.",1],
+["picture","絵・写真","She drew a picture.",1],
+["letter","手紙・文字","I wrote a letter to her.",1],
+["question","質問","May I ask a question?",1],
+["answer","答え","Please answer my question.",1],
+["color","色","What is your favorite color?",1],
+["toy","おもちゃ","The child plays with toys.",1],
+["handbag","ハンドバッグ","She bought a new handbag.",1],
+["pocket","ポケット","Put it in your pocket.",1],
+["kitchen","台所","My mother is in the kitchen.",1],
+["bathroom","浴室","The bathroom is upstairs.",1],
+["bed","ベッド","I go to bed at ten.",1],
+["table","テーブル","Put the plate on the table.",1],
+["sofa","ソファ","The cat is on the sofa.",1],
+["wall","壁","Hang the picture on the wall.",1],
+["floor","床","The floor is clean.",1],
+["roof","屋根","The roof is red.",1],
+["key","鍵","I lost my key.",1],
+["map","地図","Look at the map.",1],
+["paper","紙","Write on this paper.",1],
+["box","箱","Open the box.",1],
+["sugar","砂糖","Add some sugar.",1],
+["salt","塩","Pass me the salt.",1],
+["butter","バター","I put butter on my bread.",1],
+["cheese","チーズ","This cheese is delicious.",1],
+["onion","玉ねぎ","Cut the onion.",1],
+["potato","じゃがいも","I like potato soup.",1],
+["tomato","トマト","The tomato is red.",1],
+/* --- Level 2: 頻出（既存180 + 追加150 = 約330） --- */
 ["agree","賛成する・同意する","I agree with your idea.",2],
 ["allow","許す・許可する","My parents allow me to use it.",2],
 ["almost","ほとんど","It is almost time to go.",2],
@@ -840,6 +942,259 @@ const W=[
 ["yet","まだ・もう","I haven't finished yet.",2],
 ["anyone","誰でも・誰か","Does anyone know the answer?",2],
 ["anything","何でも・何か","I don't have anything to eat.",2],
+/* Level 2 追加 */
+["accept","受け入れる","I accept your apology.",2],
+["across","〜を横切って","Walk across the street.",2],
+["add","加える","Add some sugar to the tea.",2],
+["admire","称賛する","I admire your courage.",2],
+["advise","助言する","I advise you to rest.",2],
+["afford","余裕がある","I can't afford a new car.",2],
+["alive","生きている","The old tree is still alive.",2],
+["alone","一人で","She lives alone.",2],
+["along","〜に沿って","Walk along the river.",2],
+["although","〜だけれども","Although it rained, we went out.",2],
+["among","〜の間に","He is popular among students.",2],
+["ancient","古代の","We visited ancient ruins.",2],
+["appear","現れる","A rainbow appeared in the sky.",2],
+["arrive","到着する","The train arrived at nine.",2],
+["attend","出席する","I attend the meeting every week.",2],
+["avoid","避ける","Try to avoid mistakes.",2],
+["besides","その上","Besides English, she speaks French.",2],
+["beyond","〜を超えて","The view is beautiful beyond words.",2],
+["brief","短い","Please give a brief answer.",2],
+["careful","注意深い","Be careful with the glass.",2],
+["careless","不注意な","He made a careless mistake.",2],
+["celebrate","祝う","We celebrated her birthday.",2],
+["certain","確かな・ある","I'm certain he will come.",2],
+["common","共通の・一般的な","This is a common problem.",2],
+["compare","比較する","Compare these two pictures.",2],
+["complain","不平を言う","Don't complain about the food.",2],
+["continue","続ける","Please continue your story.",2],
+["count","数える","Count from one to ten.",2],
+["course","コース・進路","I took an English course.",2],
+["cover","覆う・表紙","Snow covered the ground.",2],
+["cross","渡る","Cross the bridge carefully.",2],
+["crowded","混雑した","The train was very crowded.",2],
+["danger","危険","The sign warns of danger.",2],
+["dangerous","危険な","Swimming here is dangerous.",2],
+["deal","取り扱う・取引","We dealt with the problem.",2],
+["deep","深い","The lake is very deep.",2],
+["deliver","配達する","They deliver pizza.",2],
+["describe","描写する","Describe your hometown.",2],
+["develop","発展させる","The town developed rapidly.",2],
+["die","死ぬ","The old tree died last year.",2],
+["direct","直接の・指示する","I asked him directly.",2],
+["disagree","反対する","I disagree with you.",2],
+["distance","距離","The distance is about 5 kilometers.",2],
+["divide","分ける","Divide the class into two groups.",2],
+["double","2倍の","The price is double now.",2],
+["doubt","疑う","I doubt his story.",2],
+["earn","稼ぐ・得る","He earns a lot of money.",2],
+["education","教育","Education is important.",2],
+["else","ほかに","What else do you need?",2],
+["encourage","励ます","My teacher encouraged me.",2],
+["enter","入る","May I enter the room?",2],
+["especially","特に","I like fruits, especially apples.",2],
+["exact","正確な","Give me the exact number.",2],
+["examine","調べる","The doctor examined my eyes.",2],
+["example","例","Give me an example.",2],
+["except","〜を除いて","Everyone except Tom came.",2],
+["exercise","運動・練習","Exercise is good for health.",2],
+["expect","期待する","I expect good results.",2],
+["explain","説明する","Explain this in English.",2],
+["express","表現する","Express your feelings.",2],
+["fail","失敗する","Don't be afraid to fail.",2],
+["familiar","よく知っている","This song sounds familiar.",2],
+["famous","有名な","He is a famous singer.",2],
+["fear","恐れ・恐れる","She has a fear of heights.",2],
+["fit","合う・適した","These shoes fit perfectly.",2],
+["fix","修理する","Can you fix my bike?",2],
+["fly","飛ぶ","Birds fly in the sky.",2],
+["force","力・強制する","Don't force him to go.",2],
+["forgive","許す","Please forgive me.",2],
+["form","形・形成する","The team formed a circle.",2],
+["forward","前へ","Move forward slowly.",2],
+["fresh","新鮮な","These are fresh vegetables.",2],
+["friendly","友好的な","She is very friendly.",2],
+["gate","門","Wait at the front gate.",2],
+["gift","贈り物・才能","She has a gift for music.",2],
+["glance","ちらりと見る","He glanced at the clock.",2],
+["glove","手袋","Wear gloves in winter.",2],
+["grade","学年・成績","She got a good grade.",2],
+["gradually","徐々に","He is gradually getting better.",2],
+["guide","案内する・案内人","The guide led us to the temple.",2],
+["hang","掛ける・ぶら下がる","Hang the picture on the wall.",2],
+["harm","害","Smoking causes harm to health.",2],
+["heat","熱・熱する","Heat the water to 100 degrees.",2],
+["hide","隠す","She hid the gift in the closet.",2],
+["hit","打つ・当たる","The ball hit the window.",2],
+["hold","持つ・開催する","We will hold a meeting today.",2],
+["honest","正直な","Be honest with me.",2],
+["huge","巨大な","A huge ship entered the port.",2],
+["imagine","想像する","Imagine a peaceful world.",2],
+["immediately","すぐに","Come here immediately.",2],
+["include","含む","The price includes tax.",2],
+["increase","増える","The population is increasing.",2],
+["independent","独立した","She is an independent woman.",2],
+["influence","影響","Parents influence children.",2],
+["instead","代わりに","Let's walk instead of driving.",2],
+["invite","招待する","I invited him to dinner.",2],
+["involve","巻き込む","Don't involve others in this.",2],
+["judge","判断する・裁判官","Don't judge people by appearance.",2],
+["keep","保つ・持ち続ける","Keep your room clean.",2],
+["key","鍵・重要な","I lost my key.",2],
+["lead","導く","This road leads to the beach.",2],
+["level","レベル・水準","My English level is improving.",2],
+["local","地元の","We ate at a local restaurant.",2],
+["lonely","寂しい","I feel lonely sometimes.",2],
+["major","主要な","This is a major problem.",2],
+["manage","管理する・何とかする","She manages a small shop.",2],
+["manner","方法・礼儀","Mind your manners.",2],
+["mark","印・印をつける","Mark the correct answer.",2],
+["marry","結婚する","They married last spring.",2],
+["matter","問題・重要である","It doesn't matter to me.",2],
+["memory","記憶","I have a good memory of that day.",2],
+["mention","言及する","He mentioned your name.",2],
+["method","方法","This method is effective.",2],
+["mind","心・気にする","Do you mind if I open the window?",2],
+["modern","現代の","This is a modern building.",2],
+["moment","瞬間・時","Wait a moment, please.",2],
+["mood","気分","I'm in a good mood today.",2],
+["narrow","狭い","This street is narrow.",2],
+["national","国の・国立の","It is a national holiday.",2],
+["nearby","近くの","There is a park nearby.",2],
+["notice","気づく・通知","I noticed a small mistake.",2],
+["obey","従う","Obey the traffic rules.",2],
+["object","物体・反対する","I object to your plan.",2],
+["occur","起こる","The accident occurred at noon.",2],
+["offer","申し出る","He offered to help me.",2],
+["order","注文・順序・命じる","I ordered a cup of coffee.",2],
+["ordinary","普通の","It was an ordinary day.",2],
+["organize","組織する","We organized a party.",2],
+["own","自分自身の・所有する","This is my own idea.",2],
+["particular","特定の・特別な","Is there any particular reason?",2],
+["passenger","乗客","The passengers got on the train.",2],
+["peaceful","平和な","The village is peaceful.",2],
+["perfect","完璧な","Your answer is perfect.",2],
+["perform","演じる・行う","They performed on stage.",2],
+["permission","許可","I need your permission.",2],
+["personal","個人の","This is my personal opinion.",2],
+["persuade","説得する","I persuaded him to join us.",2],
+["physical","身体の・物理的な","Physical exercise is important.",2],
+["plenty","たくさんの","We have plenty of time.",2],
+["popular","人気のある","This song is popular now.",2],
+["position","位置・立場","Please take your position.",2],
+["possible","可能な","Is it possible to finish today?",2],
+["practical","実用的な","This is a practical idea.",2],
+["prepare","準備する","Prepare for the test.",2],
+["pretend","ふりをする","Don't pretend to be asleep.",2],
+["private","私的な","This is my private room.",2],
+["produce","生産する","This factory produces cars.",2],
+["progress","進歩・進む","You are making good progress.",2],
+["prove","証明する","Can you prove it?",2],
+["provide","提供する","They provide free lunch.",2],
+["public","公共の・公の","Don't smoke in public places.",2],
+["punish","罰する","The teacher punished him.",2],
+["purpose","目的","What is the purpose of your visit?",2],
+["push","押す","Push the door open.",2],
+["quality","品質","Quality is more important than price.",2],
+["quarter","4分の1","It's a quarter past three.",2],
+["raise","上げる・育てる","Raise your hand if you know.",2],
+["rather","むしろ・かなり","It's rather cold today.",2],
+["reach","到着する・届く","We reached the top at noon.",2],
+["realize","気づく","I realized my mistake.",2],
+["receive","受け取る","I received your letter.",2],
+["recent","最近の","This is a recent photo.",2],
+["recognize","認識する・見分ける","I didn't recognize you.",2],
+["recommend","推薦する","I recommend this book.",2],
+["refer","言及する・参照する","Please refer to page ten.",2],
+["refuse","断る","He refused my offer.",2],
+["regret","後悔する","I regret saying that.",2],
+["regular","規則的な・いつもの","Take regular exercise.",2],
+["remain","残る・〜のままである","Please remain seated.",2],
+["remind","思い出させる","Remind me to call him.",2],
+["remove","取り除く","Remove your shoes here.",2],
+["repair","修理する","I repaired my bike.",2],
+["replace","取り替える","Replace the batteries.",2],
+["reply","返事をする","Please reply to my email.",2],
+["report","報告する・報告","I will report the results.",2],
+["represent","代表する","He represents our school.",2],
+["require","要求する","This job requires skill.",2],
+["research","研究","She does medical research.",2],
+["respect","尊敬する","We should respect each other.",2],
+["respond","反応する・答える","He responded to my question.",2],
+["responsible","責任がある","You are responsible for this.",2],
+["review","復習する・見直す","Review your notes before the test.",2],
+["rise","上がる","The sun rises early in summer.",2],
+["risk","危険・危険を冒す","Don't take unnecessary risks.",2],
+["role","役割","Everyone has a role in the team.",2],
+["sale","販売・特売","The shop is having a sale.",2],
+["satisfy","満足させる","The result satisfied everyone.",2],
+["score","得点","Our team got a high score.",2],
+["search","捜す","The police searched the area.",2],
+["secret","秘密","Can you keep a secret?",2],
+["sense","感覚・意味","He has a good sense of humor.",2],
+["separate","分ける・別々の","Separate the trash by type.",2],
+["serious","真剣な・深刻な","It is a serious problem.",2],
+["serve","仕える・提供する","The waiter served our food.",2],
+["several","いくつかの","I visited several countries.",2],
+["share","共有する","We share a room.",2],
+["similar","似ている","These two are very similar.",2],
+["simple","簡単な・単純な","It's a simple question.",2],
+["situation","状況","The situation is difficult.",2],
+["skill","技術・技能","He has excellent skills.",2],
+["slightly","わずかに","It's slightly different.",2],
+["smooth","滑らかな","The road is smooth.",2],
+["social","社会の","Social media is popular.",2],
+["solve","解く・解決する","Solve this puzzle.",2],
+["sort","種類・分類する","What sort of music do you like?",2],
+["soul","魂・精神","Music touches my soul.",2],
+["specific","具体的な","Give me a specific example.",2],
+["speed","速度","Slow down your speed.",2],
+["spirit","精神・元気","She has a strong spirit.",2],
+["spread","広げる・広がる","The news spread quickly.",2],
+["standard","標準・基準","This is the standard size.",2],
+["state","状態・述べる","Please state your name.",2],
+["step","歩み・段階","Take one step forward.",2],
+["stick","棒・貼る","Stick the picture on the wall.",2],
+["stress","ストレス・強調する","Stress can affect your health.",2],
+["stretch","伸ばす","Stretch your arms.",2],
+["strict","厳しい","My father is strict.",2],
+["subject","科目・主題","My favorite subject is math.",2],
+["successful","成功した","She became a successful writer.",2],
+["suggest","提案する","I suggest we leave early.",2],
+["supply","供給する","They supply fresh water.",2],
+["suppose","〜だと思う","I suppose you are right.",2],
+["surface","表面","The surface of the lake is calm.",2],
+["survive","生き残る","Only one tree survived.",2],
+["sweet","甘い","This cake is too sweet.",2],
+["symbol","象徴・記号","The dove is a symbol of peace.",2],
+["system","制度・体系","The new system works well.",2],
+["talent","才能","She has a talent for music.",2],
+["task","仕事・課題","Finish this task by Friday.",2],
+["taste","味・味わう","This soup has a good taste.",2],
+["term","期間・用語","The summer term begins in April.",2],
+["though","〜だけれども","Though it was late, we kept working.",2],
+["throw","投げる","Throw the ball to me.",2],
+["tidy","きちんとした","Keep your room tidy.",2],
+["total","合計・全体の","The total is 500 yen.",2],
+["toward","〜の方へ","He walked toward the station.",2],
+["treat","扱う・おごる","Treat everyone equally.",2],
+["trend","傾向","There is a new trend in fashion.",2],
+["trick","策略・芸","He played a trick on me.",2],
+["typical","典型的な","This is a typical example.",2],
+["unhappy","不幸な","He looked unhappy.",2],
+["unique","独特の・唯一の","Each person is unique.",2],
+["useful","役に立つ","This dictionary is useful.",2],
+["usual","いつもの","Today is busier than usual.",2],
+["various","さまざまな","The store has various items.",2],
+["view","景色・見解","The view from the hill is wonderful.",2],
+["violence","暴力","We must stop violence.",2],
+["weight","重さ","What is the weight of this box?",2],
+["wonder","不思議に思う・驚き","I wonder why she left.",2],
+["wonderful","素晴らしい","We had a wonderful time.",2],
+["worth","価値がある","This book is worth reading.",2],
+/* --- Level 3: 応用（既存100 + 追加80 = 約180） --- */
 ["environment","環境","We must protect the environment.",3],
 ["pollution","汚染","Air pollution is a big problem.",3],
 ["recycle","リサイクルする","We recycle bottles and cans.",3],
@@ -909,9 +1264,165 @@ const W=[
 ["create","創造する","Let's create something new.",3],
 ["reduce","減らす","We should reduce plastic waste.",3],
 ["prevent","防ぐ","Washing hands prevents illness.",3],
-["solve","解決する","We solved the problem together.",3]
+["solve","解決する","We solved the problem together.",3],
+/* Level 3 追加 */
+["abstract","抽象的な","The concept is too abstract.",3],
+["academic","学術的な","She has an academic background.",3],
+["accident","事故","The accident caused a traffic jam.",3],
+["account","説明・口座","Please explain the account.",3],
+["acknowledge","認める","I acknowledge your concern.",3],
+["adequate","適切な","We have adequate supply.",3],
+["adjust","調整する","Adjust the volume.",3],
+["adopt","採用する・養子にする","They adopted a new policy.",3],
+["advance","進歩する","Technology advances rapidly.",3],
+["affect","影響する","Weather affects our mood.",3],
+["aim","目的・狙う","My aim is to become a doctor.",3],
+["amount","量・合計","A large amount of water.",3],
+["analyze","分析する","Let's analyze the data.",3],
+["anxiety","不安","He has anxiety about the test.",3],
+["apply","申し込む・適用する","Apply for a scholarship.",3],
+["appreciate","感謝する・評価する","I appreciate your help.",3],
+["approach","近づく・取り組み","Spring is approaching.",3],
+["appropriate","適切な","Wear appropriate clothes.",3],
+["argue","議論する","They argued about the plan.",3],
+["assume","仮定する","Let's assume it's true.",3],
+["attempt","試みる","She attempted to climb the mountain.",3],
+["attitude","態度","His attitude changed completely.",3],
+["attract","引きつける","The festival attracts many people.",3],
+["available","利用できる","Tickets are available online.",3],
+["aware","気づいている","I wasn't aware of the risk.",3],
+["balance","バランス・均衡","Balance work and rest.",3],
+["behavior","行動","His behavior surprised us.",3],
+["benefit","利益・得る","Exercise has many benefits.",3],
+["capable","能力がある","She is capable of doing it.",3],
+["capacity","容量・能力","The stadium has a large capacity.",3],
+["category","カテゴリー","Which category does it belong to?",3],
+["character","性格・特徴","He has a gentle character.",3],
+["circumstance","状況","Under these circumstances, I agree.",3],
+["claim","主張する","He claims to be innocent.",3],
+["comment","コメント","She made a kind comment.",3],
+["commit","犯す・専念する","He committed to the project.",3],
+["complex","複雑な","This is a complex problem.",3],
+["concern","心配・関心","I have concern about the future.",3],
+["conclude","結論づける","We concluded the meeting.",3],
+["confirm","確認する","Please confirm your reservation.",3],
+["conflict","衝突・対立","They had a conflict of opinion.",3],
+["consequence","結果","Consider the consequences.",3],
+["constant","絶え間ない","She lives in constant fear.",3],
+["contribute","貢献する","Everyone contributed to the project.",3],
+["convince","納得させる","I convinced him to join.",3],
+["crucial","極めて重要な","This is a crucial moment.",3],
+["current","現在の","What is the current situation?",3],
+["debate","討論","We had a debate in class.",3],
+["decline","減少する・断る","Sales declined last year.",3],
+["define","定義する","Please define the term.",3],
+["demand","要求する・需要","Demand for water increased.",3],
+["demonstrate","実演する・証明する","He demonstrated the method.",3],
+["deny","否定する","He denied the rumor.",3],
+["determine","決定する","We must determine the cause.",3],
+["device","装置","This device saves energy.",3],
+["distinguish","区別する","Can you distinguish the two?",3],
+["distribute","分配する","They distributed the flyers.",3],
+["domestic","国内の","This is domestic news.",3],
+["economy","経済","The economy is growing.",3],
+["element","要素","Water is a key element of life.",3],
+["eliminate","排除する","We should eliminate waste.",3],
+["emphasize","強調する","The teacher emphasized the point.",3],
+["emerge","現れる","A new problem emerged.",3],
+["enable","可能にする","This tool enables fast work.",3],
+["essential","不可欠な","Water is essential for life.",3],
+["establish","設立する","The school was established in 1900.",3],
+["estimate","見積もる","We estimate the cost.",3],
+["evidence","証拠","There is no evidence.",3],
+["exhibit","展示する","The museum exhibits old art.",3],
+["expand","拡大する","The business is expanding.",3],
+["explore","探検する","Let's explore the forest.",3],
+["extreme","極端な","Extreme weather is increasing.",3],
+["feature","特徴","Each region has its features.",3],
+["flexible","柔軟な","We need a flexible plan.",3],
+["focus","焦点・集中する","Focus on your goal.",3],
+["fundamental","基本的な","Reading is a fundamental skill.",3],
+["generate","生み出す","Solar panels generate energy.",3],
+["global","世界的な","Global warming is a serious issue.",3],
+["guarantee","保証する","We guarantee the quality.",3],
+["identify","特定する","Can you identify the problem?",3],
+["illustrate","説明する・例示する","The book illustrates this idea.",3],
+["impact","影響","The policy had a great impact.",3],
+["indicate","示す","The arrow indicates the exit.",3],
+["individual","個人・個人の","Each individual has rights.",3],
+["industry","産業","The auto industry is large.",3],
+["inevitable","避けられない","Change is inevitable.",3],
+["initial","初期の","The initial plan was changed.",3],
+["innovate","革新する","Companies must innovate.",3],
+["insist","主張する","He insisted on his idea.",3],
+["inspire","鼓舞する","Her speech inspired us.",3],
+["institute","研究所・協会","He works at a research institute.",3],
+["intend","意図する","I intend to study abroad.",3],
+["interpret","解釈する・通訳する","How do you interpret this?",3],
+["invest","投資する","They invested in the project.",3],
+["justify","正当化する","Can you justify your action?",3],
+["launch","開始する・打ち上げる","They launched a new product.",3],
+["maintain","維持する","Maintain a healthy diet.",3],
+["measure","測る・対策","Measure the length.",3],
+["minimum","最小限の","Keep costs at a minimum.",3],
+["modify","修正する","Modify the plan if needed.",3],
+["monitor","監視する","Monitor the situation closely.",3],
+["motive","動機","What was his motive?",3],
+["negotiate","交渉する","They negotiated a deal.",3],
+["obtain","得る","Obtain permission first.",3],
+["obvious","明らかな","The answer is obvious.",3],
+["occupy","占める","The room is occupied.",3],
+["operate","操作する・運営する","Please operate this machine.",3],
+["oppose","反対する","Many people opposed the plan.",3],
+["participate","参加する","Please participate in the event.",3],
+["perceive","知覚する・気づく","I perceived a change.",3],
+["permanent","永久の","Seek a permanent solution.",3],
+["perspective","視点","Try a different perspective.",3],
+["potential","可能性・潜在的な","He has great potential.",3],
+["precise","正確な","Give me the precise figure.",3],
+["predict","予測する","It's hard to predict the future.",3],
+["preserve","保存する","Preserve our culture.",3],
+["primary","主要な・初等の","This is our primary goal.",3],
+["principle","原理・原則","Follow the basic principles.",3],
+["priority","優先事項","Safety is our top priority.",3],
+["procedure","手続き","Follow the correct procedure.",3],
+["propose","提案する","I propose a new plan.",3],
+["pursue","追求する","She pursued her dream.",3],
+["react","反応する","How did he react?",3],
+["recall","思い出す","I can't recall his name.",3],
+["reflect","反映する・反射する","The result reflects our effort.",3],
+["regulate","規制する","The law regulates sales.",3],
+["reject","拒絶する","He rejected my proposal.",3],
+["relevant","関連がある","Keep your answer relevant.",3],
+["rely","頼る","Don't rely on luck.",3],
+["resist","抵抗する","I couldn't resist the temptation.",3],
+["resolve","解決する","We must resolve the issue.",3],
+["retain","保持する","Retain the original form.",3],
+["reveal","明らかにする","The truth was revealed.",3],
+["seek","探し求める","Seek professional advice.",3],
+["significant","重要な","This is a significant change.",3],
+["source","源・情報源","Find a reliable source.",3],
+["strategy","戦略","We need a clear strategy.",3],
+["structure","構造","The structure is strong.",3],
+["submit","提出する","Submit your report by Friday.",3],
+["sufficient","十分な","Is there sufficient evidence?",3],
+["sustain","維持する","We must sustain growth.",3],
+["target","標的・目標","Set a clear target.",3],
+["technique","技術","Learn basic techniques.",3],
+["tend","傾向がある","People tend to forget.",3],
+["theory","理論","The theory is still unproven.",3],
+["transform","変える","The city transformed completely.",3],
+["undertake","引き受ける","She undertook the project.",3],
+["unify","統一する","The team unified its goal.",3],
+["utilize","活用する","Utilize your time wisely.",3],
+["verify","検証する","Verify the facts.",3],
+["virtual","仮想の","Virtual meetings are common.",3],
+["visible","見える","The mountain is visible today.",3],
+["welfare","福祉","We care for public welfare.",3],
+["withdraw","引き出す・撤退する","He withdrew his offer.",3]
 ];
 const I=[
+/* --- Level 1: 基本（既存60 + 追加30 = 約90） --- */
 ["get up","起きる・起床する","I get up at six every morning.",1],
 ["wake up","目が覚める・起こす","Wake up! It's already seven.",1],
 ["go to bed","寝る・床に就く","I go to bed at eleven.",1],
@@ -952,6 +1463,48 @@ const I=[
 ["grow up","成長する・大人になる","I want to be a pilot when I grow up.",1],
 ["pick up","拾う・迎えに行く","He picked up the paper.",1],
 ["put on","（身につける物を）着る","Put on your coat.",1],
+/* Level 1 追加 */
+["have fun","楽しむ","Have fun at the party.",1],
+["have breakfast","朝食を食べる","I have breakfast at seven.",1],
+["have lunch","昼食を食べる","We had lunch at noon.",1],
+["have dinner","夕食を食べる","We have dinner together.",1],
+["watch TV","テレビを見る","I watch TV after dinner.",1],
+["do homework","宿題をする","I do homework every day.",1],
+["do the dishes","皿洗いをする","I help do the dishes.",1],
+["play soccer","サッカーをする","They play soccer on Sundays.",1],
+["play tennis","テニスをする","I play tennis every week.",1],
+["play the piano","ピアノを弾く","She plays the piano well.",1],
+["ride a bike","自転車に乗る","I ride a bike to school.",1],
+["take a shower","シャワーを浴びる","I take a shower every morning.",1],
+["take a bath","風呂に入る","I take a bath at night.",1],
+["brush one's teeth","歯を磨く","Brush your teeth before bed.",1],
+["go shopping","買い物に行く","Let's go shopping tomorrow.",1],
+["go fishing","釣りに行く","My father goes fishing on Sundays.",1],
+["go swimming","泳ぎに行く","We go swimming in summer.",1],
+["go to school","学校へ行く","I go to school by bike.",1],
+["go to work","仕事に行く","He goes to work at eight.",1],
+["come home","帰宅する","I came home at six.",1],
+["get home","家に着く","I got home late last night.",1],
+["get ready","準備する","Get ready for school.",1],
+["get dressed","服を着る","Get dressed quickly.",1],
+["wake up early","早起きする","I wake up early every day.",1],
+["go to sleep","寝る","I go to sleep at ten.",1],
+["say hello","挨拶する","Say hello to your teacher.",1],
+["say goodbye","別れを告げる","We said goodbye at the station.",1],
+["thank you for","〜をありがとう","Thank you for your help.",1],
+["excuse me","すみません","Excuse me, where is the station?",1],
+["I'm sorry","ごめんなさい","I'm sorry for being late.",1],
+["see you later","またね","See you later, Tom.",1],
+["have a nice day","良い一日を","Have a nice day!",1],
+["nice to meet you","はじめまして","Nice to meet you, Mr. Brown.",1],
+["how are you","お元気ですか","How are you today?",1],
+["how much","いくら","How much is this?",1],
+["how many","いくつ","How many books do you have?",1],
+["what time","何時","What time is it now?",1],
+["where is","どこに","Where is the post office?",1],
+["right now","今すぐ","Come here right now.",1],
+["these days","最近","I'm busy these days.",1],
+/* --- Level 2: 頻出（既存40 + 追加50 = 約90） --- */
 ["take off","脱ぐ・離陸する","The plane took off on time.",2],
 ["try on","試着する","Can I try on this jacket?",2],
 ["look after","〜の世話をする","She looks after her little brother.",2],
@@ -992,6 +1545,51 @@ const I=[
 ["in English","英語で","Please say it in English.",2],
 ["one of","〜の一つ","He is one of my best friends.",2],
 ["and so on","など","I like apples, oranges, and so on.",2],
+/* Level 2 追加 */
+["figure out","理解する・解明する","I figured out the answer.",2],
+["give back","返す","Give back my book.",2],
+["give away","あげる・譲る","She gave away her old clothes.",2],
+["put away","片付ける","Put away your toys.",2],
+["put off","延期する","Don't put off your homework.",2],
+["turn on","つける","Turn on the light, please.",2],
+["turn off","消す","Turn off the TV.",2],
+["turn down","断る・小さくする","He turned down the offer.",2],
+["turn up","大きくする・現れる","Turn up the volume.",2],
+["turn around","振り返る","Turn around and look at me.",2],
+["fill in","記入する","Fill in this form.",2],
+["fill out","記入する","Fill out the application.",2],
+["find out","見つける・気づく","I found out the truth.",2],
+["hand in","提出する","Hand in your report.",2],
+["hand out","配る","They handed out flyers.",2],
+["care about","気にかける","She cares about others.",2],
+["care for","世話をする","She cares for her mother.",2],
+["look around","見回す","Look around the room.",2],
+["look up","調べる","Look up this word.",2],
+["look down on","見下す","Don't look down on others.",2],
+["look up to","尊敬する","I look up to my father.",2],
+["look over","ざっと目を通す","Look over the document.",2],
+["look out","気をつける","Look out for cars.",2],
+["check in","チェックインする","We checked in at three.",2],
+["check out","チェックアウトする・確かめる","Check out this new song.",2],
+["call back","電話をかけ直す","I'll call you back later.",2],
+["call off","中止する","They called off the game.",2],
+["get up","起きる","I got up late today.",2],
+["get back","戻る","When did you get back?",2],
+["get together","集まる","Let's get together next week.",2],
+["get used to","慣れる","I got used to the new school.",2],
+["keep up with","ついていく","Keep up with the class.",2],
+["keep in mind","心に留める","Keep this in mind.",2],
+["keep away from","近づかない","Keep away from the fire.",2],
+["go ahead","どうぞ・進む","Go ahead and ask.",2],
+["go over","見直す","Go over your notes.",2],
+["go through","経験する","She went through hard times.",2],
+["grow into","成長して〜になる","The child grew into a fine man.",2],
+["break down","故障する","My car broke down.",2],
+["break up","別れる","They broke up last year.",2],
+["come up","話題になる・現れる","The topic came up in class.",2],
+["come across","偶然出会う","I came across an old friend.",2],
+["come along","一緒に来る","Come along with us.",2],
+/* --- Level 3: 応用（既存20 + 追加40 = 約60） --- */
 ["look forward to","〜を楽しみに待つ","I look forward to seeing you.",3],
 ["be used to","〜に慣れている","I am used to getting up early.",3],
 ["come up with","（考えなど）を思いつく","She came up with a good idea.",3],
@@ -1031,7 +1629,48 @@ const I=[
 ["by accident","偶然に","I met him by accident.",3],
 ["all of a sudden","突然","All of a sudden, it began to rain.",3],
 ["little by little","少しずつ","Little by little, it became easier.",3],
-["from now on","今後は","From now on, I will study harder.",3]
+["from now on","今後は","From now on, I will study harder.",3],
+/* Level 3 追加 */
+["go without saying","言うまでもない","It goes without saying that health is important.",3],
+["better late than never","遅れてもやらないよりまし","Let's start now - better late than never.",3],
+["once in a while","時々","I visit my grandparents once in a while.",3],
+["sooner or later","遅かれ早かれ","Sooner or later, you'll understand.",3],
+["now and then","時々","I think of her now and then.",3],
+["by all means","ぜひとも","By all means, join us.",3],
+["in other words","言い換えれば","In other words, it's impossible.",3],
+["in general","一般に","In general, Japanese people are polite.",3],
+["in particular","特に","I like music, in particular jazz.",3],
+["as a result","その結果","It rained. As a result, we stayed home.",3],
+["as well as","〜だけでなく","She speaks English as well as French.",3],
+["as for","〜については","As for me, I prefer tea.",3],
+["apart from","〜を除いて","Apart from that, everything is fine.",3],
+["except for","〜を除いて","Everyone came except for Tom.",3],
+["due to","〜のために","The game was canceled due to rain.",3],
+["owing to","〜のおかげで・〜のために","Owing to his help, we succeeded.",3],
+["on behalf of","〜を代表して","I speak on behalf of the team.",3],
+["in terms of","〜の観点で","In terms of price, it's reasonable.",3],
+["in charge of","〜を担当して","She is in charge of the project.",3],
+["in front of","〜の前に","Wait in front of the station.",3],
+["in case of","〜の場合に","In case of fire, use the stairs.",3],
+["as far as","〜する限り","As far as I know, he is fine.",3],
+["as well","〜もまた","She sings and dances as well.",3],
+["for a while","しばらくの間","Let's rest for a while.",3],
+["for the first time","初めて","I met him for the first time.",3],
+["from time to time","時々","We meet from time to time.",3],
+["no matter what","何があっても","No matter what happens, stay calm.",3],
+["no matter how","どんなに〜でも","No matter how hard it is, don't give up.",3],
+["make sure","確かめる","Make sure to lock the door.",3],
+["make up for","埋め合わせる","I'll make up for the loss.",3],
+["make up one's mind","決心する","She made up her mind to go.",3],
+["put up with","我慢する","I can't put up with this noise.",3],
+["take advantage of","利用する","Take advantage of this chance.",3],
+["take care","気をつけて","Take care on your way home.",3],
+["take over","引き継ぐ","He took over the business.",3],
+["take up","始める・占める","She took up the piano.",3],
+["think of","思いつく・考える","I thought of a good idea.",3],
+["think about","〜について考える","Think about your future.",3],
+["work out","うまくいく・運動する","Everything worked out well.",3],
+["carry out","実行する","We carried out the plan.",3]
 ];
 const DB={w:W.map(a=>({w:a[0],m:a[1],e:a[2],l:a[3],k:'w'})),i:I.map(a=>({w:a[0],m:a[1],e:a[2],l:a[3],k:'i'}))};
 const ALL=DB.w.concat(DB.i);
@@ -1093,7 +1732,7 @@ function paintAv(el,id,name){const h=hueOf(id);
   el.style.background=`linear-gradient(135deg,hsl(${h},52%,48%),hsl(${(h+45)%360},52%,36%))`;
   el.textContent=(name||'?').trim().charAt(0)||'?';}
 
-/* ================= タブバー（スプリングピル・4画面 + 設定シート） ================= */
+/* ================= タブバー ================= */
 const tabs=[...document.querySelectorAll('.tab')];
 const SCREENS=['home','study','battle','rank'];
 let SCR='home';
@@ -1167,7 +1806,7 @@ $('btnTheme').addEventListener('click',()=>{
   saveSettings();applyTheme();snd('tap');
   toast(ST.settings.theme==='auto'?'テーマ: 自動':ST.settings.theme==='light'?'テーマ: ライト':'テーマ: ダーク','🎨');});
 
-/* ================= 学習画面: 排他ステートマシン（バグ修正の核） ================= */
+/* ================= 学習画面 ================= */
 const STUDY={view:'setup'};
 let S=null,lastSoloCfg=null,lastRes=null;
 function setStudyView(v){
@@ -1177,12 +1816,15 @@ function setStudyView(v){
   $('studyResult').classList.toggle('hidden',v!=='result');
   if(v==='setup')renderSetup();}
 function enterStudy(){
-  /* 自己修復: 状態と実体が食い違っていたら必ず setup に戻す */
   if(STUDY.view==='session'&&!S)STUDY.view='setup';
   if(STUDY.view==='result'&&!lastRes)STUDY.view='setup';
   setStudyView(STUDY.view);}
+/* ★バグ修正: source='weak'/'fav' 時に選択中typeでフィルタ */
 function currentPool(){
-  let pool=ST.settings.source==='weak'?weakPool():ST.settings.source==='fav'?favPool():(ST.settings.type==='i'?DB.i:DB.w);
+  let pool;
+  if(ST.settings.source==='weak')pool=weakPool().filter(it=>it.k===ST.settings.type);
+  else if(ST.settings.source==='fav')pool=favPool().filter(it=>it.k===ST.settings.type);
+  else pool=ST.settings.type==='i'?DB.i:DB.w;
   pool=pool.filter(it=>ST.settings.levels.includes(it.l));
   return pool;}
 function renderSetup(){
@@ -1205,12 +1847,19 @@ document.querySelectorAll('#sgLevel .chip').forEach(b=>b.addEventListener('click
 $('btnStudyStart').addEventListener('click',()=>{
   startSolo({type:ST.settings.type,levels:ST.settings.levels.slice(),source:ST.settings.source,mode:ST.settings.mode});});
 
-/* ================= 出題生成（シード決定論 = 対戦の同一問題保証） ================= */
+/* ================= 出題生成 ================= */
 function buildQuestions(items,n,rng){
   const picked=shuffle(items,rng).slice(0,n);
   return picked.map(it=>{
     const pool=it.k==='i'?DB.i:DB.w;
-    const others=shuffle(pool.filter(o=>o.m!==it.m),rng).slice(0,3);
+    // 重複する意味を除外したディストラクター
+    const seen=new Set([it.m]);
+    const others=[];
+    for(const o of shuffle(pool,rng)){
+      if(others.length>=3)break;
+      if(seen.has(o.m))continue;
+      seen.add(o.m);others.push(o);
+    }
     const opts=shuffle([it,...others],rng).map(o=>o.m);
     return{it,opts,ci:opts.indexOf(it.m)};});}
 
@@ -1219,7 +1868,12 @@ function endSession(){if(S){clearInterval(S.tid);clearTimeout(S.adv);S=null;}}
 function startSolo(cfg){
   if(battleActive()){toast('対戦中です','⚔️');return;}
   endSession();lastSoloCfg=cfg;
-  const pool=cfg.pool||(cfg.source==='weak'?weakPool():cfg.source==='fav'?favPool():(cfg.type==='i'?DB.i:DB.w));
+  /* ★バグ修正: source='weak'/'fav' は選択中typeでフィルタ */
+  let pool;
+  if(cfg.pool)pool=cfg.pool;
+  else if(cfg.source==='weak')pool=weakPool().filter(it=>it.k===cfg.type);
+  else if(cfg.source==='fav')pool=favPool().filter(it=>it.k===cfg.type);
+  else pool=cfg.type==='i'?DB.i:DB.w;
   const filtered=cfg.pool?pool:pool.filter(it=>(cfg.levels||[1,2,3]).includes(it.l));
   if(!filtered.length){toast('この条件で出題できることばがありません','📭');setStudyView('setup');return;}
   const rng=mulberry32((Math.random()*4294967296)>>>0);
@@ -1255,7 +1909,7 @@ $('sessBack').addEventListener('click',()=>{
 function renderStep(){S.locked=false;S.flipped=false;syncProg();syncFav();
   S.mode==='cards'?renderCard():renderQuiz();}
 
-/* ---- 4択（ソロ/対戦共用・毎回まっさらなノードに生成してバインド） ---- */
+/* ---- 4択 ---- */
 function renderQuiz(){
   const q=S.qs[S.i],mount=$('sessMount');
   mount.innerHTML=
@@ -1318,19 +1972,28 @@ function renderCard(){
     <button class="btn j-ok" id="jOk">○ 分かった</button>
   </div>`;
   const fc=$('fc');
-  let sx=0,dx=0,dragging=false,moved=false;
-  fc.addEventListener('pointerdown',e=>{if(S.locked)return;dragging=true;moved=false;sx=e.clientX;dx=0;
+  let sx=0,sy=0,dx=0,dy=0,dragging=false,moved=false;
+  fc.addEventListener('pointerdown',e=>{if(S.locked)return;dragging=true;moved=false;sx=e.clientX;sy=e.clientY;dx=0;dy=0;
     try{fc.setPointerCapture(e.pointerId);}catch(err){}});
-  fc.addEventListener('pointermove',e=>{if(!dragging||reducedMotion)return;dx=e.clientX-sx;
-    if(Math.abs(dx)>8){moved=true;fc.classList.add('drag');
+  fc.addEventListener('pointermove',e=>{if(!dragging||reducedMotion)return;dx=e.clientX-sx;dy=e.clientY-sy;
+    if(Math.abs(dx)>8||Math.abs(dy)>8)moved=true;
+    if(Math.abs(dx)>8&&Math.abs(dx)>Math.abs(dy)*0.7){
+      fc.classList.add('drag');
       fc.style.transform=`translateX(${dx}px) rotate(${dx/18}deg)`+(S.flipped?' rotateY(180deg)':'');
       fc.querySelector('.fc-badge.l').style.opacity=dx<-30?clamp(-dx/90,0,1):0;
-      fc.querySelector('.fc-badge.r').style.opacity=dx>30?clamp(dx/90,0,1):0;}});
-  const release=()=>{if(!dragging)return;dragging=false;fc.classList.remove('drag');
-    if(Math.abs(dx)>70&&!reducedMotion)judge(dx>0);
-    else{fc.style.transform='';fc.querySelectorAll('.fc-badge').forEach(b=>b.style.opacity=0);
-      if(!moved)flipCard();}};
-  fc.addEventListener('pointerup',release);fc.addEventListener('pointercancel',release);
+      fc.querySelector('.fc-badge.r').style.opacity=dx>30?clamp(dx/90,0,1):0;
+    }});
+  const resetVisual=()=>{fc.classList.remove('drag');fc.style.transform='';
+    fc.querySelectorAll('.fc-badge').forEach(b=>b.style.opacity=0);};
+  /* ★バグ修正: pointerup と pointercancel を分離（縦スクロールで誤フリップしない） */
+  fc.addEventListener('pointerup',()=>{
+    if(!dragging)return;dragging=false;
+    if(Math.abs(dx)>70&&!reducedMotion){resetVisual();judge(dx>0);}
+    else{resetVisual();if(!moved)flipCard();}
+    dx=0;dy=0;moved=false;});
+  fc.addEventListener('pointercancel',()=>{
+    if(!dragging)return;dragging=false;resetVisual();
+    dx=0;dy=0;moved=false;});
   $('jNo').addEventListener('click',()=>judge(false));
   $('jOk').addEventListener('click',()=>judge(true));}
 function flipCard(){if(!S||S.locked||S.mode!=='cards')return;
@@ -1388,7 +2051,7 @@ function bindFavButtons(root){
     const it=ALL.find(x=>keyOf(x)===b.dataset.fav);if(!it)return;
     const f=toggleFav(it);b.classList.toggle('faved',!!f);b.querySelector('svg').classList.toggle('line',!f);snd('tap');}));}
 
-/* ================= 結果コード（検証・重複防止・XSS安全） ================= */
+/* ================= 結果コード ================= */
 function mkResult(){
   const p={v:1,c:S.code,i:ST.profile.id,n:ST.profile.name,s:S.score,k:S.correct,t:S.qs.length,ms:Date.now()-S.t0};
   const b=b64e(JSON.stringify(p));
@@ -1418,7 +2081,7 @@ function finishBattle(){
   const code=S.code,score=S.score,correct=S.correct,total=S.qs.length,secs=Math.round((Date.now()-S.t0)/1000);
   const rc=mkResult();
   let parsed=null;try{parsed=parseResult(rc);}catch(e){}
-  if(parsed)applyResult(parsed); /* 自己エンコードの往復検証を兼ねる */
+  if(parsed)applyResult(parsed);
   const ch=ST.chal[code]||(ST.chal[code]={plays:0,best:0,last:0});
   ch.plays++;ch.best=Math.max(ch.best,score);ch.last=Date.now();saveChal();
   pushHist('対戦',correct,total,fmtCode(code));
@@ -1491,7 +2154,8 @@ function renderRank(){
   $('pgWords').textContent=uniqueWords();
   $('pgAcc').textContent=accText();
   $('pgAnswers').textContent=ST.stats.tot.a;
-  const weak=weakPool();
+  /* ★バグ修正: ラベル「苦手な単語」に合わせて単語のみ表示・復習 */
+  const weak=weakPool().filter(it=>it.k==='w');
   $('btnWeakReview').disabled=!weak.length;
   $('weakList').innerHTML=weak.length
     ?weak.slice(0,8).map(it=>
@@ -1516,7 +2180,9 @@ function renderRank(){
         <span class="mono"><b>${h.score}/${h.total}</b> <span class="sub small">${d.getMonth()+1}/${d.getDate()} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}</span></span></div>`;}).join('')
     :'<p class="sub small">まだ履歴がありません。</p>';}
 $('btnWeakReview').addEventListener('click',()=>{
-  const pool=weakPool();if(!pool.length){toast('苦手なことばはまだないよ','🌱');return;}
+  /* ★バグ修正: 単語のみ対象 */
+  const pool=weakPool().filter(it=>it.k==='w');
+  if(!pool.length){toast('苦手なことばはまだないよ','🌱');return;}
   nav('study');startSolo({pool,mode:'quiz',type:'w',levels:[1,2,3],source:'all'});});
 $('btnAddResult').addEventListener('click',()=>{
   sheet('友達の結果を取り込む',
@@ -1548,131 +2214,141 @@ function openSettings(){
        <button data-v="light" class="${s.theme==='light'?'on':''}">☀️ ライト</button>
        <button data-v="dark" class="${s.theme==='dark'?'on':''}">🌙 ダーク</button></div>
      <div class="swrow" style="margin-top:12px">サウンド<label class="sw"><input type="checkbox" id="setSound" ${s.sound?'checked':''}><i></i></label></div>
-     <div class="swrow">バイブレーション（対応端末）<label class="sw"><input type="checkbox" id="setHaptic" ${s.haptic?'checked':''}><i></i></label></div>
+     <div class="swrow">振動<label class="sw"><input type="checkbox" id="setHaptic" ${s.haptic?'checked':''}><i></i></label></div>
      <div class="label">データ</div>
-     <div class="row"><button id="btnExport" class="btn btn-line" style="font-size:13.5px">📤 バックアップ</button>
-       <button id="btnImport" class="btn btn-line" style="font-size:13.5px">📥 復元</button></div>
-     <input type="file" id="fileImport" accept="application/json,.json" class="hidden">
-     <button id="btnWipe" class="btn btn-danger" style="margin-top:10px;font-size:13.5px">学習データをリセット（IDは保持）</button>
-     <p class="small" style="margin-top:12px">データはこの端末に保存されます。機種変更の前にバックアップを。${store.ok?'':'<br><b style="color:var(--ng)">⚠️ 現在保存が無効です（プライベートブラウズ等）</b>'}</p>
-     <div class="label">このアプリについて</div>
-     <p class="small">ことばの森 — English Word Garden v1.1 © 2026<br>
-       収録: 英単語 ${DB.w.length} ／ 英熟語 ${DB.i.length}（計 ${ALL.length}）・例文付き3段階。<br>
-       サーバー・外部API不使用の単独HTML。対戦はコードで同じ問題を再現する方式。<br>
-       ショートカット: Space めくる / J × / K ○ / 1〜4 回答</p>`,
+     <p class="sub small">学習履歴・お気に入り・ランキングはこの端末に保存されています。</p>
+     <button class="btn btn-danger" id="btnReset" style="margin-top:8px">すべてのデータを初期化</button>`,
     [{label:'閉じる',cls:'btn-line'}]);
-  $('btnNameSave').onclick=()=>{
-    const v=$('setName').value.trim().slice(0,12);
-    if(!v){toast('名前を入力してね','⚠️');return;}
-    ST.profile.name=v;store.set('kg1.profile',ST.profile);
-    if(ST.players[ST.profile.id]){ST.players[ST.profile.id].n=v;savePlayers();}
-    $('setName').blur();toast('ニックネームを保存しました','✅');snd('ok');};
-  $('btnIdCopy').onclick=()=>copyText(ST.profile.id,'IDをコピーしました');
-  document.querySelectorAll('#setTheme button').forEach(b=>b.onclick=()=>{
-    ST.settings.theme=b.dataset.v;saveSettings();applyTheme();
-    document.querySelectorAll('#setTheme button').forEach(x=>x.classList.toggle('on',x===b));snd('tap');});
-  $('setSound').onchange=e=>{ST.settings.sound=e.target.checked;saveSettings();if(e.target.checked)snd('ok');};
-  $('setHaptic').onchange=e=>{ST.settings.haptic=e.target.checked;saveSettings();vib(20);};
-  $('btnExport').onclick=()=>{
-    const data={v:1,exported:new Date().toISOString(),profile:ST.profile,settings:ST.settings,stats:ST.stats,players:ST.players,chal:ST.chal};
-    const blob=new Blob([JSON.stringify(data,null,1)],{type:'application/json'});
-    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
-    a.download='kotoba-no-mori-backup-'+todayKey()+'.json';
-    document.body.appendChild(a);a.click();a.remove();
-    setTimeout(()=>URL.revokeObjectURL(a.href),4000);
-    toast('バックアップを書き出しました','📤');};
-  $('btnImport').onclick=()=>$('fileImport').click();
-  $('fileImport').onchange=()=>{
-    const f=$('fileImport').files[0];$('fileImport').value='';if(!f)return;
-    const r=new FileReader();
-    r.onload=()=>{try{
-      const d=JSON.parse(r.result);
-      if(!d||!d.profile||!d.profile.id||!d.stats)throw new Error('bad');
-      confirmSheet('バックアップを復元','現在のデータを上書きします。よろしいですか？','復元する',()=>{
-        store.set('kg1.profile',d.profile);
-        store.set('kg1.settings',Object.assign({},defSettings,d.settings||{}));
-        store.set('kg1.stats',Object.assign(defStats(),d.stats));
-        store.set('kg1.players',d.players||{});store.set('kg1.chal',d.chal||{});
-        location.reload();},true);
-    }catch(e){toast('ファイル形式が正しくありません','⚠️');}};
-    r.onerror=()=>toast('ファイルを読み込めませんでした','⚠️');
-    r.readAsText(f);};
-  $('btnWipe').onclick=()=>confirmSheet('学習データをリセット',
-    '学習記録・お気に入り・ランキング・履歴を消去します。<b>IDと名前は保持されます。</b>この操作は取り消せません。','消去する',()=>{
-      ST.stats=defStats();ST.players={};ST.chal={};
-      ST.players[ST.profile.id]={n:ST.profile.name,best:0,plays:0,k:0,t:0,last:0,hashes:[]};
-      store.set('kg1.stats',ST.stats);store.set('kg1.players',ST.players);store.set('kg1.chal',ST.chal);
-      renderHome();if(SCR==='rank')renderRank();if(SCR==='study')setStudyView('setup');
-      toast('リセットしました（IDは保持）','🗑️');},true);}
-
-/* ================= キーボード（アクティブ状態にのみルーティング） ================= */
-document.addEventListener('keydown',e=>{
-  if(e.target&&(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'))return;
-  if(sheetOpen){if(e.key==='Escape')closeSheet();return;}
-  if(SCR!=='study'||STUDY.view!=='session'||!S)return;
-  if(S.mode==='cards'){
-    if(e.key===' '){flipCard();e.preventDefault();}
-    else if(e.key==='j'||e.key==='J')judge(false);
-    else if(e.key==='k'||e.key==='K')judge(true);}
-  else{const n=+e.key;if(n>=1&&n<=4){answer(n-1);e.preventDefault();}}});
+  setTimeout(()=>{
+    try{$('setName').focus({preventScroll:true});}catch(e){}
+    $('btnNameSave').onclick=()=>{
+      const v=$('setName').value.trim().slice(0,12);
+      if(!v){toast('名前を入力してね','✏️');return;}
+      p.name=v;store.set('kg1.profile',p);
+      const me=ST.players[p.id];if(me)me.n=v;savePlayers();
+      toast('ニックネームを保存しました','✅');snd('tap');
+      if(SCR==='rank')renderRank();
+    };
+    $('btnIdCopy').onclick=()=>copyText(fmtCode(p.id),'IDをコピーしました');
+    $('setTheme').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+      s.theme=b.dataset.v;saveSettings();applyTheme();
+      $('setTheme').querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+      snd('tap');}));
+    $('setSound').onchange=e=>{s.sound=e.target.checked;saveSettings();snd('tap');};
+    $('setHaptic').onchange=e=>{s.haptic=e.target.checked;saveSettings();vib(15);};
+    $('btnReset').onclick=()=>{
+      confirmSheet('データを初期化しますか？','学習履歴・お気に入り・ランキングがすべて削除されます。この操作は取り消せません。','初期化する',()=>{
+        try{['kg1.stats','kg1.players','kg1.chal','kg1.settings','em3.profile','em3.stats'].forEach(k=>localStorage.removeItem(k));}catch(e){}
+        location.reload();
+      },true);
+    };
+  },50);
+}
 
 /* ================= 紙吹雪 ================= */
-const cvs=$('confetti'),ctx=cvs.getContext('2d');let cfRaf=null;
-function sizeConfetti(){const dpr=Math.min(devicePixelRatio||1,2);
-  cvs.width=innerWidth*dpr;cvs.height=innerHeight*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);}
+const canvas=$('confetti');
+const ctx=canvas.getContext('2d');
+let confettiPieces=[],confettiRaf=null;
+function sizeConfetti(){
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  canvas.width=innerWidth*dpr;canvas.height=innerHeight*dpr;
+  canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';
+  ctx.setTransform(dpr,0,0,dpr,0,0);}
 function confetti(){
   if(reducedMotion)return;
-  sizeConfetti();cancelAnimationFrame(cfRaf);
-  const colors=['#4C9A6E','#C98F1F','#7FC79A','#E2B45C','#2E6B4F','#A5D8B4'];
-  const ps=Array.from({length:120},()=>({
-    x:innerWidth/2+(Math.random()-.5)*innerWidth*.5,y:innerHeight*.32,
-    vx:(Math.random()-.5)*11,vy:-Math.random()*11-4,
-    s:Math.random()*7+4,c:colors[Math.floor(Math.random()*colors.length)],
-    r:Math.random()*Math.PI,vr:(Math.random()-.5)*.3,life:1}));
-  const t0=performance.now();
-  (function tick(now){
-    const el=now-t0;ctx.clearRect(0,0,innerWidth,innerHeight);
-    ps.forEach(p=>{p.vy+=.26;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.life=1-el/2600;
-      if(p.life<=0)return;
-      ctx.save();ctx.globalAlpha=clamp(p.life,0,1);ctx.translate(p.x,p.y);ctx.rotate(p.r);
-      ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*.62);ctx.restore();});
-    if(el<2600)cfRaf=requestAnimationFrame(tick);
-    else ctx.clearRect(0,0,innerWidth,innerHeight);})(t0);}
+  sizeConfetti();confettiPieces=[];
+  const colors=['#2E6B4F','#4C9A6E','#C98F1F','#E2B45C','#7FC79A','#F3E3C0'];
+  for(let i=0;i<80;i++){
+    confettiPieces.push({
+      x:innerWidth/2+(Math.random()-0.5)*100,
+      y:innerHeight/3+(Math.random()-0.5)*50,
+      vx:(Math.random()-0.5)*12,
+      vy:-Math.random()*12-4,
+      size:Math.random()*8+4,
+      color:colors[Math.floor(Math.random()*colors.length)],
+      rot:Math.random()*Math.PI*2,
+      vrot:(Math.random()-0.5)*0.3,
+      life:1
+    });}
+  if(confettiRaf)cancelAnimationFrame(confettiRaf);
+  let last=performance.now();
+  const tick=now=>{
+    const dt=Math.min((now-last)/16,2);last=now;
+    ctx.clearRect(0,0,innerWidth,innerHeight);
+    let alive=false;
+    for(const p of confettiPieces){
+      p.vy+=0.35*dt;p.vx*=0.99;p.x+=p.vx*dt;p.y+=p.vy*dt;p.rot+=p.vrot*dt;p.life-=0.008*dt;
+      if(p.life>0&&p.y<innerHeight+50){
+        alive=true;
+        ctx.save();ctx.globalAlpha=Math.min(p.life*2,1);
+        ctx.translate(p.x,p.y);ctx.rotate(p.rot);
+        ctx.fillStyle=p.color;ctx.fillRect(-p.size/2,-p.size/2,p.size,p.size*0.6);
+        ctx.restore();
+      }}
+    if(alive)confettiRaf=requestAnimationFrame(tick);
+    else{ctx.clearRect(0,0,innerWidth,innerHeight);confettiRaf=null;}};
+  confettiRaf=requestAnimationFrame(tick);}
 
-/* ================= 共有URLパラメータ（1回だけ消費・リロード再発防止） ================= */
-function handleUrlParams(){
-  let q;try{q=new URLSearchParams(location.search);}catch(e){return;}
-  const c=(q.get('c')||'').replace(/\D/g,'').slice(0,6);
-  const r=q.get('r');
-  if(!c&&!r)return;
-  try{history.replaceState(null,'',location.pathname);}catch(e){}
-  if(c&&c.length===6){
-    btCode=c;renderBattle();nav('battle');
-    toast('対戦コードを受け取りました: '+fmtCode(c),'⚔️');}
-  if(r){
-    let parsed;try{parsed=parseResult(r);}catch(e){toast('結果コードを読み取れませんでした','⚠️');return;}
-    confirmSheet('友達の結果を追加',
-      `<b>${esc(parsed.n)}</b> さんの結果（${fmtCode(parsed.c)} ・ ${parsed.s}pt）をランキングに追加しますか？`,'追加する',()=>{
-        const st=applyResult(parsed);
-        toast(st==='dup'?'取り込み済みの結果です':`${parsed.n} さんの結果を追加しました`,st==='dup'?'ℹ️':'🏆');
-        nav('rank');});}}
+/* ================= キーボード操作 ================= */
+document.addEventListener('keydown',e=>{
+  if(!S||STUDY.view!=='session'||SCR!=='study')return;
+  const tag=e.target&&e.target.tagName;
+  if(tag==='INPUT'||tag==='TEXTAREA')return;
+  if(sheetOpen)return;
+  if(S.locked)return;
+  if(S.mode==='quiz'){
+    const n=parseInt(e.key,10);
+    if(n>=1&&n<=4){e.preventDefault();answer(n-1);}
+  }else if(S.mode==='cards'){
+    if(e.key===' '||e.key==='Spacebar'){e.preventDefault();flipCard();}
+    else if(e.key==='j'||e.key==='J'){e.preventDefault();judge(false);}
+    else if(e.key==='k'||e.key==='K'){e.preventDefault();judge(true);}
+  }
+});
 
-/* ================= 起動 ================= */
-function init(){
-  applyTheme();renderHome();renderBattle();
-  setStudyView('setup');
-  lensMetrics();requestAnimationFrame(()=>lensMetrics());
-  if(!store.ok)setTimeout(()=>toast('保存が無効です（プライベートブラウズ等）','⚠️'),800);
-  try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist().catch(()=>{});}catch(e){}
-  document.addEventListener('touchmove',e=>{
-    if(!e.target.closest('.screen')&&!e.target.closest('#sheetBody'))e.preventDefault();},{passive:false});
-  document.addEventListener('focusin',e=>{
-    if(e.target.tagName==='INPUT'&&e.target.type!=='checkbox'||e.target.tagName==='TEXTAREA')
-      setTimeout(()=>{try{e.target.scrollIntoView({block:'center',behavior:'smooth'});}catch(err){}},350);});
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)store.set('kg1.stats',ST.stats);});
-  window.addEventListener('pagehide',()=>store.set('kg1.stats',ST.stats));
-  handleUrlParams();}
-init();
+/* ================= URLパラメータ初期化 ================= */
+(function initFromUrl(){
+  try{
+    const params=new URLSearchParams(location.search);
+    const rParam=params.get('r');
+    const cParam=params.get('c');
+    if(cParam&&/^\d{6}$/.test(cParam)){
+      btCode=cParam;
+      $('btCodeWrap').classList.remove('hidden');
+      $('btCode').textContent=fmtCode(cParam);
+      $('btJoinInput').value=fmtCode(cParam);
+      $('btnBtJoin').disabled=false;
+      nav('battle');
+      toast('対戦コードを読み込みました','⚔️');
+    }
+    if(rParam){
+      try{
+        const parsed=parseResult(rParam);
+        setTimeout(()=>{
+          sheet('対戦結果が届きました',
+            `<p>${esc(parsed.n)} さんの結果です。</p>
+             <p style="margin-top:8px">スコア: <b>${parsed.s}pt</b> ・ 正解 ${parsed.k}/${parsed.t}</p>
+             <p class="sub small" style="margin-top:8px">この端末のランキングに追加しますか？</p>`,
+            [{label:'追加する',cls:'btn-primary',cb:()=>{
+                const st=applyResult(parsed);
+                if(st==='dup')toast('この結果は取り込み済みです','ℹ️');
+                else{toast(`${parsed.n} さんの結果を追加しました`,'🏆');snd('ok');}
+                nav('rank');
+              }},
+             {label:'キャンセル',cls:'btn-ghost'}]);
+        },400);
+      }catch(e){
+        setTimeout(()=>toast('結果コードを読み取れませんでした','⚠️'),400);
+      }
+    }
+  }catch(e){}
+})();
+
+/* ================= 初期化 ================= */
+applyTheme();
+lensMetrics();
+renderHome();
+
 })();
 </script>
 </body>
