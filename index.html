@@ -63,8 +63,6 @@ body::after{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;opac
 .btn-ghost{color:var(--sub);font-weight:600;font-size:14px;padding:12px}
 .btn-danger{background:var(--ngbg);color:var(--ng)}
 .btn-hero{padding:18px;font-size:16.5px;border-radius:18px}
-.btn-dontknow{background:var(--card2);border:1.5px dashed var(--line);color:var(--sub);font-size:14px;padding:12px}
-.btn-dontknow:active{background:var(--pill)}
 .iconbtn{width:40px;height:40px;display:grid;place-items:center;border-radius:13px;color:var(--sub);transition:transform .2s var(--spring),color .2s;flex:none}
 .iconbtn:active{transform:scale(.86)}
 .iconbtn.faved{color:var(--amber)}
@@ -99,7 +97,7 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
 .chip.on{color:var(--green);background:var(--pill);border-color:var(--green2)}
 .brandrow{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
 .brand{display:flex;align-items:center;gap:10px}
-.brand .mark{width:40px;height:40px;border-radius:14px;background:var(--pill);display:grid;place-items:center;font-size:20px;border:1px solid var(--line);cursor:pointer}
+.brand .mark{width:40px;height:40px;border-radius:14px;background:var(--pill);display:grid;place-items:center;font-size:20px;border:1px solid var(--line)}
 .brand b{font-family:var(--serif);font-size:17px;letter-spacing:.06em;display:block}
 .brand .en{font-size:9px;font-weight:800;letter-spacing:.26em;color:var(--green2)}
 .rec{padding:20px;margin-top:20px;position:relative;overflow:hidden}
@@ -146,7 +144,6 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
 .opt.ng .num{background:var(--ng);color:#fff}
 .opt.dim{opacity:.42}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}50%{transform:translateX(6px)}75%{transform:translateX(-3px)}}
-.dontknow{margin-top:12px}
 .kbd-hint{text-align:center;color:var(--sub);font-size:11.5px;margin-top:16px}
 @media (pointer:coarse){.kbd-hint{display:none}}
 .fc-wrap{perspective:1200px;margin-top:4px}
@@ -221,37 +218,58 @@ h2{font-family:var(--serif);font-size:20px;font-weight:700;letter-spacing:.03em}
 /* ====== LIQUID GLASS TAB BAR ====== */
 #tabbar{position:fixed;z-index:50;left:0;right:0;margin:0 auto;bottom:calc(10px + var(--sab));
   width:min(520px,calc(100% - 20px));height:70px;border-radius:35px;display:flex;
-  background:linear-gradient(180deg,rgba(255,252,244,.74) 0%,rgba(255,252,244,.52) 100%);
+  background:linear-gradient(180deg,
+    rgba(255,252,244,.74) 0%,
+    rgba(255,252,244,.52) 100%);
   -webkit-backdrop-filter:blur(30px) saturate(2.2) brightness(1.06);
   backdrop-filter:blur(30px) saturate(2.2) brightness(1.06);
   border:1px solid rgba(255,255,255,.45);
-  box-shadow:0 16px 48px rgba(50,45,20,.22),0 6px 16px rgba(50,45,20,.12),
-    inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(0,0,0,.06),
-    inset 1px 0 0 rgba(255,255,255,.2),inset -1px 0 0 rgba(255,255,255,.2);
-  transform:translate3d(0,0,0);isolation:isolate;overflow:hidden}
+  box-shadow:
+    0 16px 48px rgba(50,45,20,.22),
+    0 6px 16px rgba(50,45,20,.12),
+    inset 0 1px 0 rgba(255,255,255,.7),
+    inset 0 -1px 0 rgba(0,0,0,.06),
+    inset 1px 0 0 rgba(255,255,255,.2),
+    inset -1px 0 0 rgba(255,255,255,.2);
+  transform:translate3d(0,0,0);
+  isolation:isolate;overflow:hidden}
 html[data-theme=dark] #tabbar{
-  background:linear-gradient(180deg,rgba(24,33,27,.78) 0%,rgba(24,33,27,.55) 100%);
+  background:linear-gradient(180deg,
+    rgba(24,33,27,.78) 0%,
+    rgba(24,33,27,.55) 100%);
   border:1px solid rgba(255,255,255,.14);
-  box-shadow:0 16px 48px rgba(0,0,0,.55),0 6px 16px rgba(0,0,0,.35),
-    inset 0 1px 0 rgba(255,255,255,.2),inset 0 -1px 0 rgba(0,0,0,.35),
-    inset 1px 0 0 rgba(255,255,255,.06),inset -1px 0 0 rgba(255,255,255,.06)}
+  box-shadow:
+    0 16px 48px rgba(0,0,0,.55),
+    0 6px 16px rgba(0,0,0,.35),
+    inset 0 1px 0 rgba(255,255,255,.2),
+    inset 0 -1px 0 rgba(0,0,0,.35),
+    inset 1px 0 0 rgba(255,255,255,.06),
+    inset -1px 0 0 rgba(255,255,255,.06)}
 #tabbar::before{content:"";position:absolute;inset:0;border-radius:inherit;
-  background:radial-gradient(ellipse 130% 90% at 25% -20%,rgba(255,255,255,.55),transparent 45%),
-    radial-gradient(ellipse 90% 60% at 85% 120%,rgba(255,255,255,.18),transparent 55%);
+  background:
+    radial-gradient(ellipse 130% 90% at 25% -20%, rgba(255,255,255,.55), transparent 45%),
+    radial-gradient(ellipse 90% 60% at 85% 120%, rgba(255,255,255,.18), transparent 55%);
   pointer-events:none;z-index:0}
 html[data-theme=dark] #tabbar::before{
-  background:radial-gradient(ellipse 130% 90% at 25% -20%,rgba(255,255,255,.16),transparent 45%),
-    radial-gradient(ellipse 90% 60% at 85% 120%,rgba(255,255,255,.08),transparent 55%)}
+  background:
+    radial-gradient(ellipse 130% 90% at 25% -20%, rgba(255,255,255,.16), transparent 45%),
+    radial-gradient(ellipse 90% 60% at 85% 120%, rgba(255,255,255,.08), transparent 55%)}
 #tabbar::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:0;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='1'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)'/%3E%3C/svg%3E");
   opacity:.055;mix-blend-mode:overlay}
 #lens{position:absolute;top:5px;bottom:5px;left:0;width:80px;border-radius:30px;
   background:linear-gradient(180deg,rgba(231,239,226,.95),rgba(231,239,226,.72));
-  box-shadow:0 2px 10px rgba(50,60,35,.15),inset 0 1px 0 rgba(255,255,255,.7),inset 0 -1px 0 rgba(0,0,0,.05);
+  box-shadow:
+    0 2px 10px rgba(50,60,35,.15),
+    inset 0 1px 0 rgba(255,255,255,.7),
+    inset 0 -1px 0 rgba(0,0,0,.05);
   will-change:transform;pointer-events:none;z-index:0;transition:background-color .45s}
 html[data-theme=dark] #lens{
   background:linear-gradient(180deg,rgba(36,49,41,.95),rgba(36,49,41,.75));
-  box-shadow:0 2px 10px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.12),inset 0 -1px 0 rgba(0,0,0,.3)}
+  box-shadow:
+    0 2px 10px rgba(0,0,0,.4),
+    inset 0 1px 0 rgba(255,255,255,.12),
+    inset 0 -1px 0 rgba(0,0,0,.3)}
 .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--sub);
   position:relative;z-index:1;transition:color .25s}
 .tab .icw{position:relative;width:25px;height:25px}
@@ -321,11 +339,12 @@ html[data-theme=dark] #lens{
 <div id="app">
 <main id="screens">
 
+  <!-- ===== ホーム ===== -->
   <section class="screen on" id="scr-home">
     <div class="wrap">
       <div class="brandrow">
         <div class="brand">
-          <span class="mark" id="brandMark">🌿</span>
+          <span class="mark" id="brandMark" style="cursor:pointer">🌿</span>
           <span><b>ことばの森</b><span class="en">ENGLISH WORD GARDEN</span></span>
         </div>
         <button class="iconbtn" id="btnTheme" aria-label="テーマ切替">🌗</button>
@@ -333,6 +352,7 @@ html[data-theme=dark] #lens{
       <p class="eyebrow" id="hsGreeting">Today's Little Step</p>
       <h1 id="hsGreetingLine">英語が、今日ちょっと<br>得意になる。</h1>
       <p class="sub" style="margin-top:10px" id="hsGreetingSub">一日少しずつ。積み重ねた言葉は、ちゃんと自分の力になる。</p>
+
       <div class="rec card">
         <p class="eyebrow">今日のおすすめ</p>
         <h2>15語だけ、サクッと覚えよう。</h2>
@@ -342,11 +362,13 @@ html[data-theme=dark] #lens{
         </div>
         <button class="btn btn-primary btn-hero" id="btnRecStart"><svg class="ic s"><use href="#i-play"/></svg> 学習をスタート</button>
       </div>
+
       <div class="statrow">
         <div class="mini card"><div class="mv" id="hsWords">0</div><div class="ml">学習した単語</div></div>
         <div class="mini card"><div class="mv" id="hsAcc">0%</div><div class="ml">正答率</div></div>
         <div class="mini card"><div class="mv" id="hsStreak">0</div><div class="ml">🔥 連続記録</div></div>
       </div>
+
       <div class="sect">
         <p class="eyebrow">Quick Start</p>
         <h2 style="margin-top:6px">気分で選ぶ</h2>
@@ -361,6 +383,7 @@ html[data-theme=dark] #lens{
     </div>
   </section>
 
+  <!-- ===== 学習 ===== -->
   <section class="screen" id="scr-study">
     <div class="wrap">
       <div id="studySetup">
@@ -383,6 +406,7 @@ html[data-theme=dark] #lens{
         <button class="btn btn-primary btn-hero" id="btnStudyStart" style="margin-top:10px"><svg class="ic s"><use href="#i-play"/></svg> この設定でスタート</button>
         <p class="sub small center" style="margin-top:10px">1セッション15問。少しずつ、毎日のいち歩に。</p>
       </div>
+
       <div id="studySession" class="hidden">
         <div class="sessbar">
           <button class="backbtn" id="sessBack"><svg class="ic s line"><use href="#i-back"/></svg>終了</button>
@@ -394,6 +418,7 @@ html[data-theme=dark] #lens{
         <div id="sessMount"></div>
         <p class="kbd-hint" id="sessKbd"></p>
       </div>
+
       <div id="studyResult" class="hidden">
         <div id="resSolo">
           <div class="rescard card">
@@ -433,11 +458,13 @@ html[data-theme=dark] #lens{
     </div>
   </section>
 
+  <!-- ===== 対戦 ===== -->
   <section class="screen" id="scr-battle">
     <div class="wrap">
       <p class="eyebrow">Friend Challenge</p>
       <h1>友達と勝負！</h1>
       <p class="sub" style="margin-top:6px">同じ6桁コードなら、同じ問題セットで挑戦できる。</p>
+
       <div class="btcard card">
         <p class="eyebrow">Create a Match</p>
         <h2 style="margin-top:6px">対戦コードを作る</h2>
@@ -452,6 +479,7 @@ html[data-theme=dark] #lens{
           <button class="btn btn-soft" id="btnBtStart" style="margin-top:10px">このコードで挑戦する</button>
         </div>
       </div>
+
       <div class="btcard card">
         <p class="eyebrow">Join a Match</p>
         <h2 style="margin-top:6px">コードで参加する</h2>
@@ -459,6 +487,7 @@ html[data-theme=dark] #lens{
         <input id="btJoinInput" class="code-input mono" inputmode="numeric" autocomplete="off" placeholder="000-000" maxlength="7" style="margin-top:12px" aria-label="対戦コード">
         <button class="btn btn-primary" id="btnBtJoin" style="margin-top:12px" disabled>このコードで挑戦</button>
       </div>
+
       <div class="note">
         <b>対戦と自動同期</b><br>
         結果コードを共有すると、あなたの戦績ボードURLも自動で添付されます。相手が開くと<b>1タップで相互接続</b>され、以後はアプリを開くたびに自動でランキングが同期されます。
@@ -466,12 +495,14 @@ html[data-theme=dark] #lens{
     </div>
   </section>
 
+  <!-- ===== ランキング & 記録 ===== -->
   <section class="screen" id="scr-rank">
     <div class="wrap">
       <p class="eyebrow">Community Leaderboard</p>
       <h1>ランキング</h1>
       <p class="sub" style="margin-top:6px">接続した仲間と自動でスコアを統合中。</p>
       <div class="center"><span class="syncchip" id="syncState">☁️ 準備中</span></div>
+
       <div class="statrow">
         <div class="mini card"><div class="mv" id="gbPlayers">0</div><div class="ml">参加プレイヤー</div></div>
         <div class="mini card"><div class="mv" id="gbTop">0</div><div class="ml">最高スコア</div></div>
@@ -483,6 +514,7 @@ html[data-theme=dark] #lens{
         <button class="btn btn-line" id="btnBoardImport" style="padding:12px;font-size:13px">📥 リンクで接続</button>
       </div>
       <button class="btn btn-ghost" id="btnSyncNow" style="padding:8px;font-size:12px;margin-top:6px">☁️ 今すぐ同期</button>
+
       <div class="ranklist" id="rankList"></div>
       <div class="empty hidden" id="rankEmpty">
         <div class="e">🏆</div>
@@ -494,6 +526,7 @@ html[data-theme=dark] #lens{
         <div id="chalList"></div>
       </div>
       <p class="sub small" style="margin-top:14px">接続した友達とは、アプリを開くたびに自動でランキングが統合されます（1人1ID、高いスコアが優先）。</p>
+
       <div class="sect" id="progressSec">
         <p class="eyebrow">Your Progress</p>
         <h1 style="font-size:24px">学習の記録</h1>
@@ -542,7 +575,6 @@ html[data-theme=dark] #lens{
 <script>
 'use strict';
 (function(){
-/* ================= ユーティリティ ================= */
 const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
@@ -557,7 +589,7 @@ const b64d=s=>{s=s.replace(/-/g,'+').replace(/_/g,'/');while(s.length%4)s+='=';r
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const vib=p=>{try{if(ST.settings.haptic&&navigator.vibrate)navigator.vibrate(p);}catch(e){}};
 
-/* ================= ストレージ ================= */
+/* ===== ストレージ ===== */
 const store=(()=>{let ok=true;try{localStorage.setItem('kg1.t','1');localStorage.removeItem('kg1.t');}catch(e){ok=false;}
   const mem={};
   return{ok,
@@ -595,16 +627,27 @@ const savePlayers=()=>store.set('kg1.players',ST.players);
 const saveChal=()=>store.set('kg1.chal',ST.chal);
 const saveUnlocks=()=>store.set('kg1.unlocks',ST.unlocks);
 
-/* ================= データベース（省略：前回と同一。完全版では660語+240熟語が入ります） ================= */
-/* ここに W[] と I[] をそのまま貼り付けてください（省略） */
-const W=[]; // ← 前回のコードから W 配列をコピー
-const I=[]; // ← 前回のコードから I 配列をコピー
+/* ===== データベース（前回と同一：660語+240熟語） ===== */
+const W=[
+["apple","りんご","I ate an apple after school.",1],["book","本","This book is very interesting.",1],["water","水","Drink more water every day.",1],["friend","友達","She is my best friend.",1],["school","学校","I go to school by bike.",1],["teacher","先生","Our teacher is very kind.",1],["student","生徒","He is a junior high school student.",1],["family","家族","I love my family.",1],["father","父","My father works at a hospital.",1],["mother","母","My mother cooks dinner every day.",1],["brother","兄・弟","I have two brothers.",1],["sister","姉・妹","My sister likes music.",1],["dog","犬","The dog is running in the park.",1],["cat","猫","A cat is sleeping on the sofa.",1],["bird","鳥","Birds are singing in the tree.",1],["fish","魚","I can see fish in the river.",1],["tree","木","There is a big tree in my garden.",1],["flower","花","These flowers are beautiful.",1],["sun","太陽","The sun rises in the east.",1],["moon","月","The moon is bright tonight.",1],["star","星","I can see many stars in the sky.",1],["sky","空","The sky is blue and clear.",1],["rain","雨","The rain stopped in the afternoon.",1],["snow","雪","Snow fell all night.",1],["wind","風","The wind is strong today.",1],["cloud","雲","White clouds are floating in the sky.",1],["sea","海","We swam in the sea last summer.",1],["river","川","This river is very long.",1],["mountain","山","We climbed the mountain yesterday.",1],["park","公園","Let's meet at the park.",1],["town","町","He lives in a small town.",1],["city","都市・市","Tokyo is a very big city.",1],["country","国・いなか","Japan is a beautiful country.",1],["world","世界","She wants to travel around the world.",1],["house","家","Their house is near the station.",1],["room","部屋","My room is small but comfortable.",1],["door","ドア","Please close the door.",1],["window","窓","Open the window, please.",1],["food","食べ物・料理","Japanese food is popular abroad.",1],["bread","パン","I have bread for breakfast.",1],["rice","米・ごはん","We eat rice almost every day.",1],["egg","卵","I had an egg for breakfast.",1],["milk","牛乳","She drinks milk every morning.",1],["breakfast","朝食","I eat breakfast at seven.",1],["lunch","昼食","We had lunch together.",1],["dinner","夕食","Dinner is ready now.",1],["morning","朝・午前","I study English every morning.",1],["night","夜","The stars are beautiful at night.",1],["week","週","I have a test next week.",1],["year","年・1年間","This year went by very fast.",1],["run","走る","He runs every morning.",1],["walk","歩く","Let's walk to the station.",1],["swim","泳ぐ","I can swim very fast.",1],["jump","跳ぶ","The cat jumped onto the wall.",1],["read","読む","I read books before bed.",1],["write","書く","Please write your name here.",1],["speak","話す","She speaks English very well.",1],["listen","聞く","Listen to me carefully.",1],["hear","聞こえる","I heard a strange sound.",1],["see","見る・会う","I saw him at the library.",1],["look","見る・〜に見える","You look happy today.",1],["watch","（じっと）見る","We watched a soccer game on TV.",1],["eat","食べる","Let's eat lunch together.",1],["drink","飲む","He drank a glass of water.",1],["sleep","眠る","I sleep eight hours every night.",1],["make","作る","She made a cake for me.",1],["take","取る・持っていく","Take this bag with you.",1],["give","あげる・渡す","Please give me that pen.",1],["use","使う","Can I use your computer?",1],["help","助ける・手伝う","I helped my mother cook dinner.",1],["play","遊ぶ・（競技を）する","They play tennis after school.",1],["study","勉強する","I study math every day.",1],["learn","学ぶ・覚える","We learn English at school.",1],["teach","教える","He teaches us science.",1],["work","働く・作業する","My parents work in Tokyo.",1],["live","住む・生きる","I live in Osaka with my family.",1],["love","愛する・大好き","I love this song.",1],["like","好き","I like summer best.",1],["want","欲しい・〜したい","I want a new bicycle.",1],["need","必要とする","We need more time.",1],["know","知っている","I know his name.",1],["think","考える・思う","I think this answer is right.",1],["say","言う","What did you say?",1],["tell","伝える・話す","Tell me about your trip.",1],["talk","話す","We talked about our dreams.",1],["call","呼ぶ・電話する","Call me tonight, please.",1],["ask","尋ねる・頼む","She asked me a question.",1],["open","開ける","Open your books to page ten.",1],["close","閉じる","The store closes at nine.",1],["start","始まる・始める","The game starts at three.",1],["stop","止まる・やめる","The bus stopped suddenly.",1],["wait","待つ","Wait for me here.",1],["meet","会う","Let's meet at the station.",1],["buy","買う","I bought a new dictionary.",1],["bring","持ってくる","Bring your notebook tomorrow.",1],["put","置く","Put your bag on the desk.",1],["send","送る","I sent him a message.",1],["show","見せる","Show me your pictures, please.",1],["find","見つける","I found my lost key.",1],["come","来る","Come to my house after school.",1],["go","行く","I go to bed at eleven.",1],["leave","去る・出発する","We leave Tokyo tomorrow.",1],["return","戻る・返す","He returned home late at night.",1],["move","動く・引っ越す","We moved to this town last year.",1],["turn","曲がる・回る","Turn right at the next corner.",1],["wash","洗う","Wash your hands before dinner.",1],["cook","料理する","My father cooks on Sundays.",1],["draw","描く","She draws pictures very well.",1],["sing","歌う","Let's sing this song together.",1],["smile","ほほえむ","The baby smiled at me.",1],["big","大きい","They live in a big house.",1],["small","小さい","This bag is too small.",1],["long","長い","The bridge is very long.",1],["short","短い・背が低い","Winter days are short.",1],["high","高い","That mountain is very high.",1],["new","新しい","I got a new smartphone.",1],["old","古い・年をとった","This temple is very old.",1],["young","若い","My uncle is still young.",1],["good","よい","That is a good idea.",1],["bad","悪い","The weather was bad yesterday.",1],["happy","幸せな・うれしい","I felt happy that day.",1],["sad","悲しい","The story made me sad.",1],["kind","親切な","She is kind to everyone.",1],["easy","簡単な","This question is easy.",1],["difficult","難しい","Math is difficult for me.",1],["fast","速い","He is a fast runner.",1],["slow","遅い","This computer is very slow.",1],["hot","暑い・熱い","It was hot yesterday.",1],["cold","寒い・冷たい","It is cold this morning.",1],["warm","暖かい","It is warm in spring.",1],["busy","忙しい","My father is busy every day.",1],["free","暇な・自由な・無料の","Are you free this afternoon?",1],["tired","疲れた","I was tired after the game.",1],["hungry","お腹がすいた","I am hungry now.",1],["strong","強い","He is strong and healthy.",1],["right","正しい・右","Your answer is right.",1],["wrong","間違った","I got the wrong answer.",1],["same","同じ","We are in the same class.",1],["different","異なる","Our ideas are different.",1],["beautiful","美しい","The sunset was beautiful.",1],
+/* Level1追加 */
+["red","赤い","She wore a red dress.",1],["blue","青い","The sky is blue.",1],["green","緑の","The leaves are green.",1],["yellow","黄色い","I like yellow flowers.",1],["black","黒い","He has a black bag.",1],["white","白い","Snow is white.",1],["pink","ピンクの","She likes pink.",1],["brown","茶色の","The bear is brown.",1],["head","頭","My head hurts.",1],["hand","手","Raise your hand.",1],["eye","目","She has beautiful eyes.",1],["ear","耳","Rabbits have long ears.",1],["nose","鼻","The dog has a good nose.",1],["mouth","口","Open your mouth wide.",1],["foot","足","My foot hurts.",1],["arm","腕","He broke his arm.",1],["leg","脚","The table has four legs.",1],["face","顔","Wash your face.",1],["hair","髪","Her hair is long.",1],["horse","馬","The horse runs fast.",1],["cow","牛","The cow gives us milk.",1],["sheep","羊","The sheep is white.",1],["rabbit","うさぎ","The rabbit is cute.",1],["mouse","ねずみ","A mouse ran across the floor.",1],["tiger","とら","The tiger is dangerous.",1],["lion","ライオン","The lion is the king of animals.",1],["elephant","象","The elephant is very big.",1],["monkey","猿","Monkeys are smart.",1],["bear","くま","We saw a bear in the forest.",1],["meat","肉","I eat meat every day.",1],["vegetable","野菜","Eat more vegetables.",1],["fruit","果物","Fruit is good for your health.",1],["orange","オレンジ","I drink orange juice.",1],["banana","バナナ","Monkeys like bananas.",1],["cake","ケーキ","She made a birthday cake.",1],["tea","お茶","Would you like some tea?",1],["coffee","コーヒー","I drink coffee every morning.",1],["juice","ジュース","I like apple juice.",1],["soup","スープ","The soup is hot.",1],["salad","サラダ","I had a salad for lunch.",1],["pen","ペン","Can I use your pen?",1],["pencil","鉛筆","Write with a pencil.",1],["notebook","ノート","Open your notebook.",1],["desk","机","Put it on the desk.",1],["chair","いす","Sit on the chair.",1],["classroom","教室","Our classroom is on the second floor.",1],["library","図書館","I study at the library.",1],["bag","かばん","This bag is heavy.",1],["test","テスト","We have a math test tomorrow.",1],["homework","宿題","I finished my homework.",1],["car","車","My father drives a car.",1],["bus","バス","I take the bus to school.",1],["train","電車","The train is crowded.",1],["plane","飛行機","The plane flies high.",1],["ship","船","The ship crossed the ocean.",1],["bicycle","自転車","I ride a bicycle.",1],["station","駅","I'll meet you at the station.",1],["hospital","病院","She works at a hospital.",1],["shop","店","This shop sells books.",1],["store","店・商店","The store opens at nine.",1],["restaurant","レストラン","Let's eat at that restaurant.",1],["museum","博物館","We visited a museum.",1],["zoo","動物園","We went to the zoo.",1],["garden","庭","There are flowers in the garden.",1],["today","今日","Today is my birthday.",1],["tomorrow","明日","See you tomorrow.",1],["yesterday","昨日","It rained yesterday.",1],["now","今","I'm busy now.",1],["hour","時間","I studied for two hours.",1],["minute","分","Wait a minute, please.",1],["month","月","I'll visit you next month.",1],["sunny","晴れた","It is sunny today.",1],["cloudy","曇った","The sky is cloudy.",1],["rainy","雨の","It was a rainy day.",1],["windy","風の強い","It is windy outside.",1],["snowy","雪の","It was a snowy morning.",1],["glad","うれしい","I'm glad to see you.",1],["angry","怒った","My father was angry.",1],["afraid","怖がって","I'm afraid of snakes.",1],["surprised","驚いた","I was surprised at the news.",1],["box","箱","Put it in the box.",1],["ball","ボール","Throw me the ball.",1],["game","ゲーム・試合","Let's play a game.",1],["music","音楽","I love music.",1],["movie","映画","We watched a movie.",1],["picture","絵・写真","She drew a picture.",1],["letter","手紙・文字","I wrote a letter to her.",1],["question","質問","May I ask a question?",1],["answer","答え","Please answer my question.",1],["color","色","What is your favorite color?",1],["toy","おもちゃ","The child plays with toys.",1],["handbag","ハンドバッグ","She bought a new handbag.",1],["pocket","ポケット","Put it in your pocket.",1],["kitchen","台所","My mother is in the kitchen.",1],["bathroom","浴室","The bathroom is upstairs.",1],["bed","ベッド","I go to bed at ten.",1],["table","テーブル","Put the plate on the table.",1],["sofa","ソファ","The cat is on the sofa.",1],["wall","壁","Hang the picture on the wall.",1],["floor","床","The floor is clean.",1],["roof","屋根","The roof is red.",1],["key","鍵","I lost my key.",1],["map","地図","Look at the map.",1],["paper","紙","Write on this paper.",1],["sugar","砂糖","Add some sugar.",1],["salt","塩","Pass me the salt.",1],["butter","バター","I put butter on my bread.",1],["cheese","チーズ","This cheese is delicious.",1],["onion","玉ねぎ","Cut the onion.",1],["potato","じゃがいも","I like potato soup.",1],["tomato","トマト","The tomato is red.",1],
+/* Level2 */
+["agree","賛成する・同意する","I agree with your idea.",2],["allow","許す・許可する","My parents allow me to use it.",2],["almost","ほとんど","It is almost time to go.",2],["already","すでに","I have already finished my homework.",2],["also","〜もまた","She also plays the piano.",2],["always","いつも","He always gets up early.",2],["another","もう一つの・別の","Can I have another cup of tea?",2],["around","周りに・およそ","We walked around the lake.",2],["away","離れて","The station is far away from here.",2],["become","〜になる","She wants to become a doctor.",2],["before","〜の前に","Wash your hands before meals.",2],["begin","始まる・始める","The class begins at nine.",2],["behind","〜の後ろに","The garden is behind the house.",2],["believe","信じる","I believe you can do it.",2],["between","〜の間に","The shop is between the bank and the park.",2],["borrow","借りる","Can I borrow your pen?",2],["both","両方","Both of my parents work.",2],["break","壊す・休憩","Be careful not to break it.",2],["build","建てる","They built a new library.",2],["catch","捕まえる・（電車に）間に合う","We caught the last train.",2],["change","変える・変わる","I want to change my seat.",2],["choose","選ぶ","Choose your favorite color.",2],["collect","集める","He collects old coins.",2],["decide","決める","We decided to study together.",2],["drop","落とす","I dropped my phone yesterday.",2],["during","〜の間","I slept during the movie.",2],["each","それぞれの","Each student has a locker.",2],["enough","十分な","We have enough time.",2],["even","〜でさえ","Even a child can do it.",2],["ever","今までに","Have you ever been to Kyoto?",2],["every","毎〜・すべての","I practice every day.",2],["everyone","みんな","Everyone enjoyed the party.",2],["everything","すべて","Everything was ready.",2],["excited","わくわくした","We were excited about the trip.",2],["expensive","高価な","This watch is too expensive.",2],["fall","落ちる・秋","Leaves fall in autumn.",2],["feel","感じる","I feel better today.",2],["few","ほとんどない・少数の","Few people knew the news.",2],["fill","満たす","She filled the glass with water.",2],["follow","ついて行く・従う","Follow me, please.",2],["forget","忘れる","Don't forget your umbrella.",2],["future","未来・将来","I want to be a teacher in the future.",2],["great","すばらしい・偉大な","We had a great time.",2],["grow","育つ・成長する","Plants grow fast in spring.",2],["guess","推測する","Guess what I have.",2],["happen","起こる","What happened yesterday?",2],["health","健康","Health is the most important thing.",2],["hobby","趣味","My hobby is taking pictures.",2],["hope","希望・望む","I hope you will get well soon.",2],["idea","考え・アイデア","That is a great idea.",2],["inside","内側に","Let's go inside the building.",2],["join","参加する","Why don't you join our club?",2],["just","ちょうど・ただ","I have just finished lunch.",2],["land","土地・着陸する","The plane landed safely.",2],["later","後で","See you later.",2],["less","より少ない","I have less money than he does.",2],["life","生活・命","City life is convenient.",2],["lose","失う・負ける","Don't lose your ticket.",2],["loud","（声が）大きい","His voice is very loud.",2],["lucky","幸運な","You are lucky to have such friends.",2],["mean","意味する","What does this word mean?",2],["miss","逃す・恋しく思う","I missed the bus this morning.",2],["money","お金","I saved money for the trip.",2],["most","最も・大部分の","She is the most popular singer.",2],["never","一度も〜ない","I have never seen snow.",2],["next","次の","The next train comes at ten.",2],["often","しばしば","I often go to the library.",2],["once","一度・かつて","I met him once before.",2],["only","〜だけ","I have only one brother.",2],["outside","外に","It is cold outside.",2],["pass","通る・渡す・合格する","Please pass me the salt.",2],["pick","選ぶ・摘む","We picked apples on the farm.",2],["plan","計画","Let's make a plan for summer.",2],["plant","植物・植える","We planted flowers in the garden.",2],["point","点・要点","You got ten points.",2],["practice","練習","I practice the guitar every day.",2],["present","プレゼント・現在・出席して","She gave me a birthday present.",2],["problem","問題","We must solve this problem.",2],["promise","約束","I promised to help her.",2],["proud","誇りに思って","My parents are proud of me.",2],["ready","準備ができた","Are you ready to go?",2],["remember","覚えている・思い出す","I remember her name.",2],["rest","休憩・残り","Let's take a rest here.",2],["ride","乗る","I ride my bike to school.",2],["save","節約する・救う","We should save water.",2],["seem","〜のように思える","He seems tired today.",2],["should","〜すべきだ","You should study harder.",2],["side","側・面","Stand on this side of the line.",2],["since","〜以来・〜なので","I have lived here since 2020.",2],["soon","まもなく","The bus will come soon.",2],["sorry","すまなく思って・残念な","I'm sorry for being late.",2],["sound","音・〜に聞こえる","That sounds fun.",2],["spend","（時間・お金を）使う","I spent two hours on my homework.",2],["stay","滞在する・そのままでいる","We stayed at home all day.",2],["still","まだ・それでも","It is still raining.",2],["story","物語・話","She told us an interesting story.",2],["strange","奇妙な","I heard a strange noise.",2],["sure","確かな","I am sure he will come.",2],["surprise","驚かす・驚き","The news surprised everyone.",2],["together","一緒に","Let's study together.",2],["touch","触れる","Don't touch the picture.",2],["trip","旅行","We went on a trip to Nara.",2],["trouble","トラブル・困ったこと","He is in trouble now.",2],["true","本当の・真実の","Is the story true?",2],["try","試す・やってみる","Try your best.",2],["understand","理解する","I can't understand this question.",2],["until","〜まで","Wait here until I come back.",2],["visit","訪れる","We visited the museum yesterday.",2],["voice","声","She has a beautiful voice.",2],["wear","着ている","He wears glasses.",2],["weather","天気","The weather is nice today.",2],["welcome","歓迎する・ようこそ","Welcome to our school.",2],["while","〜する間に","I listened to music while walking.",2],["win","勝つ","Our team won the game.",2],["wish","望む・願い","I wish you good luck.",2],["without","〜なしで","I went out without my umbrella.",2],["worry","心配する","Don't worry about the test.",2],["yet","まだ・もう","I haven't finished yet.",2],["anyone","誰でも・誰か","Does anyone know the answer?",2],["anything","何でも・何か","I don't have anything to eat.",2],["accept","受け入れる","I accept your apology.",2],["across","〜を横切って","Walk across the street.",2],["add","加える","Add some sugar to the tea.",2],["admire","称賛する","I admire your courage.",2],["advise","助言する","I advise you to rest.",2],["afford","余裕がある","I can't afford a new car.",2],["alive","生きている","The old tree is still alive.",2],["alone","一人で","She lives alone.",2],["along","〜に沿って","Walk along the river.",2],["although","〜だけれども","Although it rained, we went out.",2],["among","〜の間に","He is popular among students.",2],["ancient","古代の","We visited ancient ruins.",2],["appear","現れる","A rainbow appeared in the sky.",2],["arrive","到着する","The train arrived at nine.",2],["attend","出席する","I attend the meeting every week.",2],["avoid","避ける","Try to avoid mistakes.",2],["besides","その上","Besides English, she speaks French.",2],["beyond","〜を超えて","The view is beautiful beyond words.",2],["brief","短い","Please give a brief answer.",2],["careful","注意深い","Be careful with the glass.",2],["careless","不注意な","He made a careless mistake.",2],["celebrate","祝う","We celebrated her birthday.",2],["certain","確かな・ある","I'm certain he will come.",2],["common","共通の・一般的な","This is a common problem.",2],["compare","比較する","Compare these two pictures.",2],["complain","不平を言う","Don't complain about the food.",2],["continue","続ける","Please continue your story.",2],["count","数える","Count from one to ten.",2],["course","コース・進路","I took an English course.",2],["cover","覆う・表紙","Snow covered the ground.",2],["cross","渡る","Cross the bridge carefully.",2],["crowded","混雑した","The train was very crowded.",2],["danger","危険","The sign warns of danger.",2],["dangerous","危険な","Swimming here is dangerous.",2],["deal","取り扱う・取引","We dealt with the problem.",2],["deep","深い","The lake is very deep.",2],["deliver","配達する","They deliver pizza.",2],["describe","描写する","Describe your hometown.",2],["develop","発展させる","The town developed rapidly.",2],["die","死ぬ","The old tree died last year.",2],["direct","直接の・指示する","I asked him directly.",2],["disagree","反対する","I disagree with you.",2],["distance","距離","The distance is about 5 kilometers.",2],["divide","分ける","Divide the class into two groups.",2],["double","2倍の","The price is double now.",2],["doubt","疑う","I doubt his story.",2],["earn","稼ぐ・得る","He earns a lot of money.",2],["education","教育","Education is important.",2],["else","ほかに","What else do you need?",2],["encourage","励ます","My teacher encouraged me.",2],["enter","入る","May I enter the room?",2],["especially","特に","I like fruits, especially apples.",2],["exact","正確な","Give me the exact number.",2],["examine","調べる","The doctor examined my eyes.",2],["example","例","Give me an example.",2],["except","〜を除いて","Everyone except Tom came.",2],["exercise","運動・練習","Exercise is good for health.",2],["expect","期待する","I expect good results.",2],["explain","説明する","Explain this in English.",2],["express","表現する","Express your feelings.",2],["fail","失敗する","Don't be afraid to fail.",2],["familiar","よく知っている","This song sounds familiar.",2],["famous","有名な","He is a famous singer.",2],["fear","恐れ・恐れる","She has a fear of heights.",2],["fit","合う・適した","These shoes fit perfectly.",2],["fix","修理する","Can you fix my bike?",2],["fly","飛ぶ","Birds fly in the sky.",2],["force","力・強制する","Don't force him to go.",2],["forgive","許す","Please forgive me.",2],["form","形・形成する","The team formed a circle.",2],["forward","前へ","Move forward slowly.",2],["fresh","新鮮な","These are fresh vegetables.",2],["friendly","友好的な","She is very friendly.",2],["gate","門","Wait at the front gate.",2],["gift","贈り物・才能","She has a gift for music.",2],["glance","ちらりと見る","He glanced at the clock.",2],["glove","手袋","Wear gloves in winter.",2],["grade","学年・成績","She got a good grade.",2],["gradually","徐々に","He is gradually getting better.",2],["guide","案内する・案内人","The guide led us to the temple.",2],["hang","掛ける・ぶら下がる","Hang the picture on the wall.",2],["harm","害","Smoking causes harm to health.",2],["heat","熱・熱する","Heat the water to 100 degrees.",2],["hide","隠す","She hid the gift in the closet.",2],["hit","打つ・当たる","The ball hit the window.",2],["hold","持つ・開催する","We will hold a meeting today.",2],["honest","正直な","Be honest with me.",2],["huge","巨大な","A huge ship entered the port.",2],["imagine","想像する","Imagine a peaceful world.",2],["immediately","すぐに","Come here immediately.",2],["include","含む","The price includes tax.",2],["increase","増える","The population is increasing.",2],["independent","独立した","She is an independent woman.",2],["influence","影響","Parents influence children.",2],["instead","代わりに","Let's walk instead of driving.",2],["invite","招待する","I invited him to dinner.",2],["involve","巻き込む","Don't involve others in this.",2],["judge","判断する・裁判官","Don't judge people by appearance.",2],["keep","保つ・持ち続ける","Keep your room clean.",2],["lead","導く","This road leads to the beach.",2],["level","レベル・水準","My English level is improving.",2],["local","地元の","We ate at a local restaurant.",2],["lonely","寂しい","I feel lonely sometimes.",2],["major","主要な","This is a major problem.",2],["manage","管理する・何とかする","She manages a small shop.",2],["manner","方法・礼儀","Mind your manners.",2],["mark","印・印をつける","Mark the correct answer.",2],["marry","結婚する","They married last spring.",2],["matter","問題・重要である","It doesn't matter to me.",2],["memory","記憶","I have a good memory of that day.",2],["mention","言及する","He mentioned your name.",2],["method","方法","This method is effective.",2],["mind","心・気にする","Do you mind if I open the window?",2],["modern","現代の","This is a modern building.",2],["moment","瞬間・時","Wait a moment, please.",2],["mood","気分","I'm in a good mood today.",2],["narrow","狭い","This street is narrow.",2],["national","国の・国立の","It is a national holiday.",2],["nearby","近くの","There is a park nearby.",2],["notice","気づく・通知","I noticed a small mistake.",2],["obey","従う","Obey the traffic rules.",2],["object","物体・反対する","I object to your plan.",2],["occur","起こる","The accident occurred at noon.",2],["offer","申し出る","He offered to help me.",2],["order","注文・順序・命じる","I ordered a cup of coffee.",2],["ordinary","普通の","It was an ordinary day.",2],["organize","組織する","We organized a party.",2],["own","自分自身の・所有する","This is my own idea.",2],["particular","特定の・特別な","Is there any particular reason?",2],["passenger","乗客","The passengers got on the train.",2],["peaceful","平和な","The village is peaceful.",2],["perfect","完璧な","Your answer is perfect.",2],["perform","演じる・行う","They performed on stage.",2],["permission","許可","I need your permission.",2],["personal","個人の","This is my personal opinion.",2],["persuade","説得する","I persuaded him to join us.",2],["physical","身体の・物理的な","Physical exercise is important.",2],["plenty","たくさんの","We have plenty of time.",2],["popular","人気のある","This song is popular now.",2],["position","位置・立場","Please take your position.",2],["possible","可能な","Is it possible to finish today?",2],["practical","実用的な","This is a practical idea.",2],["prepare","準備する","Prepare for the test.",2],["pretend","ふりをする","Don't pretend to be asleep.",2],["private","私的な","This is my private room.",2],["produce","生産する","This factory produces cars.",2],["progress","進歩・進む","You are making good progress.",2],["prove","証明する","Can you prove it?",2],["provide","提供する","They provide free lunch.",2],["public","公共の・公の","Don't smoke in public places.",2],["punish","罰する","The teacher punished him.",2],["purpose","目的","What is the purpose of your visit?",2],["push","押す","Push the door open.",2],["quality","品質","Quality is more important than price.",2],["quarter","4分の1","It's a quarter past three.",2],["raise","上げる・育てる","Raise your hand if you know.",2],["rather","むしろ・かなり","It's rather cold today.",2],["reach","到着する・届く","We reached the top at noon.",2],["realize","気づく","I realized my mistake.",2],["receive","受け取る","I received your letter.",2],["recent","最近の","This is a recent photo.",2],["recognize","認識する・見分ける","I didn't recognize you.",2],["recommend","推薦する","I recommend this book.",2],["refer","言及する・参照する","Please refer to page ten.",2],["refuse","断る","He refused my offer.",2],["regret","後悔する","I regret saying that.",2],["regular","規則的な・いつもの","Take regular exercise.",2],["remain","残る・〜のままである","Please remain seated.",2],["remind","思い出させる","Remind me to call him.",2],["remove","取り除く","Remove your shoes here.",2],["repair","修理する","I repaired my bike.",2],["replace","取り替える","Replace the batteries.",2],["reply","返事をする","Please reply to my email.",2],["report","報告する・報告","I will report the results.",2],["represent","代表する","He represents our school.",2],["require","要求する","This job requires skill.",2],["research","研究","She does medical research.",2],["respect","尊敬する","We should respect each other.",2],["respond","反応する・答える","He responded to my question.",2],["responsible","責任がある","You are responsible for this.",2],["review","復習する・見直す","Review your notes before the test.",2],["rise","上がる","The sun rises early in summer.",2],["risk","危険・危険を冒す","Don't take unnecessary risks.",2],["role","役割","Everyone has a role in the team.",2],["sale","販売・特売","The shop is having a sale.",2],["satisfy","満足させる","The result satisfied everyone.",2],["score","得点","Our team got a high score.",2],["search","捜す","The police searched the area.",2],["secret","秘密","Can you keep a secret?",2],["sense","感覚・意味","He has a good sense of humor.",2],["separate","分ける・別々の","Separate the trash by type.",2],["serious","真剣な・深刻な","It is a serious problem.",2],["serve","仕える・提供する","The waiter served our food.",2],["several","いくつかの","I visited several countries.",2],["share","共有する","We share a room.",2],["similar","似ている","These two are very similar.",2],["simple","簡単な・単純な","It's a simple question.",2],["situation","状況","The situation is difficult.",2],["skill","技術・技能","He has excellent skills.",2],["slightly","わずかに","It's slightly different.",2],["smooth","滑らかな","The road is smooth.",2],["social","社会の","Social media is popular.",2],["solve","解く・解決する","Solve this puzzle.",2],["sort","種類・分類する","What sort of music do you like?",2],["soul","魂・精神","Music touches my soul.",2],["specific","具体的な","Give me a specific example.",2],["speed","速度","Slow down your speed.",2],["spirit","精神・元気","She has a strong spirit.",2],["spread","広げる・広がる","The news spread quickly.",2],["standard","標準・基準","This is the standard size.",2],["state","状態・述べる","Please state your name.",2],["step","歩み・段階","Take one step forward.",2],["stick","棒・貼る","Stick the picture on the wall.",2],["stress","ストレス・強調する","Stress can affect your health.",2],["stretch","伸ばす","Stretch your arms.",2],["strict","厳しい","My father is strict.",2],["subject","科目・主題","My favorite subject is math.",2],["successful","成功した","She became a successful writer.",2],["suggest","提案する","I suggest we leave early.",2],["supply","供給する","They supply fresh water.",2],["suppose","〜だと思う","I suppose you are right.",2],["surface","表面","The surface of the lake is calm.",2],["survive","生き残る","Only one tree survived.",2],["sweet","甘い","This cake is too sweet.",2],["symbol","象徴・記号","The dove is a symbol of peace.",2],["system","制度・体系","The new system works well.",2],["talent","才能","She has a talent for music.",2],["task","仕事・課題","Finish this task by Friday.",2],["taste","味・味わう","This soup has a good taste.",2],["term","期間・用語","The summer term begins in April.",2],["though","〜だけれども","Though it was late, we kept working.",2],["throw","投げる","Throw the ball to me.",2],["tidy","きちんとした","Keep your room tidy.",2],["total","合計・全体の","The total is 500 yen.",2],["toward","〜の方へ","He walked toward the station.",2],["treat","扱う・おごる","Treat everyone equally.",2],["trend","傾向","There is a new trend in fashion.",2],["trick","策略・芸","He played a trick on me.",2],["typical","典型的な","This is a typical example.",2],["unhappy","不幸な","He looked unhappy.",2],["unique","独特の・唯一の","Each person is unique.",2],["useful","役に立つ","This dictionary is useful.",2],["usual","いつもの","Today is busier than usual.",2],["view","景色・見解","The view from the hill is wonderful.",2],["violence","暴力","We must stop violence.",2],["weight","重さ","What is the weight of this box?",2],["wonder","不思議に思う・驚き","I wonder why she left.",2],["wonderful","素晴らしい","We had a wonderful time.",2],["worth","価値がある","This book is worth reading.",2],
+/* Level3 */
+["environment","環境","We must protect the environment.",3],["pollution","汚染","Air pollution is a big problem.",3],["recycle","リサイクルする","We recycle bottles and cans.",3],["energy","エネルギー","We need clean energy.",3],["resource","資源","Japan has few natural resources.",3],["nature","自然","I love being in nature.",3],["earth","地球・大地","The earth moves around the sun.",3],["climate","気候","The climate is changing.",3],["society","社会","We live in a busy society.",3],["community","地域社会","She helps her community.",3],["culture","文化","I want to learn about other cultures.",3],["tradition","伝統","This festival is an old tradition.",3],["history","歴史","Kyoto has a long history.",3],["century","世紀","The temple was built a century ago.",3],["government","政府","The government made a new law.",3],["law","法律","Everyone must follow the law.",3],["peace","平和","We all hope for peace.",3],["war","戦争","War destroys many lives.",3],["freedom","自由","Freedom is important to everyone.",3],["volunteer","ボランティア","I work as a volunteer on weekends.",3],["event","行事・出来事","The school event was a success.",3],["competition","競争・大会","He won the speech competition.",3],["prize","賞","She won the first prize.",3],["medal","メダル","He got a gold medal.",3],["champion","チャンピオン","Our team became the champion.",3],["success","成功","Hard work leads to success.",3],["effort","努力","Your effort will pay off.",3],["challenge","挑戦","I want to try a new challenge.",3],["goal","目標・ゴール","My goal is to pass the exam.",3],["opportunity","機会","This is a good opportunity to learn.",3],["experience","経験","It was a wonderful experience.",3],["knowledge","知識","Books give us knowledge.",3],["information","情報","I got some information online.",3],["message","伝言・メッセージ","She left a message for you.",3],["opinion","意見","Tell me your opinion.",3],["reason","理由","What is the reason for your answer?",3],["result","結果","The result of the test was good.",3],["cause","原因・引き起こす","What caused the accident?",3],["effect","効果・影響","Exercise has a good effect on health.",3],["communication","コミュニケーション","Communication is important in a team.",3],["discussion","話し合い・討論","We had a discussion in class.",3],["advice","助言","My teacher gave me good advice.",3],["support","支える・支援","My friends support me.",3],["trust","信頼する","You can trust him.",3],["courage","勇気","It took courage to speak up.",3],["confidence","自信","I have confidence in my team.",3],["imagination","想像力","Use your imagination.",3],["invention","発明","The invention changed the world.",3],["discovery","発見","It was an important discovery.",3],["science","科学","Science makes our lives easier.",3],["technology","科学技術","Technology is growing fast.",3],["machine","機械","This machine makes bread.",3],["robot","ロボット","The robot can clean the room.",3],["internet","インターネット","I use the internet to study.",3],["abroad","海外で・海外へ","She wants to study abroad.",3],["foreign","外国の","He speaks two foreign languages.",3],["international","国際的な","It is an international event.",3],["protect","守る","Let's protect the forest.",3],["improve","向上させる・改善する","I want to improve my English.",3],["achieve","達成する","He achieved his goal at last.",3],["overcome","乗り越える","She overcame many difficulties.",3],["various","さまざまな","There are various ways to study.",3],["necessary","必要な","Sleep is necessary for health.",3],["valuable","貴重な","Time is valuable.",3],["discover","発見する","They discovered a new star.",3],["create","創造する","Let's create something new.",3],["reduce","減らす","We should reduce plastic waste.",3],["prevent","防ぐ","Washing hands prevents illness.",3],["abstract","抽象的な","The concept is too abstract.",3],["academic","学術的な","She has an academic background.",3],["accident","事故","The accident caused a traffic jam.",3],["account","説明・口座","Please explain the account.",3],["acknowledge","認める","I acknowledge your concern.",3],["adequate","適切な","We have adequate supply.",3],["adjust","調整する","Adjust the volume.",3],["adopt","採用する・養子にする","They adopted a new policy.",3],["advance","進歩する","Technology advances rapidly.",3],["affect","影響する","Weather affects our mood.",3],["aim","目的・狙う","My aim is to become a doctor.",3],["amount","量・合計","A large amount of water.",3],["analyze","分析する","Let's analyze the data.",3],["anxiety","不安","He has anxiety about the test.",3],["apply","申し込む・適用する","Apply for a scholarship.",3],["appreciate","感謝する・評価する","I appreciate your help.",3],["approach","近づく・取り組み","Spring is approaching.",3],["appropriate","適切な","Wear appropriate clothes.",3],["argue","議論する","They argued about the plan.",3],["assume","仮定する","Let's assume it's true.",3],["attempt","試みる","She attempted to climb the mountain.",3],["attitude","態度","His attitude changed completely.",3],["attract","引きつける","The festival attracts many people.",3],["available","利用できる","Tickets are available online.",3],["aware","気づいている","I wasn't aware of the risk.",3],["balance","バランス・均衡","Balance work and rest.",3],["behavior","行動","His behavior surprised us.",3],["benefit","利益・得る","Exercise has many benefits.",3],["capable","能力がある","She is capable of doing it.",3],["capacity","容量・能力","The stadium has a large capacity.",3],["category","カテゴリー","Which category does it belong to?",3],["character","性格・特徴","He has a gentle character.",3],["circumstance","状況","Under these circumstances, I agree.",3],["claim","主張する","He claims to be innocent.",3],["comment","コメント","She made a kind comment.",3],["commit","犯す・専念する","He committed to the project.",3],["complex","複雑な","This is a complex problem.",3],["concern","心配・関心","I have concern about the future.",3],["conclude","結論づける","We concluded the meeting.",3],["confirm","確認する","Please confirm your reservation.",3],["conflict","衝突・対立","They had a conflict of opinion.",3],["consequence","結果","Consider the consequences.",3],["constant","絶え間ない","She lives in constant fear.",3],["contribute","貢献する","Everyone contributed to the project.",3],["convince","納得させる","I convinced him to join.",3],["crucial","極めて重要な","This is a crucial moment.",3],["current","現在の","What is the current situation?",3],["debate","討論","We had a debate in class.",3],["decline","減少する・断る","Sales declined last year.",3],["define","定義する","Please define the term.",3],["demand","要求する・需要","Demand for water increased.",3],["demonstrate","実演する・証明する","He demonstrated the method.",3],["deny","否定する","He denied the rumor.",3],["determine","決定する","We must determine the cause.",3],["device","装置","This device saves energy.",3],["distinguish","区別する","Can you distinguish the two?",3],["distribute","分配する","They distributed the flyers.",3],["domestic","国内の","This is domestic news.",3],["economy","経済","The economy is growing.",3],["element","要素","Water is a key element of life.",3],["eliminate","排除する","We should eliminate waste.",3],["emphasize","強調する","The teacher emphasized the point.",3],["emerge","現れる","A new problem emerged.",3],["enable","可能にする","This tool enables fast work.",3],["essential","不可欠な","Water is essential for life.",3],["establish","設立する","The school was established in 1900.",3],["estimate","見積もる","We estimate the cost.",3],["evidence","証拠","There is no evidence.",3],["exhibit","展示する","The museum exhibits old art.",3],["expand","拡大する","The business is expanding.",3],["explore","探検する","Let's explore the forest.",3],["extreme","極端な","Extreme weather is increasing.",3],["feature","特徴","Each region has its features.",3],["flexible","柔軟な","We need a flexible plan.",3],["focus","焦点・集中する","Focus on your goal.",3],["fundamental","基本的な","Reading is a fundamental skill.",3],["generate","生み出す","Solar panels generate energy.",3],["global","世界的な","Global warming is a serious issue.",3],["guarantee","保証する","We guarantee the quality.",3],["identify","特定する","Can you identify the problem?",3],["illustrate","説明する・例示する","The book illustrates this idea.",3],["impact","影響","The policy had a great impact.",3],["indicate","示す","The arrow indicates the exit.",3],["individual","個人・個人の","Each individual has rights.",3],["industry","産業","The auto industry is large.",3],["inevitable","避けられない","Change is inevitable.",3],["initial","初期の","The initial plan was changed.",3],["innovate","革新する","Companies must innovate.",3],["insist","主張する","He insisted on his idea.",3],["inspire","鼓舞する","Her speech inspired us.",3],["institute","研究所・協会","He works at a research institute.",3],["intend","意図する","I intend to study abroad.",3],["interpret","解釈する・通訳する","How do you interpret this?",3],["invest","投資する","They invested in the project.",3],["justify","正当化する","Can you justify your action?",3],["launch","開始する・打ち上げる","They launched a new product.",3],["maintain","維持する","Maintain a healthy diet.",3],["measure","測る・対策","Measure the length.",3],["minimum","最小限の","Keep costs at a minimum.",3],["modify","修正する","Modify the plan if needed.",3],["monitor","監視する","Monitor the situation closely.",3],["motive","動機","What was his motive?",3],["negotiate","交渉する","They negotiated a deal.",3],["obtain","得る","Obtain permission first.",3],["obvious","明らかな","The answer is obvious.",3],["occupy","占める","The room is occupied.",3],["operate","操作する・運営する","Please operate this machine.",3],["oppose","反対する","Many people opposed the plan.",3],["participate","参加する","Please participate in the event.",3],["perceive","知覚する・気づく","I perceived a change.",3],["permanent","永久の","Seek a permanent solution.",3],["perspective","視点","Try a different perspective.",3],["potential","可能性・潜在的な","He has great potential.",3],["precise","正確な","Give me the precise figure.",3],["predict","予測する","It's hard to predict the future.",3],["preserve","保存する","Preserve our culture.",3],["primary","主要な・初等の","This is our primary goal.",3],["principle","原理・原則","Follow the basic principles.",3],["priority","優先事項","Safety is our top priority.",3],["procedure","手続き","Follow the correct procedure.",3],["propose","提案する","I propose a new plan.",3],["pursue","追求する","She pursued her dream.",3],["react","反応する","How did he react?",3],["recall","思い出す","I can't recall his name.",3],["reflect","反映する・反射する","The result reflects our effort.",3],["regulate","規制する","The law regulates sales.",3],["reject","拒絶する","He rejected my proposal.",3],["relevant","関連がある","Keep your answer relevant.",3],["rely","頼る","Don't rely on luck.",3],["resist","抵抗する","I couldn't resist the temptation.",3],["resolve","解決する","We must resolve the issue.",3],["retain","保持する","Retain the original form.",3],["reveal","明らかにする","The truth was revealed.",3],["seek","探し求める","Seek professional advice.",3],["significant","重要な","This is a significant change.",3],["source","源・情報源","Find a reliable source.",3],["strategy","戦略","We need a clear strategy.",3],["structure","構造","The structure is strong.",3],["submit","提出する","Submit your report by Friday.",3],["sufficient","十分な","Is there sufficient evidence?",3],["sustain","維持する","We must sustain growth.",3],["target","標的・目標","Set a clear target.",3],["technique","技術","Learn basic techniques.",3],["tend","傾向がある","People tend to forget.",3],["theory","理論","The theory is still unproven.",3],["transform","変える","The city transformed completely.",3],["undertake","引き受ける","She undertook the project.",3],["unify","統一する","The team unified its goal.",3],["utilize","活用する","Utilize your time wisely.",3],["verify","検証する","Verify the facts.",3],["virtual","仮想の","Virtual meetings are common.",3],["visible","見える","The mountain is visible today.",3],["welfare","福祉","We care for public welfare.",3],["withdraw","引き出す・撤退する","He withdrew his offer.",3]
+];
+const I=[
+["get up","起きる・起床する","I get up at six every morning.",1],["wake up","目が覚める・起こす","Wake up! It's already seven.",1],["go to bed","寝る・床に就く","I go to bed at eleven.",1],["come back","戻ってくる","Come back before dinner.",1],["go out","出かける","We went out for lunch.",1],["come in","入ってくる","Please come in.",1],["sit down","座る","Sit down, please.",1],["stand up","立ち上がる","Everyone stood up.",1],["look at","〜を見る","Look at this picture.",1],["listen to","〜を聞く","I listen to music every day.",1],["talk to","〜に話しかける","She talked to me kindly.",1],["wait for","〜を待つ","I waited for the bus.",1],["look for","〜を探す","I'm looking for my key.",1],["look like","〜のように見える","He looks like his father.",1],["be from","〜の出身である","I am from Japan.",1],["be good at","〜が得意である","She is good at math.",1],["be interested in","〜に興味がある","I am interested in history.",1],["be afraid of","〜を怖がる","He is afraid of dogs.",1],["be full of","〜でいっぱいである","The box is full of toys.",1],["be late for","〜に遅刻する","Don't be late for school.",1],["be different from","〜と異なる","My idea is different from yours.",1],["be similar to","〜に似ている","This bag is similar to mine.",1],["be kind to","〜に親切である","Be kind to everyone.",1],["be made of","〜で作られている","The desk is made of wood.",1],["be covered with","〜で覆われている","The mountain is covered with snow.",1],["a lot of","たくさんの","I have a lot of books.",1],["lots of","たくさんの","There are lots of stars tonight.",1],["a few","少数の（可算）","I have a few questions.",1],["a little","少しの（不可算）","I speak a little French.",1],["each other","お互い","We help each other.",1],["for example","例えば","I like sports, for example, tennis.",1],["of course","もちろん","Of course you can join us.",1],["at first","最初は","At first, it was difficult.",1],["at last","ついに","At last, we reached the top.",1],["get on","（乗り物に）乗る","Get on the bus here.",1],["get off","（乗り物を）降りる","We get off at the next stop.",1],["get to","〜に到着する","I got to school at eight.",1],["grow up","成長する・大人になる","I want to be a pilot when I grow up.",1],["pick up","拾う・迎えに行く","He picked up the paper.",1],["put on","（身につける物を）着る","Put on your coat.",1],["have fun","楽しむ","Have fun at the party.",1],["have breakfast","朝食を食べる","I have breakfast at seven.",1],["have lunch","昼食を食べる","We had lunch at noon.",1],["have dinner","夕食を食べる","We have dinner together.",1],["watch TV","テレビを見る","I watch TV after dinner.",1],["do homework","宿題をする","I do homework every day.",1],["do the dishes","皿洗いをする","I help do the dishes.",1],["play soccer","サッカーをする","They play soccer on Sundays.",1],["play tennis","テニスをする","I play tennis every week.",1],["play the piano","ピアノを弾く","She plays the piano well.",1],["ride a bike","自転車に乗る","I ride a bike to school.",1],["take a shower","シャワーを浴びる","I take a shower every morning.",1],["take a bath","風呂に入る","I take a bath at night.",1],["brush one's teeth","歯を磨く","Brush your teeth before bed.",1],["go shopping","買い物に行く","Let's go shopping tomorrow.",1],["go fishing","釣りに行く","My father goes fishing on Sundays.",1],["go swimming","泳ぎに行く","We go swimming in summer.",1],["go to school","学校へ行く","I go to school by bike.",1],["go to work","仕事に行く","He goes to work at eight.",1],["come home","帰宅する","I came home at six.",1],["get home","家に着く","I got home late last night.",1],["get ready","準備する","Get ready for school.",1],["get dressed","服を着る","Get dressed quickly.",1],["wake up early","早起きする","I wake up early every day.",1],["go to sleep","寝る","I go to sleep at ten.",1],["say hello","挨拶する","Say hello to your teacher.",1],["say goodbye","別れを告げる","We said goodbye at the station.",1],["thank you for","〜をありがとう","Thank you for your help.",1],["excuse me","すみません","Excuse me, where is the station?",1],["I'm sorry","ごめんなさい","I'm sorry for being late.",1],["see you later","またね","See you later, Tom.",1],["have a nice day","良い一日を","Have a nice day!",1],["nice to meet you","はじめまして","Nice to meet you, Mr. Brown.",1],["how are you","お元気ですか","How are you today?",1],["how much","いくら","How much is this?",1],["how many","いくつ","How many books do you have?",1],["what time","何時","What time is it now?",1],["where is","どこに","Where is the post office?",1],["right now","今すぐ","Come here right now.",1],["these days","最近","I'm busy these days.",1],
+["take off","脱ぐ・離陸する","The plane took off on time.",2],["try on","試着する","Can I try on this jacket?",2],["look after","〜の世話をする","She looks after her little brother.",2],["take care of","〜の世話をする・大切にする","Take care of your books.",2],["take a walk","散歩する","Let's take a walk in the park.",2],["take a picture","写真を撮る","I took a picture of the sunset.",2],["take place","行われる・起こる","The festival takes place every May.",2],["take part in","〜に参加する","We took part in the event.",2],["make friends","友達を作る","It is easy to make friends here.",2],["make a mistake","間違いをする","Everyone makes a mistake sometimes.",2],["do one's best","最善を尽くす","I will do my best in the game.",2],["give up","あきらめる","Never give up your dream.",2],["have a good time","楽しい時間を過ごす","We had a good time at the party.",2],["have to","〜しなければならない","I have to finish this today.",2],["had better","〜したほうがよい","You had better hurry.",2],["would like to","〜したい","I would like to visit Kyoto.",2],["used to","かつて〜だった","I used to swim every day.",2],["be going to","〜するつもりだ","I am going to study tonight.",2],["be able to","〜できる","She was able to answer the question.",2],["be proud of","〜を誇りに思う","I am proud of my team.",2],["be surprised at","〜に驚く","I was surprised at the news.",2],["be satisfied with","〜に満足する","He was satisfied with the result.",2],["be worried about","〜を心配している","She is worried about the test.",2],["be angry with","（人）に怒る","My mother was angry with me.",2],["by the way","ところで","By the way, where is Tom?",2],["on the way","〜への途中で","I bought milk on the way home.",2],["all over","至る所に・一面に","People all over the world know it.",2],["around the world","世界中を","She traveled around the world.",2],["at once","すぐに・同時に","Come here at once.",2],["at the same time","同時に","We arrived at the same time.",2],["on time","時間通りに","The train arrived on time.",2],["in time","間に合って","We got there in time.",2],["at home","家で","I study at home after dinner.",2],["at night","夜に","Stars shine at night.",2],["in the morning","朝に・午前に","I run in the morning.",2],["on foot","徒歩で","I go to school on foot.",2],["by bus","バスで","She goes to work by bus.",2],["in English","英語で","Please say it in English.",2],["one of","〜の一つ","He is one of my best friends.",2],["and so on","など","I like apples, oranges, and so on.",2],["figure out","理解する・解明する","I figured out the answer.",2],["give back","返す","Give back my book.",2],["give away","あげる・譲る","She gave away her old clothes.",2],["put away","片付ける","Put away your toys.",2],["put off","延期する","Don't put off your homework.",2],["turn on","つける","Turn on the light, please.",2],["turn off","消す","Turn off the TV.",2],["turn down","断る・小さくする","He turned down the offer.",2],["turn up","大きくする・現れる","Turn up the volume.",2],["turn around","振り返る","Turn around and look at me.",2],["fill in","記入する","Fill in this form.",2],["fill out","記入する","Fill out the application.",2],["find out","見つける・気づく","I found out the truth.",2],["hand in","提出する","Hand in your report.",2],["hand out","配る","They handed out flyers.",2],["care about","気にかける","She cares about others.",2],["care for","世話をする","She cares for her mother.",2],["look around","見回す","Look around the room.",2],["look up","調べる","Look up this word.",2],["look down on","見下す","Don't look down on others.",2],["look up to","尊敬する","I look up to my father.",2],["look over","ざっと目を通す","Look over the document.",2],["look out","気をつける","Look out for cars.",2],["check in","チェックインする","We checked in at three.",2],["check out","チェックアウトする・確かめる","Check out this new song.",2],["call back","電話をかけ直す","I'll call you back later.",2],["call off","中止する","They called off the game.",2],["get back","戻る","When did you get back?",2],["get together","集まる","Let's get together next week.",2],["get used to","慣れる","I got used to the new school.",2],["keep up with","ついていく","Keep up with the class.",2],["keep in mind","心に留める","Keep this in mind.",2],["keep away from","近づかない","Keep away from the fire.",2],["go ahead","どうぞ・進む","Go ahead and ask.",2],["go over","見直す","Go over your notes.",2],["go through","経験する","She went through hard times.",2],["grow into","成長して〜になる","The child grew into a fine man.",2],["break down","故障する","My car broke down.",2],["break up","別れる","They broke up last year.",2],["come up","話題になる・現れる","The topic came up in class.",2],["come across","偶然出会う","I came across an old friend.",2],["come along","一緒に来る","Come along with us.",2],
+["look forward to","〜を楽しみに待つ","I look forward to seeing you.",3],["be used to","〜に慣れている","I am used to getting up early.",3],["come up with","（考えなど）を思いつく","She came up with a good idea.",3],["catch up with","〜に追いつく","I ran fast to catch up with him.",3],["get along with","〜とうまくやっていく","I get along with my classmates.",3],["get rid of","〜を取り除く","We got rid of the old boxes.",3],["run out of","〜を使い果たす","We ran out of time.",3],["make use of","〜を活用する","Make use of your experience.",3],["pay attention to","〜に注意する","Pay attention to the teacher.",3],["take it easy","気楽にやる・無理しない","Take it easy this weekend.",3],["as soon as","〜するとすぐに","Call me as soon as you arrive.",3],["as long as","〜する限り","You can stay as long as you like.",3],["not only A but also B","AだけでなくBも","She speaks not only English but also French.",3],["either A or B","AかBのどちらか","Either you or he is right.",3],["neither A nor B","AもBも〜ない","Neither Tom nor Ken was there.",3],["too ~ to ...","〜すぎて…できない","I was too tired to study.",3],["enough to","〜するのに十分","He is old enough to drive.",3],["so ~ that ...","とても〜なので…","I was so busy that I skipped lunch.",3],["prefer A to B","BよりAが好き","I prefer tea to coffee.",3],["would rather","むしろ〜したい","I would rather stay home.",3],["in order to","〜するために","I got up early in order to catch the train.",3],["instead of","〜の代わりに","I drank water instead of juice.",3],["because of","〜のために・〜が原因で","The game stopped because of the rain.",3],["thanks to","〜のおかげで","Thanks to your help, I passed.",3],["according to","〜によると","According to the news, it will rain.",3],["in spite of","〜にもかかわらず","He went out in spite of the rain.",3],["in fact","実際は","In fact, I have never met him.",3],["in addition","さらに","In addition, we need more time.",3],["on the other hand","一方では","It is cheap. On the other hand, it is slow.",3],["at least","少なくとも","Study at least one hour a day.",3],["no longer","もはや〜ない","He no longer lives here.",3],["by oneself","一人で","She did it by herself.",3],["on one's own","独力で","I finished the work on my own.",3],["in a hurry","急いで","He left in a hurry.",3],["in public","人前で","It is hard to speak in public.",3],["on purpose","わざと","She did it on purpose.",3],["by accident","偶然に","I met him by accident.",3],["all of a sudden","突然","All of a sudden, it began to rain.",3],["little by little","少しずつ","Little by little, it became easier.",3],["from now on","今後は","From now on, I will study harder.",3],["go without saying","言うまでもない","It goes without saying that health is important.",3],["better late than never","遅れてもやらないよりまし","Let's start now - better late than never.",3],["once in a while","時々","I visit my grandparents once in a while.",3],["sooner or later","遅かれ早かれ","Sooner or later, you'll understand.",3],["now and then","時々","I think of her now and then.",3],["by all means","ぜひとも","By all means, join us.",3],["in other words","言い換えれば","In other words, it's impossible.",3],["in general","一般に","In general, Japanese people are polite.",3],["in particular","特に","I like music, in particular jazz.",3],["as a result","その結果","It rained. As a result, we stayed home.",3],["as well as","〜だけでなく","She speaks English as well as French.",3],["as for","〜については","As for me, I prefer tea.",3],["apart from","〜を除いて","Apart from that, everything is fine.",3],["except for","〜を除いて","Everyone came except for Tom.",3],["due to","〜のために","The game was canceled due to rain.",3],["owing to","〜のおかげで・〜のために","Owing to his help, we succeeded.",3],["on behalf of","〜を代表して","I speak on behalf of the team.",3],["in terms of","〜の観点で","In terms of price, it's reasonable.",3],["in charge of","〜を担当して","She is in charge of the project.",3],["in front of","〜の前に","Wait in front of the station.",3],["in case of","〜の場合に","In case of fire, use the stairs.",3],["as far as","〜する限り","As far as I know, he is fine.",3],["as well","〜もまた","She sings and dances as well.",3],["for a while","しばらくの間","Let's rest for a while.",3],["for the first time","初めて","I met him for the first time.",3],["from time to time","時々","We meet from time to time.",3],["no matter what","何があっても","No matter what happens, stay calm.",3],["no matter how","どんなに〜でも","No matter how hard it is, don't give up.",3],["make sure","確かめる","Make sure to lock the door.",3],["make up for","埋め合わせる","I'll make up for the loss.",3],["make up one's mind","決心する","She made up her mind to go.",3],["put up with","我慢する","I can't put up with this noise.",3],["take advantage of","利用する","Take advantage of this chance.",3],["take care","気をつけて","Take care on your way home.",3],["take over","引き継ぐ","He took over the business.",3],["take up","始める・占める","She took up the piano.",3],["think of","思いつく・考える","I thought of a good idea.",3],["think about","〜について考える","Think about your future.",3],["work out","うまくいく・運動する","Everything worked out well.",3],["carry out","実行する","We carried out the plan.",3]
+];
 const DB={w:W.map(a=>({w:a[0],m:a[1],e:a[2],l:a[3],k:'w'})),i:I.map(a=>({w:a[0],m:a[1],e:a[2],l:a[3],k:'i'}))};
 const ALL=DB.w.concat(DB.i);
 const keyOf=it=>it.k+':'+it.w;
 const stars=l=>'★'.repeat(l);
 
-/* ================= テーマ / サウンド ================= */
+/* ===== テーマ / サウンド ===== */
 const mqDark=matchMedia('(prefers-color-scheme: dark)');
 function applyTheme(){
   const m=ST.settings.theme,dark=m==='dark'||(m==='auto'&&mqDark.matches);
@@ -629,7 +672,7 @@ function snd(n){if(!ST.settings.sound)return;
   else if(n==='achieve')[659,880,1174,1568].forEach((f,i)=>tone(f,.22,'triangle',.07,i*.14));}
 document.addEventListener('pointerdown',()=>ac(),{once:true});
 
-/* ================= トースト / シート ================= */
+/* ===== トースト / シート ===== */
 let toastQ=[],toastBusy=false;
 function toast(text,icon){toastQ.push({text,icon:icon||'🌿'});pumpToast();}
 function pumpToast(){if(toastBusy||!toastQ.length)return;toastBusy=true;
@@ -654,13 +697,13 @@ $('sheetX').addEventListener('click',closeSheet);
 const confirmSheet=(title,body,okLabel,cb,danger)=>sheet(title,body,[
   {label:okLabel,cls:danger?'btn-danger':'btn-primary',cb},{label:'キャンセル',cls:'btn-ghost'}]);
 
-/* ================= アバター ================= */
+/* ===== アバター ===== */
 function hueOf(id){let h=0;for(const c of String(id))h=(h*31+c.charCodeAt(0))%360;return h;}
 function paintAv(el,id,name){const h=hueOf(id);
   el.style.background=`linear-gradient(135deg,hsl(${h},52%,48%),hsl(${(h+45)%360},52%,36%))`;
   el.textContent=(name||'?').trim().charAt(0)||'?';}
 
-/* ================= タブバー ================= */
+/* ===== タブバー ===== */
 const tabs=[...document.querySelectorAll('.tab')];
 const SCREENS=['home','study','battle','rank'];
 let SCR='home';
@@ -679,7 +722,7 @@ function lensGo(i){lens.idx=i;
   if(!lens.raf){lens.last=performance.now();lens.raf=requestAnimationFrame(lensTick);}}
 window.addEventListener('resize',()=>{lensMetrics();sizeConfetti();});
 
-/* ================= 画面遷移 ================= */
+/* ===== 画面遷移 ===== */
 const enterHooks={home:renderHome,study:enterStudy,battle:renderBattle,rank:renderRank};
 function battleActive(){return !!(S&&S.battle&&STUDY.view==='session');}
 function nav(name){
@@ -696,7 +739,7 @@ function nav(name){
   snd('tap');vib(8);}
 tabs.forEach(t=>t.addEventListener('click',()=>nav(t.dataset.nav||'settings')));
 
-/* ================= 学習統計 ================= */
+/* ===== 学習統計 ===== */
 function wordRec(it){const k=keyOf(it);return ST.stats.words[k]||(ST.stats.words[k]={s:0,c:0,w:0,f:0,last:0});}
 function recordAnswer(it,ok){const r=wordRec(it);r.s++;if(ok)r.c++;else r.w++;r.last=ok?1:-1;
   const d=todayKey(),day=ST.stats.daily[d]||(ST.stats.daily[d]={a:0,c:0});
@@ -712,7 +755,7 @@ function accText(){const t=ST.stats.tot;return t.a?Math.round(t.c/t.a*100)+'%':'
 function pushHist(mode,score,total,kind){ST.stats.hist.unshift({t:Date.now(),mode,score,total,kind});
   ST.stats.hist=ST.stats.hist.slice(0,30);saveStats();}
 
-/* ================= ホーム ================= */
+/* ===== ホーム（感情演出） ===== */
 function greeting(){
   const h=new Date().getHours();
   if(h>=5&&h<11)return{eye:"Good Morning",line:"おはよう。今日も一歩、<br>先へ進もう。",sub:"朝の澄んだ頭で、ことばを少しだけ。"};
@@ -743,6 +786,7 @@ $('btnTheme').addEventListener('click',()=>{
   ST.settings.theme=order[(order.indexOf(ST.settings.theme)+1)%3];
   saveSettings();applyTheme();snd('tap');
   toast(ST.settings.theme==='auto'?'テーマ: 自動':ST.settings.theme==='light'?'テーマ: ライト':'テーマ: ダーク','🎨');});
+/* ロゴタップでちょっとしたお楽しみ */
 $('brandMark').addEventListener('click',()=>{
   snd('achieve');vib([10,20,10]);
   const el=$('brandMark');
@@ -751,7 +795,7 @@ $('brandMark').addEventListener('click',()=>{
   setTimeout(()=>{el.style.transform='';},420);
   toast('ことばの森へようこそ 🌿','✨');});
 
-/* ================= 学習画面 ================= */
+/* ===== 学習画面 ===== */
 const STUDY={view:'setup'};
 let S=null,lastSoloCfg=null,lastRes=null;
 function setStudyView(v){
@@ -791,7 +835,7 @@ document.querySelectorAll('#sgLevel .chip').forEach(b=>b.addEventListener('click
 $('btnStudyStart').addEventListener('click',()=>{
   startSolo({type:ST.settings.type,levels:ST.settings.levels.slice(),source:ST.settings.source,mode:ST.settings.mode});});
 
-/* ================= 出題生成 ================= */
+/* ===== 出題生成 ===== */
 function buildQuestions(items,n,rng){
   const picked=shuffle(items,rng).slice(0,n);
   return picked.map(it=>{
@@ -806,7 +850,7 @@ function buildQuestions(items,n,rng){
     const opts=shuffle([it,...others],rng).map(o=>o.m);
     return{it,opts,ci:opts.indexOf(it.m)};});}
 
-/* ================= セッションエンジン ================= */
+/* ===== セッションエンジン ===== */
 function endSession(){if(S){clearInterval(S.tid);clearTimeout(S.adv);S=null;}}
 function startSolo(cfg){
   if(battleActive()){toast('対戦中です','⚔️');return;}
@@ -822,7 +866,7 @@ function startSolo(cfg){
   S={battle:false,mode:cfg.mode,qs:buildQuestions(filtered,Math.min(15,filtered.length),rng),
     i:0,correct:0,score:0,miss:[],locked:false,t0:Date.now(),flipped:false};
   $('sessBadge').classList.add('hidden');
-  $('sessKbd').textContent=S.mode==='cards'?'Space: めくる / J: × / K: ○':'1〜4 キーで回答 / 0: わからない';
+  $('sessKbd').textContent=S.mode==='cards'?'Space: めくる / J: × / K: ○':'1〜4 キーで回答';
   setStudyView('session');renderStep();snd('tap');}
 function startBattle(code){
   if(battleActive()){toast('対戦中です','⚔️');return;}
@@ -832,7 +876,7 @@ function startBattle(code){
     i:0,correct:0,score:0,miss:[],locked:false,t0:Date.now(),per:10000,flipped:false};
   $('sessBadge').textContent='⚔️ 対戦 '+fmtCode(code);
   $('sessBadge').classList.remove('hidden');
-  $('sessKbd').textContent='1〜4 キーで回答 / 0: わからない ・ 1問10秒';
+  $('sessKbd').textContent='1〜4 キーで回答 ・ 1問10秒、早いほど高得点';
   if(SCR!=='study')nav('study');
   setStudyView('session');renderStep();snd('tap');}
 function syncProg(){$('sessBarFill').style.width=(S.i/S.qs.length*100)+'%';
@@ -851,10 +895,9 @@ $('sessBack').addEventListener('click',()=>{
 function renderStep(){S.locked=false;S.flipped=false;syncProg();syncFav();
   S.mode==='cards'?renderCard():renderQuiz();}
 
-/* ---- 4択（「わからない」ボタン追加） ---- */
+/* ---- 4択 ---- */
 function renderQuiz(){
   const q=S.qs[S.i],mount=$('sessMount');
-  if(!q){return;} /* BUG FIX: 安全ガード */
   mount.innerHTML=
     `<div class="qhead"><span>${S.battle?`第 ${S.i+1} / ${S.qs.length} 問`:'この意味はどれ？'}</span>
       <b class="mono">${S.battle?S.score+' pt':S.correct+' 正解'}</b></div>`+
@@ -864,13 +907,8 @@ function renderQuiz(){
       <div class="qword">${esc(q.it.w)}</div>
     </div>
     <div class="opts">${q.opts.map((o,i)=>
-      `<button class="opt" data-i="${i}"><span class="num">${i+1}</span><span>${esc(o)}</span></button>`).join('')}</div>
-    <button class="btn btn-dontknow dontknow" id="btnDontKnow">🤔 わからない（あとで復習）</button>`;
+      `<button class="opt" data-i="${i}"><span class="num">${i+1}</span><span>${esc(o)}</span></button>`).join('')}</div>`;
   mount.querySelectorAll('.opt').forEach(b=>b.addEventListener('click',()=>answer(+b.dataset.i)));
-  $('btnDontKnow').addEventListener('click',()=>{
-    if(!S||S.locked)return;
-    answer(-1,true); // -1 = わからない
-  });
   if(S.battle){
     S.deadline=Date.now()+S.per;
     clearInterval(S.tid);
@@ -880,17 +918,13 @@ function renderQuiz(){
       if(bar){bar.querySelector('i').style.width=clamp(left/S.per*100,0,100)+'%';bar.classList.toggle('low',left<3000);}
       if(left<=0)answer(-1);
     },100);}}
-function answer(idx,dontknow){
+function answer(idx){
   if(!S||S.locked||S.mode!=='quiz')return;
-  if(!S.qs[S.i])return; /* BUG FIX */
   S.locked=true;clearInterval(S.tid);
-  const q=S.qs[S.i],ok=idx===q.ci&&!dontknow;
+  const q=S.qs[S.i],ok=idx===q.ci;
   [...$('sessMount').querySelectorAll('.opt')].forEach((b,i)=>{
-    if(i===q.ci)b.classList.add('ok');
-    else if(i===idx&&!dontknow)b.classList.add('ng');
-    else b.classList.add('dim');
+    if(i===q.ci)b.classList.add('ok');else if(i===idx)b.classList.add('ng');else b.classList.add('dim');
     b.disabled=true;});
-  const dkBtn=$('btnDontKnow');if(dkBtn)dkBtn.disabled=true;
   if(ok){S.correct++;S.score+=S.battle?100+Math.max(0,Math.round((S.deadline-Date.now())/1000))*10:1;snd('ok');vib(10);}
   else{S.miss.push(q.it);snd('ng');vib([30,40,30]);}
   recordAnswer(q.it,ok);
@@ -905,7 +939,6 @@ function answer(idx,dontknow){
 /* ---- カード ---- */
 function renderCard(){
   const q=S.qs[S.i],it=q.it,mount=$('sessMount');
-  if(!q)return;
   mount.innerHTML=`<div class="fc-wrap"><div class="fc${reducedMotion?' no3d':''}" id="fc">
     <div class="fc-face fc-front card">
       <span class="qkind">${it.k==='i'?'英熟語':'英単語'} <span class="stars">${stars(it.l)}</span></span>
@@ -955,7 +988,6 @@ function flipCard(){if(!S||S.locked||S.mode!=='cards')return;
   if(fc){fc.style.transform='';fc.classList.toggle('flip',S.flipped);}snd('flip');vib(6);}
 function judge(ok){
   if(!S||S.locked||S.mode!=='cards')return;
-  if(!S.qs[S.i])return;
   S.locked=true;
   const q=S.qs[S.i];
   if(ok){S.correct++;S.score++;snd('ok');vib(10);}else{S.miss.push(q.it);snd('ng');vib([30,40,30]);}
@@ -970,7 +1002,7 @@ function judge(ok){
     if(S.i>=S.qs.length)finishSolo();
     else{S.locked=false;syncProg();syncFav();renderCard();}},reducedMotion?60:280);}
 
-/* ---- 実績 ---- */
+/* ---- 実績システム ---- */
 const ACHIEVEMENTS={
   first_session:{icon:'🌱',title:'はじめの一歩',desc:'初めての学習を完了'},
   first_battle:{icon:'⚔️',title:'初陣',desc:'初めての対戦を完了'},
@@ -1007,11 +1039,13 @@ function checkAchievements(){
   if(uw>=500)unlock('words500');
   if((store.get('kg1.peers',[])||[]).length>0)unlock('peer');}
 
-/* ---- ソロ結果 ---- */
+/* ---- 結果（ソロ） ---- */
 function finishSolo(){
   const total=S.qs.length,correct=S.correct,miss=S.miss.slice(),mode=S.mode,
     secs=Math.round((Date.now()-S.t0)/1000),kind=lastSoloCfg&&lastSoloCfg.type==='i'?'熟語':'単語';
   const isPerfect=total===correct&&total>0;
+  const prevBest=ST.stats.words&&Object.values(ST.stats.words).length?Math.max(0,...Object.values(ST.stats.words).map(r=>r.c||0)):0;
+  const prevTotal=ST.stats.tot.c||0;
   pushHist(mode==='cards'?'カード':'4択',correct,total,kind);
   endSession();lastRes={type:'solo'};
   setStudyView('result');
@@ -1027,7 +1061,7 @@ function finishSolo(){
   $('resTitle').textContent=isPerfect?'🎉 パーフェクト！':pct>=80?'🌟 すばらしい！':pct>=50?'👍 いい調子！':'🌱 復習すれば大丈夫！';
   $('resSub').textContent=`${total}問中 ${correct}問正解 ・ ${secs}秒 ・ 今日もいち歩、前に進んだ。`;
   $('resMiss').innerHTML=miss.length
-    ?'<div class="label">間違えたことば（わからない含む）</div>'+miss.map(it=>{
+    ?'<div class="label">間違えたことば</div>'+miss.map(it=>{
         const r=ST.stats.words[keyOf(it)];
         return`<div class="missrow card"><div class="grow"><b>${esc(it.w)}</b><div class="sub">${esc(it.m)}</div></div>
         <button class="iconbtn ${r&&r.f?'faved':''}" data-fav="${esc(keyOf(it))}"><svg class="ic s ${r&&r.f?'':'line'}"><use href="#i-star"/></svg></button></div>`;}).join('')
@@ -1047,7 +1081,7 @@ function bindFavButtons(root){
     const it=ALL.find(x=>keyOf(x)===b.dataset.fav);if(!it)return;
     const f=toggleFav(it);b.classList.toggle('faved',!!f);b.querySelector('svg').classList.toggle('line',!f);snd('tap');}));}
 
-/* ================= 結果コード ================= */
+/* ===== 結果コード ===== */
 function mkResult(){
   const p={v:1,c:S.code,i:ST.profile.id,n:ST.profile.name,s:S.score,k:S.correct,t:S.qs.length,ms:Date.now()-S.t0};
   const b=b64e(JSON.stringify(p));
@@ -1061,7 +1095,7 @@ function parseResult(str){
   if((fnv(m[1])%1296).toString(36).padStart(2,'0')!==m[2])throw new Error('checksum');
   const p=JSON.parse(b64d(m[1]));
   if(!p||p.v!==1||!/^\d{6}$/.test(String(p.c))||!/^\d{6}$/.test(String(p.i)))throw new Error('fields');
-  if(typeof p.n!=='string'||!p.n.trim()||p.n.length>12)throw new Error('name');
+  if(typeof p.n!=='string'||!p.n.trim()||p.n.length>12)throw new Error('name'); /* BUG FIX: 12字上限に統一 */
   if(!Number.isInteger(p.s)||p.s<0||p.s>2000||!Number.isInteger(p.k)||p.k<0||p.k>10||p.t!==10)throw new Error('score');
   if(!Number.isInteger(p.ms)||p.ms<0||p.ms>3600000)throw new Error('time');
   return{c:String(p.c),i:String(p.i),n:p.n.trim().slice(0,12),s:p.s,k:p.k,t:p.t,ms:p.ms,raw:s};}
@@ -1071,18 +1105,18 @@ function applyResult(r){
   if(!Array.isArray(pl.hashes))pl.hashes=[];
   if(pl.hashes.includes(r.raw))return'dup';
   pl.hashes.push(r.raw);if(pl.hashes.length>60)pl.hashes.shift();
-  pl.n=r.n;pl.plays=clamp((pl.plays||0)+1,0,9999);
-  pl.k=clamp((pl.k||0)+r.k,0,99999);pl.t=clamp((pl.t||0)+r.t,0,99999);
+  pl.n=r.n;pl.plays=clamp(pl.plays+1,0,9999);
+  pl.k=clamp(pl.k+r.k,0,99999);pl.t=clamp(pl.t+r.t,0,99999);
   pl.best=Math.max(pl.best||0,r.s);pl.last=Date.now();
   savePlayers();return'ok';}
 
-/* ================= ボードコード ================= */
-const MAX_BOARD_ENTRIES=50;
+/* ===== ボードコード（URL型バックアップ） ===== */
+const MAX_BOARD_ENTRIES=50; /* BUG FIX: 上限設けて URL 爆発防止 */
 function mkBoardCode(){
   let entries=Object.entries(ST.players)
     .filter(([id,p])=>p.plays>0)
     .map(([id,p])=>[id,p.n||'',p.best||0,p.plays||0,p.k||0,p.t||0]);
-  entries.sort((a,b)=>(b[2]||0)-(a[2]||0));
+  entries.sort((a,b)=>b[2]-a[2]);
   entries=entries.slice(0,MAX_BOARD_ENTRIES);
   const payload={v:1,ts:Date.now(),p:entries};
   const b=b64e(JSON.stringify(payload));
@@ -1116,10 +1150,10 @@ function mergeBoard(entries){
       added++;
     }else{
       let changed=false;
-      if((e.best||0)>(cur.best||0)){cur.best=e.best;changed=true;}
-      if((e.plays||0)>(cur.plays||0)){cur.plays=e.plays;changed=true;}
-      if((e.k||0)>(cur.k||0)){cur.k=e.k;changed=true;}
-      if((e.t||0)>(cur.t||0)){cur.t=e.t;changed=true;}
+      if(e.best>cur.best){cur.best=e.best;changed=true;}
+      if(e.plays>cur.plays){cur.plays=e.plays;changed=true;}
+      if(e.k>cur.k){cur.k=e.k;changed=true;}
+      if(e.t>cur.t){cur.t=e.t;changed=true;}
       const newName=(e.n||'').trim();
       if(newName&&newName!==(cur.n||'').trim()){cur.n=newName.slice(0,12);changed=true;}
       if(changed){cur.last=Date.now();updated++;}
@@ -1127,42 +1161,56 @@ function mergeBoard(entries){
   if(added||updated)savePlayers();
   return{added,updated,total:entries.length};}
 
-/* ================= Pantry 同期（安全・無料） ================= */
-const PANTRY_ID='c0ffee00-0000-4000-8000-000000000001'; // 共有Pantry（ユーザーごとにバスケット分離）
-const PANTRY_BASE='https://getpantry.cloud/apiv1/pantry/'+PANTRY_ID+'/basket/';
+/* ===== クラウド同期（jsonblob） ===== */
 const CLOUD={
+  myBlob:store.get('kg1.myblob',null),
   peers:store.get('kg1.peers',[]),
   lastSync:store.get('kg1.lastsync',0),
   syncing:false
 };
 if(!Array.isArray(CLOUD.peers))CLOUD.peers=[];
 
-async function pushMyBasket(){
-  const basket=ST.profile.id;
+async function createMyBlob(){
+  if(CLOUD.myBlob)return CLOUD.myBlob;
+  try{
+    const res=await fetch('https://jsonblob.com/api/jsonBlob',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({v:1,board:[],name:ST.profile.name,id:ST.profile.id,ts:Date.now()})
+    });
+    if(!res.ok)return null;
+    const loc=res.headers.get('Location')||res.headers.get('location');
+    if(loc){
+      CLOUD.myBlob=loc;
+      store.set('kg1.myblob',loc);
+      return loc;
+    }
+  }catch(e){}
+  return null;
+}
+async function pushMyBlob(){
+  const url=await createMyBlob();
+  if(!url)return false;
   try{
     let entries=Object.entries(ST.players)
       .filter(([id,p])=>p.plays>0)
       .map(([id,p])=>[id,p.n||'',p.best||0,p.plays||0,p.k||0,p.t||0]);
-    entries.sort((a,b)=>(b[2]||0)-(a[2]||0));
+    entries.sort((a,b)=>b[2]-a[2]);
     entries=entries.slice(0,MAX_BOARD_ENTRIES);
-    const body={v:1,board:entries,name:ST.profile.name,id:ST.profile.id,ts:Date.now()};
-    const res=await fetch(PANTRY_BASE+encodeURIComponent(basket),{
-      method:'POST',
+    const res=await fetch(url,{
+      method:'PUT',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(body)
+      body:JSON.stringify({v:1,board:entries,name:ST.profile.name,id:ST.profile.id,ts:Date.now()})
     });
     return res.ok;
   }catch(e){return false;}
 }
-async function pullFromPeer(peerId){
+async function pullFromPeer(url){
   try{
-    const res=await fetch(PANTRY_BASE+encodeURIComponent(peerId),{
-      headers:{'Accept':'application/json'},
-      cache:'no-store'
-    });
+    const res=await fetch(url,{headers:{'Accept':'application/json'}});
     if(!res.ok)return{added:0,updated:0};
     const data=await res.json();
-    if(!data.board||!Array.isArray(data.board)||data.board.length===0)return{added:0,updated:0};
+    if(!data.board||!Array.isArray(data.board))return{added:0,updated:0};
     const entries=data.board.map(e=>({
       id:String(e[0]||''),
       n:String(e[1]||'').slice(0,12),
@@ -1181,11 +1229,10 @@ async function syncAll(showToast){
   updateSyncUI('syncing');
   let total={added:0,updated:0};
   for(const peer of CLOUD.peers){
-    if(peer===ST.profile.id)continue;
     const r=await pullFromPeer(peer);
     total.added+=r.added;total.updated+=r.updated;
   }
-  await pushMyBasket();
+  await pushMyBlob();
   CLOUD.lastSync=Date.now();
   store.set('kg1.lastsync',CLOUD.lastSync);
   CLOUD.syncing=false;
@@ -1196,11 +1243,12 @@ async function syncAll(showToast){
   }
   if(SCR==='rank')renderRank();
 }
-function addPeer(id){
-  if(!id||typeof id!=='string'||!/^\d{6}$/.test(id))return false;
-  if(id===ST.profile.id)return false;
-  if(!CLOUD.peers.includes(id)){
-    CLOUD.peers.push(id);
+function addPeer(url){
+  if(!url||typeof url!=='string')return false;
+  if(!url.includes('jsonblob.com'))return false;
+  if(url===CLOUD.myBlob)return false;
+  if(!CLOUD.peers.includes(url)){
+    CLOUD.peers.push(url);
     if(CLOUD.peers.length>100)CLOUD.peers.shift();
     store.set('kg1.peers',CLOUD.peers);
     return true;
@@ -1226,7 +1274,7 @@ function updateSyncUI(state){
   }
 }
 
-/* ================= 対戦結果 ================= */
+/* ===== 対戦結果 ===== */
 function finishBattle(){
   clearInterval(S.tid);
   const code=S.code,score=S.score,correct=S.correct,total=S.qs.length,secs=Math.round((Date.now()-S.t0)/1000);
@@ -1243,10 +1291,12 @@ function finishBattle(){
   $('resBtCode').textContent=rc;
   $('btnResBtCopy').onclick=()=>copyText(rc,'結果コードをコピーしました');
   $('btnResBtShare').onclick=async()=>{
-    await pushMyBasket();
-    const params=new URLSearchParams({r:rc,p:ST.profile.id});
-    let url='';
-    if(location.origin&&location.origin!=='null')url=location.origin+location.pathname+'?'+params.toString();
+    const myBlob=CLOUD.myBlob||await createMyBlob();
+    const params=new URLSearchParams({r:rc});
+    if(myBlob)params.set('p',myBlob);
+    let url;
+    if(location.origin==='null'||!location.origin)url='';
+    else url=location.origin+location.pathname+'?'+params.toString();
     const text=`ことばの森 対戦結果 ⚔️ ${fmtCode(code)}\n${ST.profile.name}: ${score}pt（${correct}/${total}）\n\nこのリンクを開くと自動でランキング同期が始まります🌿\n${url}\n結果コード: ${rc}`;
     if(navigator.share){try{await navigator.share({title:'ことばの森 対戦結果',text});}catch(e){if(e&&e.name==='AbortError')return;}}
     else copyText(rc,'結果コードをコピーしました');
@@ -1255,10 +1305,10 @@ function finishBattle(){
   $('btnBtBack').onclick=()=>{setStudyView('setup');nav('battle');};
   checkAchievements();
   if(correct>=8){confetti();snd('win');}else snd('ok');
-  setTimeout(()=>pushMyBasket(),500);
+  setTimeout(()=>pushMyBlob(),500); /* バックグラウンド自動保存 */
 }
 
-/* ================= 対戦画面 ================= */
+/* ===== 対戦画面 ===== */
 let btCode='';
 function renderBattle(){
   if(btCode){$('btCodeWrap').classList.remove('hidden');$('btCode').textContent=fmtCode(btCode);}}
@@ -1269,7 +1319,7 @@ $('btnBtRegen').addEventListener('click',()=>{newCode();toast('新しいコー�
 $('btnBtStart').addEventListener('click',()=>{if(btCode)startBattle(btCode);});
 $('btnBtShare').addEventListener('click',async()=>{
   let url='';
-  if(location.origin&&location.origin!=='null')url=location.origin+location.pathname+'?c='+btCode;
+  if(location.origin!=='null'&&location.origin)url=location.origin+location.pathname+'?c='+btCode;
   const text=`ことばの森で勝負しよう！🌿⚔️\n対戦コード: ${fmtCode(btCode)}\n${url}`;
   if(navigator.share){try{await navigator.share({title:'ことばの森 対戦',text});return;}catch(e){if(e&&e.name==='AbortError')return;}}
   copyText(fmtCode(btCode),'コードをコピーしました');});
@@ -1287,7 +1337,7 @@ async function copyText(t,msg){
     document.body.appendChild(ta);ta.select();document.execCommand('copy');ta.remove();toast(msg,'📋');}
     catch(e2){toast('コピーできませんでした','⚠️');}}}
 
-/* ================= ランキング ================= */
+/* ===== ランキング & 記録 ===== */
 function renderRank(){
   const entries=Object.entries(ST.players).map(([id,p])=>({id,...p})).filter(e=>e.plays>0);
   entries.sort((a,b)=>(b.best||0)-(a.best||0)||(b.k/(b.t||1))-(a.k/(a.t||1))||b.last-a.last);
@@ -1312,7 +1362,7 @@ function renderRank(){
       <span class="rk">${medals[i]||i+1}</span><span class="av" data-av="${esc(e.id)}" data-nm="${esc(e.n)}"></span>
       <div class="grow"><b>${esc(e.n)}${e.id===ST.profile.id?' <span class="sub small">（あなた）</span>':''}</b>
         <span class="sub small">${e.plays}回挑戦 ・ 正答率 ${e.t?Math.round(e.k/e.t*100):0}%</span></div>
-      <div class="sc"><b class="mono">${e.best||0}</b><span class="sub small"> pt</span></div>
+      <div class="sc"><b class="mono">${e.best}</b><span class="sub small"> pt</span></div>
     </div>`).join('');
   $('rankList').querySelectorAll('[data-av]').forEach(el=>paintAv(el,el.dataset.av,el.dataset.nm));
   const chals=Object.entries(ST.chal).sort((a,b)=>b[1].last-a[1].last).slice(0,6);
@@ -1354,32 +1404,33 @@ $('btnWeakReview').addEventListener('click',()=>{
   if(!pool.length){toast('苦手なことばはまだないよ','🌱');return;}
   nav('study');startSolo({pool,mode:'quiz',type:'w',levels:[1,2,3],source:'all'});});
 
-/* ================= 同期UI ================= */
+/* ===== 同期UI ===== */
 $('btnSyncNow').addEventListener('click',async()=>{
   if(!CLOUD.peers.length){toast('接続中の友達がいません。リンクを共有してみよう','🤝');return;}
   await syncAll(true);
 });
 $('btnBoardShare').addEventListener('click',async()=>{
-  await pushMyBasket();
-  const params=new URLSearchParams({p:ST.profile.id});
+  const blob=await createMyBlob();
+  if(!blob){toast('同期リンクの生成に失敗しました。ネット接続を確認してください','⚠️');return;}
+  await pushMyBlob();
   let url='';
-  if(location.origin&&location.origin!=='null')url=location.origin+location.pathname+'?'+params.toString();
+  if(location.origin!=='null'&&location.origin)url=location.origin+location.pathname+'?p='+encodeURIComponent(blob);
   const text=`ことばの森で一緒に学ぼう！🌿\nこのリンクを開くと、自動でランキングが同期されます。\n${url}`;
   if(navigator.share){try{await navigator.share({title:'ことばの森 同期リンク',text});}catch(e){if(e&&e.name==='AbortError')return;}}
-  else copyText(url||ST.profile.id,'同期リンクをコピーしました');});
+  else copyText(url||blob,'同期リンクをコピーしました');});
 $('btnBoardImport').addEventListener('click',()=>{
   sheet('同期リンクで接続',
-    `<p style="text-align:center;margin-bottom:12px">友達から届いたリンク、または6桁IDを貼り付けてください。<br><span class="sub small">一度接続すると、以後は自動で同期されます。</span></p>
-     <textarea id="impBoardText" class="field" placeholder="https://...?p=... または 123-456"></textarea>`,
+    `<p style="text-align:center;margin-bottom:12px">友達から届いたリンク、または blob URL を貼り付けてください。<br><span class="sub small">一度接続すると、以後は自動で同期されます。</span></p>
+     <textarea id="impBoardText" class="field" placeholder="https://...?p=... または https://jsonblob.com/api/jsonBlob/..."></textarea>`,
     [{label:'接続する',cls:'btn-primary',cb:()=>{
       const val=$('impBoardText').value.trim();
-      if(!val){toast('URLまたはIDを入力してね','⚠️');return false;}
-      let peerId=val;
+      if(!val){toast('URLを入力してね','⚠️');return false;}
+      let peerUrl=val;
       const m=val.match(/[?&]p=([^&]+)/);
-      if(m){peerId=m[1];}
-      else if(/^\d{3}-\d{3}$/.test(val)){peerId=val.replace('-','');}
-      if(!/^\d{6}$/.test(peerId)){toast('形式が正しくないよ','⚠️');return false;}
-      if(!addPeer(peerId)){toast('このリンクは既に接続済みか、自分自身のものです','ℹ️');return false;}
+      if(m){try{peerUrl=decodeURIComponent(m[1]);}catch(e){peerUrl=m[1];}}
+      else if(/^https?:\/\/jsonblob\.com\/api\/jsonBlob\/\d+$/.test(val))peerUrl=val;
+      else{toast('URLの形式が正しくないよ','⚠️');return false;}
+      if(!addPeer(peerUrl)){toast('このリンクは既に接続済みか、自分自身のものです','ℹ️');return false;}
       toast('友達と接続しました！同期を開始します','🤝');
       unlock('peer');
       syncAll(true);
@@ -1401,7 +1452,7 @@ $('btnAddResult')&&$('btnAddResult').addEventListener('click',()=>{
      {label:'キャンセル',cls:'btn-ghost'}]);
   setTimeout(()=>{try{$('impText').focus();}catch(e){}},400);});
 
-/* ================= 設定 ================= */
+/* ===== 設定シート ===== */
 function openSettings(){
   if(battleActive()){toast('対戦中は設定を開けません','⚔️');return;}
   const s=ST.settings,p=ST.profile;
@@ -1432,7 +1483,7 @@ function openSettings(){
       const me=ST.players[p.id];if(me)me.n=v;savePlayers();
       toast('ニックネームを保存しました','✅');snd('tap');
       if(SCR==='rank')renderRank();
-      pushMyBasket();
+      pushMyBlob();
     };
     $('btnIdCopy').onclick=()=>copyText(fmtCode(p.id),'IDをコピーしました');
     $('setTheme').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
@@ -1443,14 +1494,14 @@ function openSettings(){
     $('setHaptic').onchange=e=>{s.haptic=e.target.checked;saveSettings();vib(15);};
     $('btnReset').onclick=()=>{
       confirmSheet('データを初期化しますか？','学習履歴・お気に入り・ランキング・同期接続がすべて削除されます。この操作は取り消せません。','初期化する',()=>{
-        try{['kg1.stats','kg1.players','kg1.chal','kg1.settings','kg1.unlocks','kg1.peers','kg1.lastsync','em3.profile','em3.stats'].forEach(k=>localStorage.removeItem(k));}catch(e){}
+        try{['kg1.stats','kg1.players','kg1.chal','kg1.settings','kg1.unlocks','kg1.myblob','kg1.peers','kg1.lastsync','em3.profile','em3.stats'].forEach(k=>localStorage.removeItem(k));}catch(e){}
         location.reload();
       },true);
     };
   },50);
 }
 
-/* ================= 紙吹雪 ================= */
+/* ===== 紙吹雪 ===== */
 const canvas=$('confetti');
 const ctx=canvas.getContext('2d');
 let confettiPieces=[],confettiRaf=null;
@@ -1496,7 +1547,7 @@ function confetti(){
     else{ctx.clearRect(0,0,innerWidth,innerHeight);confettiRaf=null;}};
   confettiRaf=requestAnimationFrame(tick);}
 
-/* ================= キーボード ================= */
+/* ===== キーボード ===== */
 document.addEventListener('keydown',e=>{
   if(!S||STUDY.view!=='session'||SCR!=='study')return;
   const tag=e.target&&e.target.tagName;
@@ -1506,7 +1557,6 @@ document.addEventListener('keydown',e=>{
   if(S.mode==='quiz'){
     const n=parseInt(e.key,10);
     if(n>=1&&n<=4){e.preventDefault();answer(n-1);}
-    else if(e.key==='0'){e.preventDefault();answer(-1,true);} // 0キーでわからない
   }else if(S.mode==='cards'){
     if(e.key===' '||e.key==='Spacebar'){e.preventDefault();flipCard();}
     else if(e.key==='j'||e.key==='J'){e.preventDefault();judge(false);}
@@ -1514,22 +1564,25 @@ document.addEventListener('keydown',e=>{
   }
 });
 
-/* ================= URLパラメータ（排他制御） ================= */
+/* ===== URLパラメータ（排他制御） ===== */
 (function initFromUrl(){
   try{
     const params=new URLSearchParams(location.search);
     let handled=false;
     const pParam=params.get('p');
-    if(pParam&&/^\d{6}$/.test(pParam)){
-      if(addPeer(pParam)){
-        handled=true;
-        setTimeout(()=>{
-          toast('友達と接続しました！同期を開始します','🤝');
-          unlock('peer');
-          nav('rank');
-          syncAll(true);
-        },300);
-      }
+    if(pParam){
+      try{
+        const peerUrl=decodeURIComponent(pParam);
+        if(addPeer(peerUrl)){
+          handled=true;
+          setTimeout(()=>{
+            toast('友達と接続しました！同期を開始します','🤝');
+            unlock('peer');
+            nav('rank');
+            syncAll(true);
+          },300);
+        }
+      }catch(e){}
     }
     const cParam=params.get('c');
     if(cParam&&/^\d{6}$/.test(cParam)&&!handled){
@@ -1580,7 +1633,7 @@ document.addEventListener('keydown',e=>{
   }catch(e){}
 })();
 
-/* ================= 自動同期トリガー ================= */
+/* ===== 自動同期トリガー ===== */
 document.addEventListener('visibilitychange',()=>{
   if(!document.hidden&&CLOUD.peers.length>0){
     if(Date.now()-CLOUD.lastSync>5*60*1000)syncAll(false);
@@ -1590,13 +1643,18 @@ window.addEventListener('online',()=>{
   if(CLOUD.peers.length>0)syncAll(true);
 });
 
-/* ================= 初期化 ================= */
+/* ===== 初期化 ===== */
 applyTheme();
 lensMetrics();
 renderHome();
 updateSyncUI('idle');
-if(CLOUD.peers.length>0)setTimeout(()=>syncAll(false),1200);
-setTimeout(()=>pushMyBasket(),3000);
+
+/* 起動時に自動同期（peersが存在する場合） */
+if(CLOUD.peers.length>0){
+  setTimeout(()=>syncAll(false),1200);
+}
+/* 個人バックアップを定期的に送信（次回起動時に備える） */
+setTimeout(()=>pushMyBlob(),3000);
 checkAchievements();
 
 })();
